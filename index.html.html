@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#0B0F1A">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="India Briefing">
+<title>India Daily Briefing</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0B0F1A;--bg2:#111827;--card:#15202E;--card2:#1E2D40;--card3:#243347;
+  --border:#1E2D40;--border2:#263548;
+  --amber:#F6A621;--amber2:#FBBF24;--amber-d:rgba(246,166,33,.12);
+  --green:#10B981;--green-d:rgba(16,185,129,.12);
+  --blue:#3B82F6;--blue-d:rgba(59,130,246,.12);
+  --red:#EF4444;--red-d:rgba(239,68,68,.12);
+  --purple:#8B5CF6;--purple-d:rgba(139,92,246,.12);
+  --teal:#06B6D4;--orange:#F97316;--orange-d:rgba(249,115,22,.12);
+  --text:#F1F5F9;--text2:#94A3B8;--text3:#4B6080;--text4:#2E4260;
+  --ff:'Outfit',sans-serif;--ffd:'DM Serif Display',serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:var(--ff);min-height:100vh;overflow-x:hidden;}
+::-webkit-scrollbar{width:4px;height:4px;}
+::-webkit-scrollbar-track{background:var(--bg2);}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:4px;}
+
+/* HEADER */
+header{background:linear-gradient(180deg,rgba(11,15,26,.98),rgba(17,24,39,.96));border-bottom:1px solid var(--border);padding:10px 20px;position:sticky;top:0;z-index:300;backdrop-filter:blur(14px);}
+.hdr{max-width:1280px;margin:0 auto;display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.logo{display:flex;align-items:center;gap:9px;flex-shrink:0;}
+.logo-mark{width:36px;height:36px;background:linear-gradient(135deg,#F6A621,#FBBF24);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:19px;box-shadow:0 0 16px rgba(246,166,33,.3);}
+.logo h1{font-family:var(--ffd);font-size:17px;line-height:1;}
+.logo span{font-size:9.5px;color:var(--text3);letter-spacing:.5px;font-weight:500;}
+.srch{flex:1;max-width:360px;position:relative;}
+.srch input{width:100%;background:var(--card2);border:1px solid var(--border2);color:var(--text);font-family:var(--ff);font-size:13px;padding:8px 32px 8px 34px;border-radius:8px;outline:none;transition:border-color .2s,box-shadow .2s;}
+.srch input::placeholder{color:var(--text3);}
+.srch input:focus{border-color:var(--amber);box-shadow:0 0 0 2px var(--amber-d);}
+.srch .si{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--text3);font-size:13px;pointer-events:none;}
+.srch .sc{position:absolute;right:8px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--text3);cursor:pointer;font-size:13px;display:none;}
+.hdr-r{display:flex;align-items:center;gap:7px;margin-left:auto;}
+#date-el{font-size:11px;color:var(--text3);white-space:nowrap;}
+.ibtn{background:var(--card2);border:1px solid var(--border2);color:var(--text2);padding:7px 10px;border-radius:7px;cursor:pointer;font-size:14px;transition:all .2s;display:flex;align-items:center;gap:4px;font-family:var(--ff);}
+.ibtn:hover{border-color:var(--amber);color:var(--amber);}
+.ibtn .bl{font-size:11.5px;font-weight:700;}
+#rbtn{background:var(--amber);border-color:var(--amber);color:#0B0F1A;font-weight:800;font-size:12.5px;padding:7px 15px;}
+#rbtn:hover{background:var(--amber2);border-color:var(--amber2);}
+#rbtn:disabled{opacity:.5;cursor:not-allowed;}
+.ar-pill{font-size:10px;background:var(--green-d);color:var(--green);border:1px solid rgba(16,185,129,.25);padding:3px 8px;border-radius:20px;font-weight:600;white-space:nowrap;display:none;align-items:center;gap:3px;}
+
+/* TICKER */
+.ticker{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 20px;height:32px;display:flex;align-items:center;gap:10px;overflow:hidden;}
+.tlbl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--amber);flex-shrink:0;}
+.tscroll{display:flex;overflow-x:auto;scrollbar-width:none;flex:1;gap:0;}
+.tscroll::-webkit-scrollbar{display:none;}
+.titem{display:flex;align-items:center;gap:5px;padding:0 14px;border-right:1px solid var(--border);white-space:nowrap;flex-shrink:0;}
+.titem:last-child{border-right:none;}
+.tn{font-size:10px;font-weight:700;color:var(--text2);}
+.tv{font-size:11px;font-weight:700;}
+.tc{font-size:10px;font-weight:600;}
+.up{color:var(--green);}.dn{color:var(--red);}.neu{color:var(--text2);}
+
+/* TABS */
+.tabs{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 20px;overflow-x:auto;scrollbar-width:none;}
+.tabs::-webkit-scrollbar{display:none;}
+.tabs-in{max-width:1280px;margin:0 auto;display:flex;}
+.tab{padding:12px 15px;font-size:12.5px;font-weight:600;color:var(--text3);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:all .2s;display:flex;align-items:center;gap:5px;}
+.tab:hover{color:var(--text);}
+.tab.active{color:var(--amber);border-bottom-color:var(--amber);}
+.cnt{background:var(--card3);color:var(--text3);font-size:9px;font-weight:700;padding:2px 6px;border-radius:20px;transition:all .2s;}
+.tab.active .cnt{background:var(--amber-d);color:var(--amber);}
+
+/* MAIN */
+.main{max-width:1280px;margin:0 auto;padding:20px;}
+
+/* WELCOME */
+#welcome{text-align:center;padding:52px 20px 36px;}
+.wflag{font-size:60px;margin-bottom:14px;display:block;animation:float 3s ease-in-out infinite;}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+#welcome h2{font-family:var(--ffd);font-size:30px;margin-bottom:10px;background:linear-gradient(135deg,var(--text),var(--amber));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+#welcome p{color:var(--text2);font-size:14px;max-width:420px;margin:0 auto 24px;line-height:1.75;}
+.wpills{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:28px;}
+.wp{padding:8px 14px;border-radius:20px;font-size:12px;font-weight:600;}
+.wp.agri{background:var(--green-d);border:1px solid rgba(16,185,129,.2);color:var(--green);}
+.wp.biz{background:var(--blue-d);border:1px solid rgba(59,130,246,.2);color:var(--blue);}
+.wp.pol{background:var(--red-d);border:1px solid rgba(239,68,68,.2);color:var(--red);}
+.wp.gen{background:var(--purple-d);border:1px solid rgba(139,92,246,.2);color:var(--purple);}
+.wp.mandi{background:var(--orange-d);border:1px solid rgba(249,115,22,.2);color:var(--orange);}
+.sbtn{background:linear-gradient(135deg,var(--amber),var(--amber2));color:#0B0F1A;border:none;padding:13px 36px;border-radius:10px;font-size:15px;font-weight:800;cursor:pointer;font-family:var(--ff);box-shadow:0 0 24px rgba(246,166,33,.3);transition:all .2s;}
+.sbtn:hover{transform:translateY(-2px);box-shadow:0 0 32px rgba(246,166,33,.45);}
+.ntip{margin-top:16px;font-size:11.5px;color:var(--text3);line-height:1.7;}
+.ntip a{color:var(--blue);font-weight:600;text-decoration:none;}
+
+/* LOADING */
+#loading{display:none;flex-direction:column;align-items:center;justify-content:center;min-height:55vh;gap:18px;}
+.spin{width:42px;height:42px;border:3px solid var(--border2);border-top-color:var(--amber);border-radius:50%;animation:spin .75s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.lcard{background:var(--card);border:1px solid var(--border2);border-radius:14px;padding:22px 26px;min-width:290px;}
+.lhd{font-family:var(--ffd);font-size:17px;margin-bottom:3px;}
+.lsub{font-size:11px;color:var(--text3);margin-bottom:16px;}
+.lstep{display:flex;align-items:center;gap:9px;padding:8px 0;border-bottom:1px solid var(--border);font-size:12.5px;color:var(--text3);transition:all .3s;}
+.lstep:last-child{border:none;}
+.ldot{width:7px;height:7px;border-radius:50%;background:var(--border2);flex-shrink:0;transition:all .3s;}
+.ltxt{flex:1;}.ltime{font-size:10px;color:var(--text4);}
+.lstep.active{color:var(--amber);}.lstep.active .ldot{background:var(--amber);box-shadow:0 0 6px var(--amber);}
+.lstep.done{color:var(--green);}.lstep.done .ldot{background:var(--green);}
+.lstep.fail{color:var(--red);}.lstep.fail .ldot{background:var(--red);}
+
+/* PANELS */
+.panel{display:none;}
+.panel.show{display:block;animation:fup .3s ease;}
+@keyframes fup{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
+
+/* STATUS */
+.sbar{background:var(--card);border:1px solid var(--border2);border-radius:9px;padding:9px 14px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:11.5px;color:var(--text3);margin-bottom:16px;}
+.sbar b{color:var(--green);}
+
+/* TOP ROW */
+.toprow{display:grid;grid-template-columns:1fr 270px;gap:14px;margin-bottom:18px;}
+
+/* WEATHER */
+.wcard{background:linear-gradient(135deg,#0F2027,#203A43,#2C5364);border:1px solid rgba(6,182,212,.2);border-radius:14px;padding:18px;display:flex;flex-direction:column;justify-content:space-between;min-height:128px;position:relative;overflow:hidden;}
+.wcard::before{content:'';position:absolute;top:-20px;right:-20px;width:110px;height:110px;background:radial-gradient(circle,rgba(6,182,212,.15),transparent 70%);pointer-events:none;}
+.wtop{display:flex;justify-content:space-between;align-items:flex-start;}
+.wcity{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--teal);}
+.wdesc{font-size:11px;color:rgba(255,255,255,.5);margin-top:2px;}
+.wtemp{font-family:var(--ffd);font-size:40px;color:white;line-height:1;margin:6px 0;}
+.wico{font-size:34px;line-height:1;}
+.wbot{display:flex;gap:12px;}
+.wstat{font-size:10.5px;color:rgba(255,255,255,.5);}
+.wstat b{color:white;}
+
+/* OVERVIEW GRID */
+.ovgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:11px;margin-bottom:18px;}
+.ovc{background:var(--card);border:1px solid var(--border2);border-radius:13px;padding:15px;cursor:pointer;transition:all .22s;position:relative;overflow:hidden;}
+.ovc::after{content:'';position:absolute;top:0;left:0;right:0;height:2.5px;}
+.ovc.agri::after{background:linear-gradient(90deg,var(--green),#34D399);}
+.ovc.biz::after{background:linear-gradient(90deg,var(--blue),#60A5FA);}
+.ovc.pol::after{background:linear-gradient(90deg,var(--red),#F87171);}
+.ovc.gen::after{background:linear-gradient(90deg,var(--purple),#A78BFA);}
+.ovc:hover{transform:translateY(-3px);box-shadow:0 8px 32px rgba(0,0,0,.4);}
+.ovc.agri:hover{border-color:rgba(16,185,129,.3);}
+.ovc.biz:hover{border-color:rgba(59,130,246,.3);}
+.ovc.pol:hover{border-color:rgba(239,68,68,.3);}
+.ovc.gen:hover{border-color:rgba(139,92,246,.3);}
+.ovh{display:flex;align-items:center;gap:8px;margin-bottom:9px;}
+.ovico{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px;}
+.ovico.agri{background:var(--green-d);}.ovico.biz{background:var(--blue-d);}.ovico.pol{background:var(--red-d);}.ovico.gen{background:var(--purple-d);}
+.ovc h3{font-size:12.5px;font-weight:700;}
+.ovhl{font-size:11.5px;color:var(--text2);line-height:1.42;margin-bottom:8px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.ovft{display:flex;justify-content:space-between;align-items:center;}
+.ovcnt{font-size:10px;color:var(--text3);font-weight:600;}
+
+/* SECTION HEADER */
+.shdr{display:flex;align-items:center;gap:8px;margin-bottom:13px;padding-bottom:10px;border-bottom:1px solid var(--border);}
+.sdot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.shdr h2{font-size:14.5px;font-weight:700;}
+.scnt{background:var(--card3);border:1px solid var(--border2);color:var(--text3);font-size:9.5px;font-weight:700;padding:2px 8px;border-radius:20px;margin-left:auto;}
+
+/* NEWS GRID */
+.ngrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(305px,1fr));gap:11px;}
+
+/* NEWS CARD */
+.nc{background:var(--card);border:1px solid var(--border2);border-radius:13px;padding:15px;transition:all .22s;animation:cin .35s ease both;display:flex;flex-direction:column;}
+.nc:hover{border-color:rgba(246,166,33,.2);box-shadow:0 6px 28px rgba(0,0,0,.3);transform:translateY(-2px);}
+@keyframes cin{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
+.nctop2{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+.nccat{font-size:9px;color:var(--text4);font-weight:700;text-transform:uppercase;letter-spacing:1.2px;}
+.ncacts{display:flex;gap:3px;}
+.nab{background:none;border:none;cursor:pointer;color:var(--text3);font-size:13px;padding:2px 4px;border-radius:4px;transition:all .15s;line-height:1;}
+.nab:hover{color:var(--amber);background:var(--amber-d);}
+.nab.bm{color:var(--amber);}
+.nchead{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:9px;}
+.nchead h4{font-size:13px;font-weight:600;line-height:1.45;flex:1;color:var(--text);}
+.imp{flex-shrink:0;font-size:8.5px;font-weight:700;text-transform:uppercase;padding:3px 6px;border-radius:4px;}
+.imp.H{background:var(--red-d);color:#F87171;border:1px solid rgba(239,68,68,.2);}
+.imp.M{background:var(--amber-d);color:var(--amber);border:1px solid rgba(246,166,33,.2);}
+.imp.L{background:rgba(75,96,128,.1);color:var(--text3);border:1px solid var(--border);}
+.ncsum{font-size:12px;color:var(--text2);line-height:1.65;margin-bottom:11px;flex:1;}
+.ncft{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:auto;}
+.ncmeta .ncsrc{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--text3);}
+.ncmeta .nct{font-size:10px;color:var(--text4);margin-top:2px;}
+.ncbtns{display:flex;gap:5px;flex-shrink:0;}
+.rbtn{font-size:11px;color:var(--text);text-decoration:none;font-weight:700;padding:5px 10px;background:var(--card3);border:1px solid var(--border2);border-radius:6px;transition:all .15s;white-space:nowrap;}
+.rbtn:hover{background:var(--amber-d);border-color:rgba(246,166,33,.3);color:var(--amber);}
+.wabtn{font-size:12px;padding:5px 8px;background:rgba(37,211,102,.1);border:1px solid rgba(37,211,102,.2);border-radius:6px;text-decoration:none;transition:all .15s;cursor:pointer;}
+.wabtn:hover{background:rgba(37,211,102,.22);}
+
+/* MANDI */
+.mgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:9px;margin-bottom:20px;}
+.mc{background:var(--card);border:1px solid var(--border2);border-radius:11px;padding:14px;text-align:center;transition:all .2s;}
+.mc:hover{border-color:rgba(249,115,22,.3);transform:translateY(-2px);}
+.mcrop{font-size:20px;margin-bottom:5px;}
+.mname{font-size:10.5px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px;}
+.mprice{font-family:var(--ffd);font-size:18px;color:var(--orange);margin-bottom:1px;}
+.munit{font-size:9px;color:var(--text4);}
+.mchg{font-size:10.5px;font-weight:700;margin-top:4px;}
+
+/* EMPTY */
+.empty{text-align:center;padding:50px 20px;color:var(--text3);}
+.empty .ei{font-size:44px;margin-bottom:12px;opacity:.5;}
+.empty p{font-size:13px;line-height:1.7;}
+
+/* TOAST */
+#toast{position:fixed;bottom:22px;right:22px;z-index:999;background:var(--card2);border:1px solid var(--border2);color:var(--text);font-size:13px;font-weight:500;padding:10px 16px;border-radius:9px;box-shadow:0 8px 32px rgba(0,0,0,.5);transform:translateY(70px);opacity:0;transition:all .3s cubic-bezier(.34,1.56,.64,1);pointer-events:none;max-width:260px;}
+#toast.show{transform:translateY(0);opacity:1;}
+
+@media(max-width:900px){.toprow{grid-template-columns:1fr;}.ovgrid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:768px){.hdr{height:auto;flex-wrap:wrap;}.srch{order:3;max-width:100%;flex:0 0 100%;}.main{padding:14px;}.ngrid{grid-template-columns:1fr;}#date-el{display:none;}}
+@media(max-width:480px){.ovgrid{grid-template-columns:1fr 1fr;}.mgrid{grid-template-columns:repeat(3,1fr);}}
+</style>
+</head>
+<body>
+
+<header>
+ <div class="hdr">
+  <div class="logo">
+   <div class="logo-mark">🇮🇳</div>
+   <div><h1>India Briefing</h1><span>Live · Daily · All-in-One</span></div>
+  </div>
+  <div class="srch">
+   <span class="si">🔍</span>
+   <input id="sinput" type="text" placeholder="Search news, topics, sources…" oninput="onSearch(this.value)" autocomplete="off">
+   <button class="sc" id="sclr" onclick="clearSearch()">✕</button>
+  </div>
+  <div class="hdr-r">
+   <span id="date-el"></span>
+   <div class="ar-pill" id="arpill">🔄 <span id="arcd"></span></div>
+   <button class="ibtn" onclick="goTab('saved')" title="Saved">🔖 <span class="bl" id="svhdr">0</span></button>
+   <button class="ibtn" id="thbtn" onclick="toggleTheme()">☀️</button>
+   <button id="rbtn" class="ibtn" onclick="fetchAll(false)">⚡ Refresh</button>
+  </div>
+ </div>
+</header>
+
+<div class="ticker"><span class="tlbl">📊 Markets</span><div class="tscroll" id="tscroll"><div class="titem"><span class="tn">Loading…</span></div></div></div>
+
+<div class="tabs">
+ <div class="tabs-in">
+  <div class="tab active" data-tab="overview" onclick="goTab('overview')">🏠 Overview</div>
+  <div class="tab" data-tab="agri" onclick="goTab('agri')">🌾 Agriculture <span class="cnt" id="b-agri">0</span></div>
+  <div class="tab" data-tab="biz" onclick="goTab('biz')">📈 Business <span class="cnt" id="b-biz">0</span></div>
+  <div class="tab" data-tab="pol" onclick="goTab('pol')">🏛️ Politics <span class="cnt" id="b-pol">0</span></div>
+  <div class="tab" data-tab="gen" onclick="goTab('gen')">🌐 General <span class="cnt" id="b-gen">0</span></div>
+  <div class="tab" data-tab="mandi" onclick="goTab('mandi')">🛒 Mandi</div>
+  <div class="tab" data-tab="saved" onclick="goTab('saved')">🔖 Saved <span class="cnt" id="b-saved">0</span></div>
+  <div class="tab" id="srtab" data-tab="sr" style="display:none" onclick="goTab('sr')">🔍 Results <span class="cnt" id="b-sr">0</span></div>
+ </div>
+</div>
+
+<div class="main">
+
+<!-- WELCOME -->
+<div id="welcome">
+ <span class="wflag">🇮🇳</span>
+ <h2>India Daily Briefing</h2>
+ <p>Agriculture · Business · Politics · General · Mandi Prices · Weather — all in one place, updated live every day.</p>
+ <div class="wpills">
+  <div class="wp agri">🌾 Agriculture & MSP</div><div class="wp biz">📈 Markets & Business</div>
+  <div class="wp pol">🏛️ Politics & Policy</div><div class="wp gen">🌐 General News</div><div class="wp mandi">🛒 Mandi Prices</div>
+ </div>
+ <button class="sbtn" onclick="fetchAll(false)">⚡ Get Today's Briefing</button>
+ <p class="ntip">For best results, host free on <a href="https://app.netlify.com/drop" target="_blank">Netlify Drop</a> — just drag &amp; drop this file.<br>Needs internet · Powered by Google News RSS · No API key</p>
+</div>
+
+<!-- LOADING -->
+<div id="loading">
+ <div class="spin"></div>
+ <div class="lcard">
+  <div class="lhd">Fetching today's news</div>
+  <div class="lsub" id="lsub">Fetching all 4 categories in parallel…</div>
+  <div>
+   <div class="lstep" id="ls-agri"><div class="ldot"></div><span class="ltxt">🌾 Agriculture — crops, mandi, MSP, NABARD</span><span class="ltime" id="lt-agri"></span></div>
+   <div class="lstep" id="ls-biz"><div class="ldot"></div><span class="ltxt">📈 Business — markets, RBI, economy</span><span class="ltime" id="lt-biz"></span></div>
+   <div class="lstep" id="ls-pol"><div class="ldot"></div><span class="ltxt">🏛️ Politics — parliament, government</span><span class="ltime" id="lt-pol"></span></div>
+   <div class="lstep" id="ls-gen"><div class="ldot"></div><span class="ltxt">🌐 General — top India stories</span><span class="ltime" id="lt-gen"></span></div>
+   <div class="lstep" id="ls-wx"><div class="ldot"></div><span class="ltxt">🌤️ Weather</span><span class="ltime" id="lt-wx"></span></div>
+  </div>
+ </div>
+</div>
+
+<!-- OVERVIEW -->
+<div id="panel-overview" class="panel">
+ <div class="sbar"><span id="stxt">–</span><span id="utxt" style="font-size:11px;color:var(--text3);">–</span></div>
+ <div class="toprow">
+  <div><div class="ovgrid" id="ovgrid"></div></div>
+  <div id="wxwrap"></div>
+ </div>
+ <div class="shdr"><div class="sdot" style="background:var(--amber);box-shadow:0 0 6px var(--amber)"></div><h2>🔥 Top Stories Across All Categories</h2></div>
+ <div class="ngrid" id="topgrid"></div>
+</div>
+
+<!-- AGRI -->
+<div id="panel-agri" class="panel">
+ <div class="shdr"><div class="sdot" style="background:var(--green)"></div><h2>🌾 Agriculture & Agri Business</h2><span class="scnt" id="c-agri">0</span></div>
+ <div class="ngrid" id="grid-agri"></div>
+</div>
+
+<!-- BIZ -->
+<div id="panel-biz" class="panel">
+ <div class="shdr"><div class="sdot" style="background:var(--blue)"></div><h2>📈 Business & Markets</h2><span class="scnt" id="c-biz">0</span></div>
+ <div class="ngrid" id="grid-biz"></div>
+</div>
+
+<!-- POL -->
+<div id="panel-pol" class="panel">
+ <div class="shdr"><div class="sdot" style="background:var(--red)"></div><h2>🏛️ Politics & Government</h2><span class="scnt" id="c-pol">0</span></div>
+ <div class="ngrid" id="grid-pol"></div>
+</div>
+
+<!-- GEN -->
+<div id="panel-gen" class="panel">
+ <div class="shdr"><div class="sdot" style="background:var(--purple)"></div><h2>🌐 General News</h2><span class="scnt" id="c-gen">0</span></div>
+ <div class="ngrid" id="grid-gen"></div>
+</div>
+
+<!-- MANDI -->
+<div id="panel-mandi" class="panel">
+ <div class="shdr"><div class="sdot" style="background:var(--orange)"></div><h2>🛒 Mandi & Commodity Prices</h2><span class="scnt">Indicative · ₹/Quintal</span></div>
+ <div class="mgrid" id="mgrid"></div>
+ <div class="shdr" style="margin-top:18px;"><div class="sdot" style="background:var(--orange)"></div><h2>📰 Commodity News</h2><span class="scnt" id="c-mandi">0</span></div>
+ <div class="ngrid" id="grid-mandi"></div>
+</div>
+
+<!-- SAVED -->
+<div id="panel-saved" class="panel">
+ <div class="shdr"><div class="sdot" style="background:var(--amber)"></div><h2>🔖 Saved Articles</h2><span class="scnt" id="c-saved">0</span></div>
+ <div class="ngrid" id="grid-saved"></div>
+</div>
+
+<!-- SEARCH RESULTS -->
+<div id="panel-sr" class="panel">
+ <div class="shdr"><div class="sdot" style="background:var(--teal)"></div><h2>🔍 Search Results</h2><span class="scnt" id="c-sr">0</span></div>
+ <div id="srline" style="font-size:13px;color:var(--text2);margin-bottom:14px;"></div>
+ <div class="ngrid" id="grid-sr"></div>
+</div>
+
+</div>
+<div id="toast"></div>
+
+<script>
+const FEEDS={
+  agri:['https://news.google.com/rss/search?q=india+agriculture+farmer+crop+mandi+MSP&hl=en-IN&gl=IN&ceid=IN:en','https://news.google.com/rss/search?q=india+kisan+NABARD+monsoon+irrigation+agritech+FPO&hl=en-IN&gl=IN&ceid=IN:en','https://news.google.com/rss/search?q=india+crop+price+harvest+fertilizer+pest+soil&hl=en-IN&gl=IN&ceid=IN:en'],
+  biz:['https://news.google.com/rss/search?q=india+economy+stock+market+RBI+rupee+inflation&hl=en-IN&gl=IN&ceid=IN:en','https://news.google.com/rss/search?q=india+Sensex+Nifty+startup+GDP+export+IPO&hl=en-IN&gl=IN&ceid=IN:en','https://news.google.com/rss/search?q=india+business+corporate+earnings+sector+trade&hl=en-IN&gl=IN&ceid=IN:en'],
+  pol:['https://news.google.com/rss/search?q=india+politics+government+parliament+BJP+Modi&hl=en-IN&gl=IN&ceid=IN:en','https://news.google.com/rss/search?q=india+minister+scheme+election+state+law+policy&hl=en-IN&gl=IN&ceid=IN:en','https://news.google.com/rss/search?q=india+opposition+congress+supreme+court+verdict&hl=en-IN&gl=IN&ceid=IN:en'],
+  gen:['https://news.google.com/rss/search?q=india+top+news+today&hl=en-IN&gl=IN&ceid=IN:en','https://news.google.com/rss/search?q=india+health+science+sports+education+technology&hl=en-IN&gl=IN&ceid=IN:en','https://news.google.com/rss/search?q=india+international+climate+infrastructure&hl=en-IN&gl=IN&ceid=IN:en'],
+  mandi:['https://news.google.com/rss/search?q=india+mandi+commodity+price+wheat+rice+onion&hl=en-IN&gl=IN&ceid=IN:en','https://news.google.com/rss/search?q=india+MCX+NCDEX+gold+silver+crude+oil+commodity+price&hl=en-IN&gl=IN&ceid=IN:en'],
+};
+const MANDI=[
+  {e:'🌾',n:'Wheat',p:'2250–2400',u:'₹/qtl',c:'+1.2%',up:1},{e:'🍚',n:'Rice',p:'3200–3500',u:'₹/qtl',c:'+0.8%',up:1},
+  {e:'🌽',n:'Maize',p:'1950–2100',u:'₹/qtl',c:'-0.5%',up:0},{e:'🧅',n:'Onion',p:'1800–2200',u:'₹/qtl',c:'+3.4%',up:1},
+  {e:'🥔',n:'Potato',p:'900–1100',u:'₹/qtl',c:'-1.1%',up:0},{e:'🍅',n:'Tomato',p:'1500–2400',u:'₹/qtl',c:'+5.2%',up:1},
+  {e:'💛',n:'Tur Dal',p:'6800–7200',u:'₹/qtl',c:'+0.3%',up:1},{e:'🟢',n:'Moong',p:'7200–7600',u:'₹/qtl',c:'+1.8%',up:1},
+  {e:'🌻',n:'Soybean',p:'4200–4600',u:'₹/qtl',c:'-0.7%',up:0},{e:'🥜',n:'Groundnut',p:'5800–6200',u:'₹/qtl',c:'+2.1%',up:1},
+  {e:'🌿',n:'Cotton',p:'6500–7000',u:'₹/qtl',c:'+0.9%',up:1},{e:'🟡',n:'Mustard',p:'5200–5600',u:'₹/qtl',c:'-0.4%',up:0},
+];
+const PROXIES=[
+  u=>({url:`https://api.allorigins.win/raw?url=${encodeURIComponent(u)}`,j:0}),
+  u=>({url:`https://corsproxy.io/?${encodeURIComponent(u)}`,j:0}),
+  u=>({url:`https://api.allorigins.win/get?url=${encodeURIComponent(u)}`,j:1}),
+  u=>({url:`https://thingproxy.freeboard.io/fetch/${encodeURIComponent(u)}`,j:0}),
+];
+const HKW=['crisis','flood','drought','record','ban','strike','collapse','emergency','attack','death','explosion','historic','election','budget','scam'];
+const MKW=['launch','policy','scheme','rise','fall','growth','report','minister','government','price','market','rbi','award'];
+const WI={0:'☀️',1:'🌤️',2:'⛅',3:'☁️',45:'🌫️',51:'🌦️',61:'🌧️',63:'🌧️',80:'🌦️',95:'⛈️'};
+const WD={0:'Clear sky',1:'Mainly clear',2:'Partly cloudy',3:'Overcast',45:'Foggy',51:'Drizzle',61:'Light rain',63:'Moderate rain',80:'Showers',95:'Thunderstorm'};
+
+let data={agri:[],biz:[],pol:[],gen:[],mandi:[]};
+let bm=JSON.parse(localStorage.getItem('idb_bm')||'[]');
+let activeTab='overview',loaded=false,isDark=true,arTimer=null,arNext=0,srQ='';
+let cstore={},ccnt=0;
+
+// Init date
+document.getElementById('date-el').textContent=new Date().toLocaleDateString('en-IN',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
+
+// Utils
+function getImp(t){const s=(t||'').toLowerCase();if(HKW.some(k=>s.includes(k)))return'H';if(MKW.some(k=>s.includes(k)))return'M';return'L';}
+function impL(c){return{H:'High',M:'Medium',L:'Low'}[c]||'';}
+function strip(h){const d=document.createElement('div');d.innerHTML=h||'';return d.textContent||'';}
+function trunc(s,n){const t=strip(s);return t.length>n?t.slice(0,n)+'…':t;}
+function ago(ds){try{const m=(Date.now()-new Date(ds))/60000;if(m<1)return'just now';if(m<60)return~~m+'m ago';if(m<1440)return~~(m/60)+'h ago';return~~(m/1440)+'d ago';}catch{return'';}}
+function host(u){try{return new URL(u).hostname.replace('www.','').replace('feeds.','');}catch{return'News';}}
+function dedup(a){const s=new Set();return a.filter(x=>{const k=x.headline.slice(0,55).toLowerCase();if(s.has(k))return false;s.add(k);return true;});}
+function toast(m,d=2400){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),d);}
+function hl(t,q){if(!q)return t;return t.replace(new RegExp(`(${q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')})`, 'gi'),'<mark style="background:rgba(246,166,33,.2);color:var(--amber);border-radius:2px;padding:0 2px;">$1</mark>');}
+
+// Bookmarks
+function isBm(link){return bm.some(b=>b.link===link);}
+function toggleBm(item){
+  if(isBm(item.link)){bm=bm.filter(b=>b.link!==item.link);toast('🗑 Removed from saved');}
+  else{bm.unshift({...item,savedAt:Date.now()});toast('🔖 Saved!');}
+  localStorage.setItem('idb_bm',JSON.stringify(bm));
+  updSaved();
+  if(activeTab==='saved')renderSaved();
+  document.querySelectorAll(`[data-bl="${item.link}"]`).forEach(b=>{b.classList.toggle('bm',isBm(item.link));b.textContent=isBm(item.link)?'🔖':'🏷️';});
+}
+function updSaved(){const n=bm.length;['b-saved','svhdr'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=n;});const cs=document.getElementById('c-saved');if(cs)cs.textContent=n+' saved';}
+
+// WA Share
+function wa(headline,link){window.open('https://wa.me/?text='+encodeURIComponent(`📰 *${headline}*\n\n${link}\n\n_via India Daily Briefing_`),'_blank');}
+
+// Card
+function card(item,delay,catLabel,q){
+  const imp=item.importance||'L';
+  const b=isBm(item.link);
+  const id='c'+(ccnt++);
+  cstore[id]=item;
+  const h2=q?hl(item.headline,q):item.headline;
+  const sm=q?hl(item.summary,q):item.summary;
+  return`<div class="nc" style="animation-delay:${delay}s">
+    <div class="nctop2">
+      ${catLabel?`<div class="nccat">${catLabel}</div>`:`<div class="nccat">${item.source||''}</div>`}
+      <div class="ncacts">
+        <button class="nab ${b?'bm':''}" data-bl="${item.link}" onclick='toggleBm(cstore["${id}"])' title="${b?'Remove':'Save'}">${b?'🔖':'🏷️'}</button>
+      </div>
+    </div>
+    <div class="nchead"><h4>${h2}</h4><span class="imp ${imp}">${impL(imp)}</span></div>
+    <div class="ncsum">${sm}</div>
+    <div class="ncft">
+      <div class="ncmeta"><div class="ncsrc">${item.source}</div><div class="nct">${item.pubDate?ago(item.pubDate):''}</div></div>
+      <div class="ncbtns">
+        <button class="wabtn" onclick="wa('${item.headline.replace(/'/g,"\\'")}','${item.link}')" title="Share on WhatsApp">📲</button>
+        ${item.link&&item.link!=='#'?`<a href="${item.link}" target="_blank" rel="noopener" class="rbtn">Read →</a>`:''}
+      </div>
+    </div>
+  </div>`;
+}
+
+function renderGrid(gid,items,cid,bid,q){
+  cstore={};ccnt=0;
+  const el=document.getElementById(gid);if(!el)return;
+  el.innerHTML=items.length?items.map((it,i)=>card(it,i*.045,null,q)).join(''):'<div class="empty"><div class="ei">📭</div><p>No stories found.</p></div>';
+  if(cid)document.getElementById(cid).textContent=items.length+' stories';
+  if(bid)document.getElementById(bid).textContent=items.length;
+}
+
+// Search
+function onSearch(val){
+  srQ=val.trim().toLowerCase();
+  document.getElementById('sclr').style.display=val?'block':'none';
+  if(!loaded)return;
+  if(!srQ){document.getElementById('srtab').style.display='none';if(activeTab==='sr')goTab('overview');return;}
+  const all=[...data.agri,...data.biz,...data.pol,...data.gen,...data.mandi];
+  const res=all.filter(it=>it.headline.toLowerCase().includes(srQ)||it.summary.toLowerCase().includes(srQ)||(it.source||'').toLowerCase().includes(srQ));
+  cstore={};ccnt=0;
+  document.getElementById('grid-sr').innerHTML=res.length?res.map((it,i)=>card(it,i*.04,null,srQ)).join(''):`<div class="empty"><div class="ei">🔍</div><p>No results for "<b>${val}</b>"</p></div>`;
+  document.getElementById('c-sr').textContent=res.length+' found';
+  document.getElementById('b-sr').textContent=res.length;
+  document.getElementById('srline').innerHTML=`Showing <b>${res.length}</b> results for "<b>${val}</b>"`;
+  document.getElementById('srtab').style.display='flex';
+  goTab('sr');
+}
+function clearSearch(){document.getElementById('sinput').value='';onSearch('');document.getElementById('srtab').style.display='none';if(activeTab==='sr')goTab('overview');}
+
+// Saved
+function renderSaved(){
+  cstore={};ccnt=0;
+  const el=document.getElementById('grid-saved');
+  el.innerHTML=bm.length?bm.map((it,i)=>card(it,i*.04)).join(''):'<div class="empty"><div class="ei">🔖</div><p>No saved articles yet.<br>Tap 🏷️ on any story to save it.</p></div>';
+  updSaved();
+}
+
+// Mandi
+function renderMandi(){
+  document.getElementById('mgrid').innerHTML=MANDI.map(m=>`<div class="mc"><div class="mcrop">${m.e}</div><div class="mname">${m.n}</div><div class="mprice">${m.p}</div><div class="munit">${m.u}</div><div class="mchg ${m.up?'up':'dn'}">${m.c}</div></div>`).join('');
+}
+
+// Weather
+async function fetchWx(){
+  setStep('wx','active');
+  try{
+    let lat=19.076,lon=72.877,city='Mumbai';
+    try{if(navigator.geolocation)await new Promise((res,rej)=>{navigator.geolocation.getCurrentPosition(p=>{lat=p.coords.latitude;lon=p.coords.longitude;city='Your Location';res();},rej,{timeout:4000});});}catch{}
+    const r=await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,weathercode,windspeed_10m&timezone=Asia%2FKolkata`,{cache:'no-store'});
+    const d=await r.json();const c=d.current;
+    const ico=WI[c.weathercode]||'🌤️';const desc=WD[c.weathercode]||'';
+    document.getElementById('wxwrap').innerHTML=`<div class="wcard"><div class="wtop"><div><div class="wcity">📍 ${city}</div><div class="wdesc">${desc}</div></div><div class="wico">${ico}</div></div><div class="wtemp">${Math.round(c.temperature_2m)}°C</div><div class="wbot"><div class="wstat">💧 <b>${c.relative_humidity_2m}%</b></div><div class="wstat">💨 <b>${Math.round(c.windspeed_10m)} km/h</b></div></div></div>`;
+    setStep('wx','done');
+  }catch{setStep('wx','fail');document.getElementById('wxwrap').innerHTML=`<div class="wcard" style="align-items:center;justify-content:center;text-align:center;"><div style="font-size:26px;margin-bottom:6px">🌤️</div><div style="font-size:11px;color:rgba(255,255,255,.4)">Weather unavailable</div></div>`;}
+}
+
+// Ticker
+function renderTicker(items){document.getElementById('tscroll').innerHTML=items.map(m=>`<div class="titem"><span class="tn">${m.n}</span><span class="tv ${m.cls}">${m.v}</span>${m.c?`<span class="tc ${m.cls}">${m.c}</span>`:''}</div>`).join('');}
+renderTicker([{n:'Sensex',v:'—',c:'',cls:'neu'},{n:'Nifty',v:'—',c:'',cls:'neu'},{n:'Gold',v:'—',c:'',cls:'neu'},{n:'USD/INR',v:'—',c:'',cls:'neu'}]);
+
+// RSS engine
+function parseRSS(xml){try{const doc=new DOMParser().parseFromString(xml,'text/xml');if(doc.querySelector('parsererror'))return[];return[...doc.querySelectorAll('item')].map(el=>{const title=strip(el.querySelector('title')?.textContent||'');const link=el.querySelector('link')?.textContent||el.querySelector('guid')?.textContent||'#';const desc=strip(el.querySelector('description')?.textContent||'');const pubDate=el.querySelector('pubDate')?.textContent||'';const source=el.querySelector('source')?.textContent||host(link);return{headline:trunc(title,120),summary:trunc(desc,220)||'Tap Read to view.',source,link,pubDate,importance:getImp(title+' '+desc)};}).filter(it=>it.headline.length>5);}catch{return[];}}
+function ftch(url,ms=9500){return Promise.race([fetch(url,{cache:'no-store'}),new Promise((_,r)=>setTimeout(()=>r(new Error('timeout')),ms))]);}
+async function fetchFeed(rssUrl){for(const mp of PROXIES){try{const {url,j}=mp(rssUrl);const res=await ftch(url,10000);if(!res.ok)continue;const text=j?(await res.json()).contents||'':await res.text();const items=parseRSS(text);if(items.length>0)return items;}catch{continue;}}return[];}
+async function fetchCat(key){const t0=Date.now();const res=await Promise.all(FEEDS[key].map(u=>fetchFeed(u)));const items=dedup(res.flat()).slice(0,15);return{items,ms:((Date.now()-t0)/1000).toFixed(1)+'s'};}
+
+// Step UI
+function setStep(id,st,t){const el=document.getElementById('ls-'+id);if(!el)return;el.className='lstep '+st;if(t)document.getElementById('lt-'+id).textContent=t;}
+
+// Tab
+function goTab(tab){activeTab=tab;document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.tab===tab));document.querySelectorAll('.panel').forEach(p=>p.classList.remove('show'));const p=document.getElementById('panel-'+tab);if(p)p.classList.add('show');if(tab==='saved')renderSaved();}
+
+// Auto-refresh
+const AR=3*60*60*1000;
+function startAR(){if(arTimer)clearInterval(arTimer);arNext=Date.now()+AR;const pill=document.getElementById('arpill');pill.style.display='flex';const tick=()=>{const rem=Math.max(0,arNext-Date.now());const h=~~(rem/3600000);const m=~~((rem%3600000)/60000);document.getElementById('arcd').textContent=`${h}h ${m}m`;if(rem<=0){fetchAll(true);arNext=Date.now()+AR;}};tick();arTimer=setInterval(tick,60000);}
+
+// Theme
+function toggleTheme(){isDark=!isDark;document.getElementById('thbtn').textContent=isDark?'☀️':'🌙';const v=isDark?{bg:'#0B0F1A',bg2:'#111827',card:'#15202E',card2:'#1E2D40',card3:'#243347',bdr:'#1E2D40',bdr2:'#263548',text:'#F1F5F9',text2:'#94A3B8',text3:'#4B6080',text4:'#2E4260'}:{bg:'#F8F9FA',bg2:'#FFFFFF',card:'#FFFFFF',card2:'#F1F5F9',card3:'#E2E8F0',bdr:'#E2E8F0',bdr2:'#CBD5E1',text:'#0F172A',text2:'#475569',text3:'#94A3B8',text4:'#CBD5E1'};const names=['--bg','--bg2','--card','--card2','--card3','--border','--border2','--text','--text2','--text3','--text4'];const vals=Object.values(v);names.forEach((n,i)=>document.documentElement.style.setProperty(n,vals[i]));}
+
+// Overview
+function renderOverview(){
+  const cats=[{key:'agri',cls:'agri',icon:'🌾',lbl:'Agriculture',tab:'agri'},{key:'biz',cls:'biz',icon:'📈',lbl:'Business',tab:'biz'},{key:'pol',cls:'pol',icon:'🏛️',lbl:'Politics',tab:'pol'},{key:'gen',cls:'gen',icon:'🌐',lbl:'General',tab:'gen'}];
+  document.getElementById('ovgrid').innerHTML=cats.map(c=>{const a=data[c.key]||[];return`<div class="ovc ${c.cls}" onclick="goTab('${c.tab}')"><div class="ovh"><div class="ovico ${c.cls}">${c.icon}</div><h3>${c.lbl}</h3></div><div class="ovhl">${a[0]?a[0].headline:'No stories'}</div><div class="ovft"><span class="ovcnt">${a.length} stories</span><span style="font-size:11px;color:var(--text4)">→</span></div></div>`;}).join('');
+  const ord={H:0,M:1,L:2};const top=[];
+  cats.forEach(c=>{[...(data[c.key]||[])].sort((a,b)=>(ord[a.importance]||2)-(ord[b.importance]||2)).slice(0,2).forEach(it=>top.push({...it,_cat:c.icon+' '+c.lbl}));});
+  cstore={};ccnt=0;
+  document.getElementById('topgrid').innerHTML=top.length?top.map((it,i)=>{const imp=it.importance||'L';const b=isBm(it.link);const id='c'+(ccnt++);cstore[id]=it;return`<div class="nc" style="animation-delay:${i*.045}s"><div class="nctop2"><div class="nccat">${it._cat}</div><div class="ncacts"><button class="nab ${b?'bm':''}" data-bl="${it.link}" onclick='toggleBm(cstore["${id}"])'>${b?'🔖':'🏷️'}</button></div></div><div class="nchead"><h4>${it.headline}</h4><span class="imp ${imp}">${impL(imp)}</span></div><div class="ncsum">${it.summary}</div><div class="ncft"><div class="ncmeta"><div class="ncsrc">${it.source}</div><div class="nct">${it.pubDate?ago(it.pubDate):''}</div></div><div class="ncbtns"><button class="wabtn" onclick="wa('${it.headline.replace(/'/g,"\\'")}','${it.link}')">📲</button>${it.link&&it.link!=='#'?`<a href="${it.link}" target="_blank" rel="noopener" class="rbtn">Read →</a>`:''}</div></div></div>`;}).join(''):'<div class="empty"><div class="ei">📰</div><p>Loading…</p></div>';
+}
+
+// Main fetch — all parallel
+async function fetchAll(silent){
+  const btn=document.getElementById('rbtn');btn.disabled=true;btn.textContent='⏳';
+  if(!silent){document.getElementById('welcome').style.display='none';document.querySelectorAll('.panel').forEach(p=>p.classList.remove('show'));document.getElementById('loading').style.display='flex';}
+  ['agri','biz','pol','gen'].forEach(id=>setStep(id,'active'));setStep('wx','active');
+
+  const [a,b,p,g,m]=await Promise.all([fetchCat('agri'),fetchCat('biz'),fetchCat('pol'),fetchCat('gen'),fetchCat('mandi')]);
+  data.agri=a.items;setStep('agri',a.items.length?'done':'fail',a.ms);
+  data.biz=b.items;setStep('biz',b.items.length?'done':'fail',b.ms);
+  data.pol=p.items;setStep('pol',p.items.length?'done':'fail',p.ms);
+  data.gen=g.items;setStep('gen',g.items.length?'done':'fail',g.ms);
+  data.mandi=m.items;
+
+  fetchWx();
+  // Ticker from biz headlines
+  if(data.biz.length>0){renderTicker(data.biz.slice(0,4).map((it,i)=>({n:['📈','💰','📊','🏦'][i],v:trunc(it.headline,45),c:'',cls:'neu'})));}
+
+  if(!silent){document.getElementById('loading').style.display='none';loaded=true;document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.tab==='overview'));document.getElementById('panel-overview').classList.add('show');activeTab='overview';}
+
+  const total=data.agri.length+data.biz.length+data.pol.length+data.gen.length;
+  renderOverview();
+  renderGrid('grid-agri',data.agri,'c-agri','b-agri');
+  renderGrid('grid-biz',data.biz,'c-biz','b-biz');
+  renderGrid('grid-pol',data.pol,'c-pol','b-pol');
+  renderGrid('grid-gen',data.gen,'c-gen','b-gen');
+  renderGrid('grid-mandi',data.mandi,'c-mandi',null);
+  renderMandi();updSaved();
+
+  const now2=new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});
+  document.getElementById('stxt').innerHTML=total>0?`<b>${total} stories</b> loaded across 4 categories`:`<span style="color:var(--red)">⚠️ Could not fetch — host on <a href="https://app.netlify.com/drop" target="_blank" style="color:var(--blue)">Netlify Drop</a> for best results</span>`;
+  document.getElementById('utxt').textContent=total>0?'🕐 Updated '+now2:'';
+
+  if(total>0){localStorage.setItem('idb_last',new Date().toISOString());localStorage.setItem('idb_cache',JSON.stringify(data));if(silent)toast('🔄 News refreshed!');startAR();}
+  btn.disabled=false;btn.innerHTML='⚡ Refresh';
+}
+
+// Init — instant cache load
+(function init(){
+  updSaved();renderMandi();
+  const cache=localStorage.getItem('idb_cache'),last=localStorage.getItem('idb_last');
+  if(cache&&last){try{
+    data=JSON.parse(cache);loaded=true;
+    document.getElementById('welcome').style.display='none';
+    renderOverview();
+    renderGrid('grid-agri',data.agri,'c-agri','b-agri');
+    renderGrid('grid-biz',data.biz,'c-biz','b-biz');
+    renderGrid('grid-pol',data.pol,'c-pol','b-pol');
+    renderGrid('grid-gen',data.gen,'c-gen','b-gen');
+    renderGrid('grid-mandi',data.mandi,'c-mandi',null);
+    updSaved();
+    document.getElementById('panel-overview').classList.add('show');
+    document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.tab==='overview'));
+    activeTab='overview';
+    const t=new Date(last).toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});
+    const total=data.agri.length+data.biz.length+data.pol.length+data.gen.length;
+    document.getElementById('stxt').innerHTML=`<b>${total} stories</b> (cached)`;
+    document.getElementById('utxt').textContent='Last fetch: '+t;
+    if((Date.now()-new Date(last))/3600000>1)setTimeout(()=>fetchAll(true),1200);
+    else startAR();
+    fetchWx();
+    if(data.biz.length)renderTicker(data.biz.slice(0,4).map((it,i)=>({n:['📈','💰','📊','🏦'][i],v:trunc(it.headline,45),c:'',cls:'neu'})));
+  }catch{setTimeout(()=>fetchAll(false),300);}}
+})();
+</script>
+</body>
+</html>
