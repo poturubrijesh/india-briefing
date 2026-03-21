@@ -297,7 +297,7 @@ header{background:linear-gradient(180deg,rgba(11,15,26,.98),rgba(17,24,39,.96));
   <div><div class="ovgrid" id="ovgrid"></div></div>
   <div id="wxwrap"></div>
  </div>
- <div class="shdr"><div class="sdot" style="background:var(--amber);box-shadow:0 0 6px var(--amber)"></div><h2>🔥 Top Stories Across All Categories</h2></div>
+ <div class="shdr"><div class="sdot" style="background:var(--amber);box-shadow:0 0 6px var(--amber)"></div><h2>🔥 Top Stories Across All Categories</h2><button id="topbtn" onclick="toggleTop()" style="margin-left:auto;flex-shrink:0;background:var(--amber-d);border:1px solid rgba(246,166,33,.3);color:var(--amber);font-size:11px;font-weight:700;padding:5px 12px;border-radius:20px;cursor:pointer;font-family:var(--ff);transition:all .2s;">🔥 Top Stories</button></div>
  <div class="ngrid" id="topgrid"></div>
 </div>
 
@@ -380,6 +380,21 @@ let data={agri:[],biz:[],pol:[],gen:[],mandi:[]};
 let bm=JSON.parse(localStorage.getItem('idb_bm')||'[]');
 let activeTab='overview',loaded=false,isDark=true,arTimer=null,arNext=0,srQ='';
 let cstore={},ccnt=0;
+let topOnly=false; // Top Stories toggle — never modifies data arrays
+
+// Welcome back
+(function checkWelcome(){
+  const visited=localStorage.getItem('idb_visited');
+  if(visited){
+    const wb=document.createElement('div');
+    wb.id='wb-msg';
+    wb.style.cssText='position:fixed;top:70px;left:50%;transform:translateX(-50%);background:var(--card2);border:1px solid rgba(246,166,33,.3);color:var(--amber);font-size:13px;font-weight:600;padding:8px 20px;border-radius:20px;z-index:400;box-shadow:0 4px 20px rgba(0,0,0,.4);pointer-events:none;animation:fup .4s ease;';
+    wb.textContent='👋 Welcome back!';
+    document.body.appendChild(wb);
+    setTimeout(()=>wb.remove(),2800);
+  }
+  localStorage.setItem('idb_visited','1');
+})();
 
 // Init date
 document.getElementById('date-el').textContent=new Date().toLocaleDateString('en-IN',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
@@ -441,12 +456,27 @@ function card(item,delay,catLabel,q){
   </div>`;
 }
 
+// Top Stories toggle — never slices data; only controls render count
+function toggleTop(){
+  topOnly=!topOnly;
+  const btn=document.getElementById('topbtn');
+  if(btn){btn.textContent=topOnly?'🔄 Show All':'🔥 Top Stories';btn.style.background=topOnly?'rgba(246,166,33,.25)':'var(--amber-d)';}
+  renderOverview();
+  renderGrid('grid-agri',data.agri,'c-agri','b-agri');
+  renderGrid('grid-biz', data.biz, 'c-biz', 'b-biz');
+  renderGrid('grid-pol', data.pol, 'c-pol', 'b-pol');
+  renderGrid('grid-gen', data.gen, 'c-gen', 'b-gen');
+  renderGrid('grid-mandi',data.mandi,'c-mandi',null);
+}
+
 function renderGrid(gid,items,cid,bid,q){
   cstore={};ccnt=0;
   const el=document.getElementById(gid);if(!el)return;
-  el.innerHTML=items.length?items.map((it,i)=>card(it,i*.045,null,q)).join(''):'<div class="empty"><div class="ei">📭</div><p>No stories found.</p></div>';
-  if(cid)document.getElementById(cid).textContent=items.length+' stories';
-  if(bid)document.getElementById(bid).textContent=items.length;
+  // Apply topOnly filter during render only — original arrays never touched
+  const view=topOnly?items.slice(0,5):items;
+  el.innerHTML=view.length?view.map((it,i)=>card(it,i*.045,null,q)).join(''):'<div class="empty"><div class="ei">📭</div><p>No stories found.</p></div>';
+  if(cid)document.getElementById(cid).textContent=(topOnly?`Top 5 of ${items.length}`:items.length+' stories');
+  if(bid)document.getElementById(bid).textContent=topOnly?'5':items.length;
 }
 
 // Search
@@ -563,9 +593,11 @@ function renderOverview(){
   const cats=[{key:'agri',cls:'agri',icon:'🌾',lbl:'Agriculture',tab:'agri'},{key:'biz',cls:'biz',icon:'📈',lbl:'Business',tab:'biz'},{key:'pol',cls:'pol',icon:'🏛️',lbl:'Politics',tab:'pol'},{key:'gen',cls:'gen',icon:'🌐',lbl:'General',tab:'gen'}];
   document.getElementById('ovgrid').innerHTML=cats.map(c=>{const a=data[c.key]||[];return`<div class="ovc ${c.cls}" onclick="goTab('${c.tab}')"><div class="ovh"><div class="ovico ${c.cls}">${c.icon}</div><h3>${c.lbl}</h3></div><div class="ovhl">${a[0]?a[0].headline:'No stories'}</div><div class="ovft"><span class="ovcnt">${a.length} stories</span><span style="font-size:11px;color:var(--text4)">→</span></div></div>`;}).join('');
   const ord={H:0,M:1,L:2};const top=[];
-  cats.forEach(c=>{[...(data[c.key]||[])].sort((a,b)=>(ord[a.importance]||2)-(ord[b.importance]||2)).slice(0,2).forEach(it=>top.push({...it,_cat:c.icon+' '+c.lbl}));});
+  cats.forEach(c=>{[...(data[c.key]||[])].sort((a,b)=>(ord[a.importance]||2)-(ord[b.importance]||2)).slice(0,topOnly?2:2).forEach(it=>top.push({...it,_cat:c.icon+' '+c.lbl}));});
+  // When topOnly, show top 5 total across all cats; otherwise show 2 per cat (8 total)
+  const topView=topOnly?top.slice(0,5):top;
   cstore={};ccnt=0;
-  document.getElementById('topgrid').innerHTML=top.length?top.map((it,i)=>{const imp=it.importance||'L';const b=isBm(it.link);const id='c'+(ccnt++);cstore[id]=it;return`<div class="nc" style="animation-delay:${i*.045}s"><div class="nctop2"><div class="nccat">${it._cat}</div><div class="ncacts"><button class="nab ${b?'bm':''}" data-bl="${it.link}" onclick='toggleBm(cstore["${id}"])'>${b?'🔖':'🏷️'}</button></div></div><div class="nchead"><h4>${it.headline}</h4><span class="imp ${imp}">${impL(imp)}</span></div><div class="ncsum">${it.summary}</div><div class="ncft"><div class="ncmeta"><div class="ncsrc">${it.source}</div><div class="nct">${it.pubDate?ago(it.pubDate):''}</div></div><div class="ncbtns"><button class="wabtn" onclick="wa('${it.headline.replace(/'/g,"\\'")}','${it.link}')">📲</button>${it.link&&it.link!=='#'?`<a href="${it.link}" target="_blank" rel="noopener" class="rbtn">Read →</a>`:''}</div></div></div>`;}).join(''):'<div class="empty"><div class="ei">📰</div><p>Loading…</p></div>';
+  document.getElementById('topgrid').innerHTML=topView.length?topView.map((it,i)=>{const imp=it.importance||'L';const b=isBm(it.link);const id='c'+(ccnt++);cstore[id]=it;return`<div class="nc" style="animation-delay:${i*.045}s"><div class="nctop2"><div class="nccat">${it._cat}</div><div class="ncacts"><button class="nab ${b?'bm':''}" data-bl="${it.link}" onclick='toggleBm(cstore["${id}"])'>${b?'🔖':'🏷️'}</button></div></div><div class="nchead"><h4>${it.headline}</h4><span class="imp ${imp}">${impL(imp)}</span></div><div class="ncsum">${it.summary}</div><div class="ncft"><div class="ncmeta"><div class="ncsrc">${it.source}</div><div class="nct">${it.pubDate?ago(it.pubDate):''}</div></div><div class="ncbtns"><button class="wabtn" onclick="wa('${it.headline.replace(/'/g,"\\'")}','${it.link}')">📲</button>${it.link&&it.link!=='#'?`<a href="${it.link}" target="_blank" rel="noopener" class="rbtn">Read →</a>`:''}</div></div></div>`;}).join(''):'<div class="empty"><div class="ei">📰</div><p>Loading…</p></div>';
 }
 
 // Main fetch — all parallel
