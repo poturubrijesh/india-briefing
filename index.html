@@ -41,6 +41,7 @@ header{background:linear-gradient(180deg,rgba(11,15,26,.98),rgba(17,24,39,.96));
 .srch .sc{position:absolute;right:8px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--text3);cursor:pointer;font-size:13px;display:none;}
 .hdr-r{display:flex;align-items:center;gap:7px;margin-left:auto;}
 #date-el{font-size:11px;color:var(--text3);white-space:nowrap;}
+#last-updated{font-size:10px;color:var(--text3);white-space:nowrap;background:var(--card2);border:1px solid var(--border2);padding:3px 9px;border-radius:20px;display:none;}
 .ibtn{background:var(--card2);border:1px solid var(--border2);color:var(--text2);padding:7px 10px;border-radius:7px;cursor:pointer;font-size:14px;transition:all .2s;display:flex;align-items:center;gap:4px;font-family:var(--ff);}
 .ibtn:hover{border-color:var(--amber);color:var(--amber);}
 .ibtn .bl{font-size:11.5px;font-weight:700;}
@@ -164,6 +165,8 @@ header{background:linear-gradient(180deg,rgba(11,15,26,.98),rgba(17,24,39,.96));
 /* NEWS CARD */
 .nc{background:var(--card);border:1px solid var(--border2);border-radius:13px;padding:15px;transition:all .22s;animation:cin .35s ease both;display:flex;flex-direction:column;}
 .nc:hover{border-color:rgba(246,166,33,.2);box-shadow:0 6px 28px rgba(0,0,0,.3);transform:translateY(-2px);}
+.nc.clickable{cursor:pointer;}
+.new-badge{display:inline-flex;align-items:center;gap:3px;font-size:8.5px;font-weight:800;color:#10B981;background:rgba(16,185,129,.12);border:1px solid rgba(16,185,129,.25);padding:2px 6px;border-radius:20px;text-transform:uppercase;letter-spacing:.5px;margin-left:4px;vertical-align:middle;flex-shrink:0;}
 @keyframes cin{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
 .nctop2{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
 .nccat{font-size:9px;color:var(--text4);font-weight:700;text-transform:uppercase;letter-spacing:1.2px;}
@@ -226,6 +229,7 @@ header{background:linear-gradient(180deg,rgba(11,15,26,.98),rgba(17,24,39,.96));
   </div>
   <div class="hdr-r">
    <span id="date-el"></span>
+   <span id="last-updated"></span>
    <div class="ar-pill" id="arpill">🔄 <span id="arcd"></span> <select id="arsel" onchange="AR=+this.value;startAR();" style="background:none;border:none;color:var(--green);font-size:9px;cursor:pointer;font-family:var(--ff);outline:none;margin-left:2px;">
      <option value="120000" selected>2m</option>
      <option value="300000">5m</option>
@@ -408,6 +412,7 @@ function updSaved(){const n=bm.length;['b-saved','svhdr'].forEach(id=>{const el=
 function wa(headline,link){window.open('https://wa.me/?text='+encodeURIComponent(`📰 *${headline}*\n\n${link}\n\n_via India Daily Briefing_`),'_blank');}
 
 // Card
+function isNew(pubDate){if(!pubDate)return false;return(Date.now()-new Date(pubDate))<2*60*60*1000;}
 function card(item,delay,catLabel,q){
   const imp=item.importance||'L';
   const b=isBm(item.link);
@@ -415,20 +420,22 @@ function card(item,delay,catLabel,q){
   cstore[id]=item;
   const h2=q?hl(item.headline,q):item.headline;
   const sm=q?hl(item.summary,q):item.summary;
-  return`<div class="nc" style="animation-delay:${delay}s">
+  const newBadge=isNew(item.pubDate)?'<span class="new-badge">🟢 NEW</span>':'';
+  const clickable=item.link&&item.link!=='#';
+  return`<div class="nc${clickable?' clickable':''}" style="animation-delay:${delay}s"${clickable?` onclick="if(!event.target.closest('button,a'))window.open('${item.link}','_blank')"`:''}> 
     <div class="nctop2">
       ${catLabel?`<div class="nccat">${catLabel}</div>`:`<div class="nccat">${item.source||''}</div>`}
       <div class="ncacts">
-        <button class="nab ${b?'bm':''}" data-bl="${item.link}" onclick='toggleBm(cstore["${id}"])' title="${b?'Remove':'Save'}">${b?'🔖':'🏷️'}</button>
+        <button class="nab ${b?'bm':''}" data-bl="${item.link}" onclick='event.stopPropagation();toggleBm(cstore["${id}"])' title="${b?'Remove':'Save'}">${b?'🔖':'🏷️'}</button>
       </div>
     </div>
-    <div class="nchead"><h4>${h2}</h4><span class="imp ${imp}">${impL(imp)}</span></div>
+    <div class="nchead"><h4>${h2}${newBadge}</h4><span class="imp ${imp}">${impL(imp)}</span></div>
     <div class="ncsum">${sm}</div>
     <div class="ncft">
       <div class="ncmeta"><div class="ncsrc">${item.source}</div><div class="nct">${item.pubDate?ago(item.pubDate):''}</div></div>
       <div class="ncbtns">
-        <button class="wabtn" onclick="wa('${item.headline.replace(/'/g,"\\'")}','${item.link}')" title="Share on WhatsApp">📲</button>
-        ${item.link&&item.link!=='#'?`<a href="${item.link}" target="_blank" rel="noopener" class="rbtn">Read →</a>`:''}
+        <button class="wabtn" onclick="event.stopPropagation();wa('${item.headline.replace(/'/g,"\\'")}','${item.link}')" title="Share on WhatsApp">📲</button>
+        ${clickable?`<a href="${item.link}" target="_blank" rel="noopener" class="rbtn" onclick="event.stopPropagation()">Read →</a>`:''}
       </div>
     </div>
   </div>`;
@@ -519,7 +526,7 @@ async function fetchCat(key){
 function setStep(id,st,t){const el=document.getElementById('ls-'+id);if(!el)return;el.className='lstep '+st;if(t)document.getElementById('lt-'+id).textContent=t;}
 
 // Tab
-function goTab(tab){activeTab=tab;document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.tab===tab));document.querySelectorAll('.panel').forEach(p=>p.classList.remove('show'));const p=document.getElementById('panel-'+tab);if(p)p.classList.add('show');if(tab==='saved')renderSaved();}
+function goTab(tab){activeTab=tab;document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.tab===tab));document.querySelectorAll('.panel').forEach(p=>p.classList.remove('show'));const p=document.getElementById('panel-'+tab);if(p)p.classList.add('show');if(tab==='saved')renderSaved();window.scrollTo({top:0,behavior:'smooth'});}
 
 // Auto-refresh — configurable
 const AR_OPTIONS={900000:'15 min',1800000:'30 min',3600000:'1 hour',10800000:'3 hours'};
@@ -591,6 +598,8 @@ async function fetchAll(silent){
   renderMandi();updSaved();
 
   const now2=new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});
+  const luEl=document.getElementById('last-updated');
+  if(luEl){luEl.textContent='🕐 '+now2;luEl.style.display='inline-flex';}
   document.getElementById('stxt').innerHTML=total>0
     ?`<b>${total} stories</b> loaded &nbsp;·&nbsp; <span style="color:var(--teal)">🕐 ${freshTotal} from last 6h</span> &nbsp;·&nbsp; <span style="color:var(--text3);font-size:10px;">Latest first · Duplicates removed</span>`
     :`<span style="color:var(--red)">⚠️ Could not fetch — host on <a href="https://app.netlify.com/drop" target="_blank" style="color:var(--blue)">Netlify Drop</a> for best results</span>`;
@@ -618,6 +627,8 @@ async function fetchAll(silent){
     document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.tab==='overview'));
     activeTab='overview';
     const t=new Date(last).toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});
+    const luEl=document.getElementById('last-updated');
+    if(luEl){luEl.textContent='🕐 '+t;luEl.style.display='inline-flex';}
     const total=data.agri.length+data.biz.length+data.pol.length+data.gen.length;
     document.getElementById('stxt').innerHTML=`<b>${total} stories</b> (cached)`;
     document.getElementById('utxt').textContent='Last fetch: '+t;
@@ -626,6 +637,10 @@ async function fetchAll(silent){
     fetchWx();
     if(data.biz.length)renderTicker(data.biz.slice(0,4).map((it,i)=>({n:['📈','💰','📊','🏦'][i],v:trunc(it.headline,45),c:'',cls:'neu'})));
   }catch{setTimeout(()=>fetchAll(false),300);}}
+  else{
+    // No cache — auto-fetch immediately on page load
+    setTimeout(()=>fetchAll(false),300);
+  }
 })();
 </script>
 </body>
