@@ -226,7 +226,12 @@ header{background:linear-gradient(180deg,rgba(11,15,26,.98),rgba(17,24,39,.96));
   </div>
   <div class="hdr-r">
    <span id="date-el"></span>
-   <div class="ar-pill" id="arpill">🔄 <span id="arcd"></span></div>
+   <div class="ar-pill" id="arpill">🔄 <span id="arcd"></span> <select id="arsel" onchange="AR=+this.value;startAR();" style="background:none;border:none;color:var(--green);font-size:9px;cursor:pointer;font-family:var(--ff);outline:none;margin-left:2px;">
+     <option value="900000">15m</option>
+     <option value="1800000">30m</option>
+     <option value="3600000" selected>1h</option>
+     <option value="10800000">3h</option>
+   </select></div>
    <button class="ibtn" onclick="goTab('saved')" title="Saved">🔖 <span class="bl" id="svhdr">0</span></button>
    <button class="ibtn" id="thbtn" onclick="toggleTheme()">☀️</button>
    <button id="rbtn" class="ibtn" onclick="fetchAll(false)">⚡ Refresh</button>
@@ -293,25 +298,25 @@ header{background:linear-gradient(180deg,rgba(11,15,26,.98),rgba(17,24,39,.96));
 
 <!-- AGRI -->
 <div id="panel-agri" class="panel">
- <div class="shdr"><div class="sdot" style="background:var(--green)"></div><h2>🌾 Agriculture & Agri Business</h2><span class="scnt" id="c-agri">0</span></div>
+ <div class="shdr"><div class="sdot" style="background:var(--green)"></div><h2>🌾 Agriculture & Agri Business</h2><span class="scnt" id="c-agri">0</span><span class="scnt" style="background:var(--green-d);color:var(--green);border-color:rgba(16,185,129,.2);">🕐 Latest First</span></div>
  <div class="ngrid" id="grid-agri"></div>
 </div>
 
 <!-- BIZ -->
 <div id="panel-biz" class="panel">
- <div class="shdr"><div class="sdot" style="background:var(--blue)"></div><h2>📈 Business & Markets</h2><span class="scnt" id="c-biz">0</span></div>
+ <div class="shdr"><div class="sdot" style="background:var(--blue)"></div><h2>📈 Business & Markets</h2><span class="scnt" id="c-biz">0</span><span class="scnt" style="background:var(--blue-d);color:var(--blue);border-color:rgba(59,130,246,.2);">🕐 Latest First</span></div>
  <div class="ngrid" id="grid-biz"></div>
 </div>
 
 <!-- POL -->
 <div id="panel-pol" class="panel">
- <div class="shdr"><div class="sdot" style="background:var(--red)"></div><h2>🏛️ Politics & Government</h2><span class="scnt" id="c-pol">0</span></div>
+ <div class="shdr"><div class="sdot" style="background:var(--red)"></div><h2>🏛️ Politics & Government</h2><span class="scnt" id="c-pol">0</span><span class="scnt" style="background:var(--red-d);color:var(--red);border-color:rgba(239,68,68,.2);">🕐 Latest First</span></div>
  <div class="ngrid" id="grid-pol"></div>
 </div>
 
 <!-- GEN -->
 <div id="panel-gen" class="panel">
- <div class="shdr"><div class="sdot" style="background:var(--purple)"></div><h2>🌐 General News</h2><span class="scnt" id="c-gen">0</span></div>
+ <div class="shdr"><div class="sdot" style="background:var(--purple)"></div><h2>🌐 General News</h2><span class="scnt" id="c-gen">0</span><span class="scnt" style="background:var(--purple-d);color:var(--purple);border-color:rgba(139,92,246,.2);">🕐 Latest First</span></div>
  <div class="ngrid" id="grid-gen"></div>
 </div>
 
@@ -381,7 +386,8 @@ function strip(h){const d=document.createElement('div');d.innerHTML=h||'';return
 function trunc(s,n){const t=strip(s);return t.length>n?t.slice(0,n)+'…':t;}
 function ago(ds){try{const m=(Date.now()-new Date(ds))/60000;if(m<1)return'just now';if(m<60)return~~m+'m ago';if(m<1440)return~~(m/60)+'h ago';return~~(m/1440)+'d ago';}catch{return'';}}
 function host(u){try{return new URL(u).hostname.replace('www.','').replace('feeds.','');}catch{return'News';}}
-function dedup(a){const s=new Set();return a.filter(x=>{const k=x.headline.slice(0,55).toLowerCase();if(s.has(k))return false;s.add(k);return true;});}
+function similarity(a,b){const wa=new Set(a.toLowerCase().replace(/[^a-z0-9\s]/g,'').split(/\s+/).filter(w=>w.length>3));const wb=new Set(b.toLowerCase().replace(/[^a-z0-9\s]/g,'').split(/\s+/).filter(w=>w.length>3));let common=0;wa.forEach(w=>{if(wb.has(w))common++;});const union=wa.size+wb.size-common;return union===0?0:common/union;}
+function dedup(a){const kept=[];a.forEach(x=>{const isDup=kept.some(k=>similarity(k.headline,x.headline)>0.55);if(!isDup)kept.push(x);});return kept;}
 function toast(m,d=2400){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),d);}
 function hl(t,q){if(!q)return t;return t.replace(new RegExp(`(${q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')})`, 'gi'),'<mark style="background:rgba(246,166,33,.2);color:var(--amber);border-radius:2px;padding:0 2px;">$1</mark>');}
 
@@ -488,7 +494,7 @@ renderTicker([{n:'Sensex',v:'—',c:'',cls:'neu'},{n:'Nifty',v:'—',c:'',cls:'n
 function parseRSS(xml){try{const doc=new DOMParser().parseFromString(xml,'text/xml');if(doc.querySelector('parsererror'))return[];return[...doc.querySelectorAll('item')].map(el=>{const title=strip(el.querySelector('title')?.textContent||'');const link=el.querySelector('link')?.textContent||el.querySelector('guid')?.textContent||'#';const desc=strip(el.querySelector('description')?.textContent||'');const pubDate=el.querySelector('pubDate')?.textContent||'';const source=el.querySelector('source')?.textContent||host(link);return{headline:trunc(title,120),summary:trunc(desc,220)||'Tap Read to view.',source,link,pubDate,importance:getImp(title+' '+desc)};}).filter(it=>it.headline.length>5);}catch{return[];}}
 function ftch(url,ms=9500){return Promise.race([fetch(url,{cache:'no-store'}),new Promise((_,r)=>setTimeout(()=>r(new Error('timeout')),ms))]);}
 async function fetchFeed(rssUrl){for(const mp of PROXIES){try{const {url,j}=mp(rssUrl);const res=await ftch(url,10000);if(!res.ok)continue;const text=j?(await res.json()).contents||'':await res.text();const items=parseRSS(text);if(items.length>0)return items;}catch{continue;}}return[];}
-async function fetchCat(key){const t0=Date.now();const res=await Promise.all(FEEDS[key].map(u=>fetchFeed(u)));const items=dedup(res.flat()).slice(0,15);return{items,ms:((Date.now()-t0)/1000).toFixed(1)+'s'};}
+async function fetchCat(key){const t0=Date.now();const res=await Promise.all(FEEDS[key].map(u=>fetchFeed(u)));const all=res.flat();all.sort((a,b)=>{const da=a.pubDate?new Date(a.pubDate):new Date(0);const db=b.pubDate?new Date(b.pubDate):new Date(0);return db-da;});const items=dedup(all).slice(0,15);return{items,ms:((Date.now()-t0)/1000).toFixed(1)+'s'};}
 
 // Step UI
 function setStep(id,st,t){const el=document.getElementById('ls-'+id);if(!el)return;el.className='lstep '+st;if(t)document.getElementById('lt-'+id).textContent=t;}
@@ -496,9 +502,32 @@ function setStep(id,st,t){const el=document.getElementById('ls-'+id);if(!el)retu
 // Tab
 function goTab(tab){activeTab=tab;document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.tab===tab));document.querySelectorAll('.panel').forEach(p=>p.classList.remove('show'));const p=document.getElementById('panel-'+tab);if(p)p.classList.add('show');if(tab==='saved')renderSaved();}
 
-// Auto-refresh
-const AR=3*60*60*1000;
-function startAR(){if(arTimer)clearInterval(arTimer);arNext=Date.now()+AR;const pill=document.getElementById('arpill');pill.style.display='flex';const tick=()=>{const rem=Math.max(0,arNext-Date.now());const h=~~(rem/3600000);const m=~~((rem%3600000)/60000);document.getElementById('arcd').textContent=`${h}h ${m}m`;if(rem<=0){fetchAll(true);arNext=Date.now()+AR;}};tick();arTimer=setInterval(tick,60000);}
+// Auto-refresh — configurable
+const AR_OPTIONS={900000:'15 min',1800000:'30 min',3600000:'1 hour',10800000:'3 hours'};
+let AR=3600000; // default 1 hour
+function startAR(){
+  if(arTimer)clearInterval(arTimer);
+  arNext=Date.now()+AR;
+  const pill=document.getElementById('arpill');
+  pill.style.display='flex';
+  const tick=()=>{
+    const rem=Math.max(0,arNext-Date.now());
+    const h=~~(rem/3600000);
+    const m=~~((rem%3600000)/60000);
+    const s=~~((rem%60000)/1000);
+    document.getElementById('arcd').textContent=h>0?`${h}h ${m}m`:`${m}m ${s}s`;
+    if(rem<=0){fetchAll(true);arNext=Date.now()+AR;}
+  };
+  tick();
+  arTimer=setInterval(tick,1000);
+}
+// Refresh when user comes back to the tab after being away > AR interval
+document.addEventListener('visibilitychange',()=>{
+  if(!document.hidden&&loaded){
+    const last=localStorage.getItem('idb_last');
+    if(last&&(Date.now()-new Date(last))>AR)fetchAll(true);
+  }
+});
 
 // Theme
 function toggleTheme(){isDark=!isDark;document.getElementById('thbtn').textContent=isDark?'☀️':'🌙';const v=isDark?{bg:'#0B0F1A',bg2:'#111827',card:'#15202E',card2:'#1E2D40',card3:'#243347',bdr:'#1E2D40',bdr2:'#263548',text:'#F1F5F9',text2:'#94A3B8',text3:'#4B6080',text4:'#2E4260'}:{bg:'#F8F9FA',bg2:'#FFFFFF',card:'#FFFFFF',card2:'#F1F5F9',card3:'#E2E8F0',bdr:'#E2E8F0',bdr2:'#CBD5E1',text:'#0F172A',text2:'#475569',text3:'#94A3B8',text4:'#CBD5E1'};const names=['--bg','--bg2','--card','--card2','--card3','--border','--border2','--text','--text2','--text3','--text4'];const vals=Object.values(v);names.forEach((n,i)=>document.documentElement.style.setProperty(n,vals[i]));}
