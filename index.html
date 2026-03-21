@@ -227,10 +227,11 @@ header{background:linear-gradient(180deg,rgba(11,15,26,.98),rgba(17,24,39,.96));
   <div class="hdr-r">
    <span id="date-el"></span>
    <div class="ar-pill" id="arpill">🔄 <span id="arcd"></span> <select id="arsel" onchange="AR=+this.value;startAR();" style="background:none;border:none;color:var(--green);font-size:9px;cursor:pointer;font-family:var(--ff);outline:none;margin-left:2px;">
+     <option value="120000" selected>2m</option>
+     <option value="300000">5m</option>
      <option value="900000">15m</option>
      <option value="1800000">30m</option>
-     <option value="3600000" selected>1h</option>
-     <option value="10800000">3h</option>
+     <option value="3600000">1h</option>
    </select></div>
    <button class="ibtn" onclick="goTab('saved')" title="Saved">🔖 <span class="bl" id="svhdr">0</span></button>
    <button class="ibtn" id="thbtn" onclick="toggleTheme()">☀️</button>
@@ -494,7 +495,25 @@ renderTicker([{n:'Sensex',v:'—',c:'',cls:'neu'},{n:'Nifty',v:'—',c:'',cls:'n
 function parseRSS(xml){try{const doc=new DOMParser().parseFromString(xml,'text/xml');if(doc.querySelector('parsererror'))return[];return[...doc.querySelectorAll('item')].map(el=>{const title=strip(el.querySelector('title')?.textContent||'');const link=el.querySelector('link')?.textContent||el.querySelector('guid')?.textContent||'#';const desc=strip(el.querySelector('description')?.textContent||'');const pubDate=el.querySelector('pubDate')?.textContent||'';const source=el.querySelector('source')?.textContent||host(link);return{headline:trunc(title,120),summary:trunc(desc,220)||'Tap Read to view.',source,link,pubDate,importance:getImp(title+' '+desc)};}).filter(it=>it.headline.length>5);}catch{return[];}}
 function ftch(url,ms=9500){return Promise.race([fetch(url,{cache:'no-store'}),new Promise((_,r)=>setTimeout(()=>r(new Error('timeout')),ms))]);}
 async function fetchFeed(rssUrl){for(const mp of PROXIES){try{const {url,j}=mp(rssUrl);const res=await ftch(url,10000);if(!res.ok)continue;const text=j?(await res.json()).contents||'':await res.text();const items=parseRSS(text);if(items.length>0)return items;}catch{continue;}}return[];}
-async function fetchCat(key){const t0=Date.now();const res=await Promise.all(FEEDS[key].map(u=>fetchFeed(u)));const all=res.flat();all.sort((a,b)=>{const da=a.pubDate?new Date(a.pubDate):new Date(0);const db=b.pubDate?new Date(b.pubDate):new Date(0);return db-da;});const items=dedup(all).slice(0,15);return{items,ms:((Date.now()-t0)/1000).toFixed(1)+'s'};}
+const SIX_HOURS=6*60*60*1000;
+async function fetchCat(key){
+  const t0=Date.now();
+  const res=await Promise.all(FEEDS[key].map(u=>fetchFeed(u)));
+  let all=res.flat();
+  // 1. Sort newest first
+  all.sort((a,b)=>{
+    const da=a.pubDate?new Date(a.pubDate):new Date(0);
+    const db=b.pubDate?new Date(b.pubDate):new Date(0);
+    return db-da;
+  });
+  // 2. Filter: keep only last 6 hours; if nothing qualifies keep top 5 as fallback
+  const cutoff=Date.now()-SIX_HOURS;
+  const recent=all.filter(x=>x.pubDate&&new Date(x.pubDate)>=cutoff);
+  const pool=recent.length>=3?recent:all.slice(0,5);
+  // 3. Deduplicate (fuzzy)
+  const items=dedup(pool).slice(0,15);
+  return{items,ms:((Date.now()-t0)/1000).toFixed(1)+'s',fresh:recent.length};
+}
 
 // Step UI
 function setStep(id,st,t){const el=document.getElementById('ls-'+id);if(!el)return;el.className='lstep '+st;if(t)document.getElementById('lt-'+id).textContent=t;}
@@ -504,7 +523,7 @@ function goTab(tab){activeTab=tab;document.querySelectorAll('.tab').forEach(t=>t
 
 // Auto-refresh — configurable
 const AR_OPTIONS={900000:'15 min',1800000:'30 min',3600000:'1 hour',10800000:'3 hours'};
-let AR=3600000; // default 1 hour
+let AR=120000; // default 2 minutes
 function startAR(){
   if(arTimer)clearInterval(arTimer);
   arNext=Date.now()+AR;
@@ -554,6 +573,7 @@ async function fetchAll(silent){
   data.pol=p.items;setStep('pol',p.items.length?'done':'fail',p.ms);
   data.gen=g.items;setStep('gen',g.items.length?'done':'fail',g.ms);
   data.mandi=m.items;
+  const freshTotal=a.fresh+b.fresh+p.fresh+g.fresh;
 
   fetchWx();
   // Ticker from biz headlines
@@ -571,7 +591,9 @@ async function fetchAll(silent){
   renderMandi();updSaved();
 
   const now2=new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});
-  document.getElementById('stxt').innerHTML=total>0?`<b>${total} stories</b> loaded across 4 categories`:`<span style="color:var(--red)">⚠️ Could not fetch — host on <a href="https://app.netlify.com/drop" target="_blank" style="color:var(--blue)">Netlify Drop</a> for best results</span>`;
+  document.getElementById('stxt').innerHTML=total>0
+    ?`<b>${total} stories</b> loaded &nbsp;·&nbsp; <span style="color:var(--teal)">🕐 ${freshTotal} from last 6h</span> &nbsp;·&nbsp; <span style="color:var(--text3);font-size:10px;">Latest first · Duplicates removed</span>`
+    :`<span style="color:var(--red)">⚠️ Could not fetch — host on <a href="https://app.netlify.com/drop" target="_blank" style="color:var(--blue)">Netlify Drop</a> for best results</span>`;
   document.getElementById('utxt').textContent=total>0?'🕐 Updated '+now2:'';
 
   if(total>0){localStorage.setItem('idb_last',new Date().toISOString());localStorage.setItem('idb_cache',JSON.stringify(data));if(silent)toast('🔄 News refreshed!');startAR();}
