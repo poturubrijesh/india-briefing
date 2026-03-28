@@ -75,16 +75,6 @@ header{background:linear-gradient(180deg,rgba(11,15,26,.98),rgba(17,24,39,.96));
 /* MAIN */
 .main{max-width:1280px;margin:0 auto;padding:20px;}
 
-/* API KEY BANNER */
-.api-banner{background:linear-gradient(135deg,rgba(246,166,33,.08),rgba(251,191,36,.04));border:1px solid rgba(246,166,33,.25);border-radius:12px;padding:16px 20px;margin-bottom:20px;display:none;}
-.api-banner h3{font-size:14px;font-weight:700;color:var(--amber);margin-bottom:6px;}
-.api-banner p{font-size:12px;color:var(--text2);line-height:1.6;margin-bottom:10px;}
-.api-input-row{display:flex;gap:8px;flex-wrap:wrap;}
-.api-input-row input{flex:1;min-width:200px;background:var(--bg2);border:1px solid var(--border2);color:var(--text);font-family:var(--ff);font-size:12px;padding:8px 12px;border-radius:7px;outline:none;}
-.api-input-row input:focus{border-color:var(--amber);}
-.api-save-btn{background:var(--amber);border:none;color:#0B0F1A;font-family:var(--ff);font-size:12px;font-weight:700;padding:8px 16px;border-radius:7px;cursor:pointer;}
-.api-save-btn:hover{background:var(--amber2);}
-
 /* WELCOME */
 #welcome{text-align:center;padding:52px 20px 36px;}
 .wflag{font-size:60px;margin-bottom:14px;display:block;animation:float 3s ease-in-out infinite;}
@@ -123,7 +113,7 @@ header{background:linear-gradient(180deg,rgba(11,15,26,.98),rgba(17,24,39,.96));
 .panel.show{display:block;animation:fup .3s ease;}
 @keyframes fup{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
 
-/* STATUS */
+/* STATUS BAR */
 .sbar{background:var(--card);border:1px solid var(--border2);border-radius:9px;padding:9px 14px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:11.5px;color:var(--text3);margin-bottom:16px;}
 .sbar b{color:var(--green);}
 
@@ -176,7 +166,6 @@ header{background:linear-gradient(180deg,rgba(11,15,26,.98),rgba(17,24,39,.96));
 .nc{background:var(--card);border:1px solid var(--border2);border-radius:13px;overflow:hidden;transition:all .22s;animation:cin .35s ease both;display:flex;flex-direction:column;}
 .nc:hover{border-color:rgba(246,166,33,.2);box-shadow:0 6px 28px rgba(0,0,0,.3);transform:translateY(-2px);}
 .nc.clickable{cursor:pointer;}
-/* Article image */
 .nc-img{width:100%;height:150px;object-fit:cover;display:block;background:var(--card2);}
 .nc-img-placeholder{width:100%;height:150px;background:linear-gradient(135deg,var(--card2),var(--card3));display:flex;align-items:center;justify-content:center;font-size:32px;color:var(--text4);}
 .nc-body{padding:14px;display:flex;flex-direction:column;flex:1;}
@@ -223,6 +212,7 @@ header{background:linear-gradient(180deg,rgba(11,15,26,.98),rgba(17,24,39,.96));
 .err-card{background:var(--red-d);border:1px solid rgba(239,68,68,.25);border-radius:12px;padding:18px 20px;margin-bottom:16px;display:none;}
 .err-card h4{font-size:13px;font-weight:700;color:#F87171;margin-bottom:5px;}
 .err-card p{font-size:12px;color:var(--text2);line-height:1.6;}
+.err-card code{font-size:11px;background:rgba(0,0,0,.3);padding:2px 6px;border-radius:4px;color:#F87171;}
 
 /* TOAST */
 #toast{position:fixed;bottom:22px;right:22px;z-index:999;background:var(--card2);border:1px solid var(--border2);color:var(--text);font-size:13px;font-weight:500;padding:10px 16px;border-radius:9px;box-shadow:0 8px 32px rgba(0,0,0,.5);transform:translateY(70px);opacity:0;transition:all .3s cubic-bezier(.34,1.56,.64,1);pointer-events:none;max-width:260px;}
@@ -249,29 +239,34 @@ header{background:linear-gradient(180deg,rgba(11,15,26,.98),rgba(17,24,39,.96));
   <div class="hdr-r">
    <span id="date-el"></span>
    <span id="last-updated"></span>
-   <div class="ar-pill" id="arpill">🔄 <span id="arcd"></span> <select id="arsel" onchange="AR=+this.value;startAR();" style="background:none;border:none;color:var(--green);font-size:9px;cursor:pointer;font-family:var(--ff);outline:none;margin-left:2px;">
+   <div class="ar-pill" id="arpill">🔄 <span id="arcd"></span>
+    <select id="arsel" onchange="AR=+this.value;startAR();" style="background:none;border:none;color:var(--green);font-size:9px;cursor:pointer;font-family:var(--ff);outline:none;margin-left:2px;">
      <option value="120000" selected>2m</option>
      <option value="300000">5m</option>
      <option value="900000">15m</option>
      <option value="1800000">30m</option>
      <option value="3600000">1h</option>
-   </select></div>
+    </select>
+   </div>
    <button class="ibtn" onclick="goTab('saved')" title="Saved">🔖 <span class="bl" id="svhdr">0</span></button>
    <button class="ibtn" id="thbtn" onclick="toggleTheme()">☀️</button>
-   <button id="rbtn" class="ibtn" onclick="fetchAll(false)">⚡ Refresh</button>
+   <button id="rbtn" class="ibtn" onclick="fetchNews()">⚡ Refresh</button>
   </div>
  </div>
 </header>
 
-<div class="ticker"><span class="tlbl">📊 Markets</span><div class="tscroll" id="tscroll"><div class="titem"><span class="tn">Loading…</span></div></div></div>
+<div class="ticker">
+ <span class="tlbl">📊 Markets</span>
+ <div class="tscroll" id="tscroll"><div class="titem"><span class="tn">Loading…</span></div></div>
+</div>
 
 <div class="tabs">
  <div class="tabs-in">
   <div class="tab active" data-tab="overview" onclick="goTab('overview')">🏠 Overview</div>
-  <div class="tab" data-tab="agri" onclick="goTab('agri')">🌾 Agriculture <span class="cnt" id="b-agri">0</span></div>
-  <div class="tab" data-tab="biz" onclick="goTab('biz')">📈 Business <span class="cnt" id="b-biz">0</span></div>
-  <div class="tab" data-tab="pol" onclick="goTab('pol')">🏛️ Politics <span class="cnt" id="b-pol">0</span></div>
-  <div class="tab" data-tab="gen" onclick="goTab('gen')">🌐 General <span class="cnt" id="b-gen">0</span></div>
+  <div class="tab" data-tab="agri"  onclick="goTab('agri')">🌾 Agriculture <span class="cnt" id="b-agri">0</span></div>
+  <div class="tab" data-tab="biz"   onclick="goTab('biz')">📈 Business <span class="cnt" id="b-biz">0</span></div>
+  <div class="tab" data-tab="pol"   onclick="goTab('pol')">🏛️ Politics <span class="cnt" id="b-pol">0</span></div>
+  <div class="tab" data-tab="gen"   onclick="goTab('gen')">🌐 General <span class="cnt" id="b-gen">0</span></div>
   <div class="tab" data-tab="mandi" onclick="goTab('mandi')">🛒 Mandi</div>
   <div class="tab" data-tab="saved" onclick="goTab('saved')">🔖 Saved <span class="cnt" id="b-saved">0</span></div>
   <div class="tab" id="srtab" data-tab="sr" style="display:none" onclick="goTab('sr')">🔍 Results <span class="cnt" id="b-sr">0</span></div>
@@ -280,132 +275,126 @@ header{background:linear-gradient(180deg,rgba(11,15,26,.98),rgba(17,24,39,.96));
 
 <div class="main">
 
-<!-- API KEY BANNER -->
-<div class="api-banner" id="apiBanner">
- <h3>🔑 NewsAPI Key Required</h3>
- <p>Enter your free NewsAPI key to load live news. Get one at <a href="https://newsapi.org/register" target="_blank" style="color:var(--amber);font-weight:700;">newsapi.org/register</a> — it's free and instant.<br>
- <strong style="color:var(--text3);">⚠️ Note:</strong> NewsAPI free tier requires requests from localhost or a backend. For production, proxy requests through your own server.</p>
- <div class="api-input-row">
-  <input type="text" id="apiKeyInput" placeholder="Paste your NewsAPI key here…" autocomplete="off">
-  <button class="api-save-btn" onclick="saveApiKey()">Save & Load News</button>
+ <!-- ERROR CARD -->
+ <div class="err-card" id="errCard">
+  <h4>⚠️ <span id="errTitle">Could not load news</span></h4>
+  <p id="errMsg">–</p>
  </div>
-</div>
 
-<!-- ERROR CARD -->
-<div class="err-card" id="errCard">
- <h4>⚠️ <span id="errTitle">Could not fetch news</span></h4>
- <p id="errMsg">–</p>
-</div>
-
-<!-- WELCOME -->
-<div id="welcome">
- <span class="wflag">🇮🇳</span>
- <h2>India Daily Briefing</h2>
- <p>Agriculture · Business · Politics · General · Mandi Prices · Weather — all in one place, updated live every day.</p>
- <div class="wpills">
-  <div class="wp agri">🌾 Agriculture & MSP</div><div class="wp biz">📈 Markets & Business</div>
-  <div class="wp pol">🏛️ Politics & Policy</div><div class="wp gen">🌐 General News</div><div class="wp mandi">🛒 Mandi Prices</div>
+ <!-- WELCOME -->
+ <div id="welcome">
+  <span class="wflag">🇮🇳</span>
+  <h2>India Daily Briefing</h2>
+  <p>Agriculture · Business · Politics · General · Mandi Prices · Weather — all in one place, updated live every day.</p>
+  <div class="wpills">
+   <div class="wp agri">🌾 Agriculture & MSP</div>
+   <div class="wp biz">📈 Markets & Business</div>
+   <div class="wp pol">🏛️ Politics & Policy</div>
+   <div class="wp gen">🌐 General News</div>
+   <div class="wp mandi">🛒 Mandi Prices</div>
+  </div>
+  <button class="sbtn" onclick="fetchNews()">⚡ Get Today's Briefing</button>
+  <p class="ntip">Powered by a secure backend · No API keys in your browser</p>
  </div>
- <button class="sbtn" onclick="startWithKey()">⚡ Get Today's Briefing</button>
- <p class="ntip">Powered by <a href="https://newsapi.org" target="_blank">NewsAPI.org</a> · Free API key required · No proxy needed</p>
-</div>
 
-<!-- LOADING -->
-<div id="loading">
- <div class="spin"></div>
- <div class="lcard">
-  <div class="lhd">Fetching today's news</div>
-  <div class="lsub" id="lsub">Fetching all 4 categories in parallel…</div>
-  <div>
-   <div class="lstep" id="ls-agri"><div class="ldot"></div><span class="ltxt">🌾 Agriculture — crops, mandi, MSP</span><span class="ltime" id="lt-agri"></span></div>
-   <div class="lstep" id="ls-biz"><div class="ldot"></div><span class="ltxt">📈 Business — markets, RBI, economy</span><span class="ltime" id="lt-biz"></span></div>
-   <div class="lstep" id="ls-pol"><div class="ldot"></div><span class="ltxt">🏛️ Politics — parliament, government</span><span class="ltime" id="lt-pol"></span></div>
-   <div class="lstep" id="ls-gen"><div class="ldot"></div><span class="ltxt">🌐 General — top India stories</span><span class="ltime" id="lt-gen"></span></div>
-   <div class="lstep" id="ls-wx"><div class="ldot"></div><span class="ltxt">🌤️ Weather</span><span class="ltime" id="lt-wx"></span></div>
+ <!-- LOADING -->
+ <div id="loading">
+  <div class="spin"></div>
+  <div class="lcard">
+   <div class="lhd">Fetching today's news</div>
+   <div class="lsub">Contacting backend · Fetching all categories…</div>
+   <div>
+    <div class="lstep" id="ls-agri"><div class="ldot"></div><span class="ltxt">🌾 Agriculture — crops, mandi, MSP</span><span class="ltime" id="lt-agri"></span></div>
+    <div class="lstep" id="ls-biz"> <div class="ldot"></div><span class="ltxt">📈 Business — markets, RBI, economy</span><span class="ltime" id="lt-biz"></span></div>
+    <div class="lstep" id="ls-pol"> <div class="ldot"></div><span class="ltxt">🏛️ Politics — parliament, government</span><span class="ltime" id="lt-pol"></span></div>
+    <div class="lstep" id="ls-gen"> <div class="ldot"></div><span class="ltxt">🌐 General — top India stories</span><span class="ltime" id="lt-gen"></span></div>
+    <div class="lstep" id="ls-wx">  <div class="ldot"></div><span class="ltxt">🌤️ Weather</span><span class="ltime" id="lt-wx"></span></div>
+   </div>
   </div>
  </div>
-</div>
 
-<!-- OVERVIEW -->
-<div id="panel-overview" class="panel">
- <div class="sbar"><span id="stxt">–</span><span id="utxt" style="font-size:11px;color:var(--text3);">–</span></div>
- <div class="toprow">
-  <div><div class="ovgrid" id="ovgrid"></div></div>
-  <div id="wxwrap"></div>
+ <!-- OVERVIEW -->
+ <div id="panel-overview" class="panel">
+  <div class="sbar"><span id="stxt">–</span><span id="utxt" style="font-size:11px;color:var(--text3);">–</span></div>
+  <div class="toprow">
+   <div><div class="ovgrid" id="ovgrid"></div></div>
+   <div id="wxwrap"></div>
+  </div>
+  <div class="shdr">
+   <div class="sdot" style="background:var(--amber);box-shadow:0 0 6px var(--amber)"></div>
+   <h2>🔥 Top Stories Across All Categories</h2>
+   <button id="topbtn" onclick="toggleTop()" style="margin-left:auto;flex-shrink:0;background:var(--amber-d);border:1px solid rgba(246,166,33,.3);color:var(--amber);font-size:11px;font-weight:700;padding:5px 12px;border-radius:20px;cursor:pointer;font-family:var(--ff);transition:all .2s;">🔥 Top Stories</button>
+  </div>
+  <div class="ngrid" id="topgrid"></div>
  </div>
- <div class="shdr"><div class="sdot" style="background:var(--amber);box-shadow:0 0 6px var(--amber)"></div><h2>🔥 Top Stories Across All Categories</h2><button id="topbtn" onclick="toggleTop()" style="margin-left:auto;flex-shrink:0;background:var(--amber-d);border:1px solid rgba(246,166,33,.3);color:var(--amber);font-size:11px;font-weight:700;padding:5px 12px;border-radius:20px;cursor:pointer;font-family:var(--ff);transition:all .2s;">🔥 Top Stories</button></div>
- <div class="ngrid" id="topgrid"></div>
-</div>
 
-<!-- AGRI -->
-<div id="panel-agri" class="panel">
- <div class="shdr"><div class="sdot" style="background:var(--green)"></div><h2>🌾 Agriculture & Agri Business</h2><span class="scnt" id="c-agri">0</span><span class="scnt" style="background:var(--green-d);color:var(--green);border-color:rgba(16,185,129,.2);">🕐 Latest First</span></div>
- <div class="ngrid" id="grid-agri"></div>
-</div>
+ <!-- AGRI -->
+ <div id="panel-agri" class="panel">
+  <div class="shdr"><div class="sdot" style="background:var(--green)"></div><h2>🌾 Agriculture & Agri Business</h2><span class="scnt" id="c-agri">0</span><span class="scnt" style="background:var(--green-d);color:var(--green);border-color:rgba(16,185,129,.2);">🕐 Latest First</span></div>
+  <div class="ngrid" id="grid-agri"></div>
+ </div>
 
-<!-- BIZ -->
-<div id="panel-biz" class="panel">
- <div class="shdr"><div class="sdot" style="background:var(--blue)"></div><h2>📈 Business & Markets</h2><span class="scnt" id="c-biz">0</span><span class="scnt" style="background:var(--blue-d);color:var(--blue);border-color:rgba(59,130,246,.2);">🕐 Latest First</span></div>
- <div class="ngrid" id="grid-biz"></div>
-</div>
+ <!-- BIZ -->
+ <div id="panel-biz" class="panel">
+  <div class="shdr"><div class="sdot" style="background:var(--blue)"></div><h2>📈 Business & Markets</h2><span class="scnt" id="c-biz">0</span><span class="scnt" style="background:var(--blue-d);color:var(--blue);border-color:rgba(59,130,246,.2);">🕐 Latest First</span></div>
+  <div class="ngrid" id="grid-biz"></div>
+ </div>
 
-<!-- POL -->
-<div id="panel-pol" class="panel">
- <div class="shdr"><div class="sdot" style="background:var(--red)"></div><h2>🏛️ Politics & Government</h2><span class="scnt" id="c-pol">0</span><span class="scnt" style="background:var(--red-d);color:var(--red);border-color:rgba(239,68,68,.2);">🕐 Latest First</span></div>
- <div class="ngrid" id="grid-pol"></div>
-</div>
+ <!-- POL -->
+ <div id="panel-pol" class="panel">
+  <div class="shdr"><div class="sdot" style="background:var(--red)"></div><h2>🏛️ Politics & Government</h2><span class="scnt" id="c-pol">0</span><span class="scnt" style="background:var(--red-d);color:var(--red);border-color:rgba(239,68,68,.2);">🕐 Latest First</span></div>
+  <div class="ngrid" id="grid-pol"></div>
+ </div>
 
-<!-- GEN -->
-<div id="panel-gen" class="panel">
- <div class="shdr"><div class="sdot" style="background:var(--purple)"></div><h2>🌐 General News</h2><span class="scnt" id="c-gen">0</span><span class="scnt" style="background:var(--purple-d);color:var(--purple);border-color:rgba(139,92,246,.2);">🕐 Latest First</span></div>
- <div class="ngrid" id="grid-gen"></div>
-</div>
+ <!-- GEN -->
+ <div id="panel-gen" class="panel">
+  <div class="shdr"><div class="sdot" style="background:var(--purple)"></div><h2>🌐 General News</h2><span class="scnt" id="c-gen">0</span><span class="scnt" style="background:var(--purple-d);color:var(--purple);border-color:rgba(139,92,246,.2);">🕐 Latest First</span></div>
+  <div class="ngrid" id="grid-gen"></div>
+ </div>
 
-<!-- MANDI -->
-<div id="panel-mandi" class="panel">
- <div class="shdr"><div class="sdot" style="background:var(--orange)"></div><h2>🛒 Mandi & Commodity Prices</h2><span class="scnt">Indicative · ₹/Quintal</span></div>
- <div class="mgrid" id="mgrid"></div>
- <div class="shdr" style="margin-top:18px;"><div class="sdot" style="background:var(--orange)"></div><h2>📰 Commodity News</h2><span class="scnt" id="c-mandi">0</span></div>
- <div class="ngrid" id="grid-mandi"></div>
-</div>
+ <!-- MANDI -->
+ <div id="panel-mandi" class="panel">
+  <div class="shdr"><div class="sdot" style="background:var(--orange)"></div><h2>🛒 Mandi & Commodity Prices</h2><span class="scnt">Indicative · ₹/Quintal</span></div>
+  <div class="mgrid" id="mgrid"></div>
+  <div class="shdr" style="margin-top:18px;"><div class="sdot" style="background:var(--orange)"></div><h2>📰 Commodity News</h2><span class="scnt" id="c-mandi">0</span></div>
+  <div class="ngrid" id="grid-mandi"></div>
+ </div>
 
-<!-- SAVED -->
-<div id="panel-saved" class="panel">
- <div class="shdr"><div class="sdot" style="background:var(--amber)"></div><h2>🔖 Saved Articles</h2><span class="scnt" id="c-saved">0</span></div>
- <div class="ngrid" id="grid-saved"></div>
-</div>
+ <!-- SAVED -->
+ <div id="panel-saved" class="panel">
+  <div class="shdr"><div class="sdot" style="background:var(--amber)"></div><h2>🔖 Saved Articles</h2><span class="scnt" id="c-saved">0</span></div>
+  <div class="ngrid" id="grid-saved"></div>
+ </div>
 
-<!-- SEARCH RESULTS -->
-<div id="panel-sr" class="panel">
- <div class="shdr"><div class="sdot" style="background:var(--teal)"></div><h2>🔍 Search Results</h2><span class="scnt" id="c-sr">0</span></div>
- <div id="srline" style="font-size:13px;color:var(--text2);margin-bottom:14px;"></div>
- <div class="ngrid" id="grid-sr"></div>
-</div>
+ <!-- SEARCH RESULTS -->
+ <div id="panel-sr" class="panel">
+  <div class="shdr"><div class="sdot" style="background:var(--teal)"></div><h2>🔍 Search Results</h2><span class="scnt" id="c-sr">0</span></div>
+  <div id="srline" style="font-size:13px;color:var(--text2);margin-bottom:14px;"></div>
+  <div class="ngrid" id="grid-sr"></div>
+ </div>
 
-</div>
+</div><!-- /.main -->
 <div id="toast"></div>
 
 <script>
-/* ============================================================
-   CONFIGURATION — paste your NewsAPI key here or use the UI
-   Get a free key at: https://newsapi.org/register
-   ============================================================ */
-let NEWSAPI_KEY = localStorage.getItem('idb_apikey') || '';
+/* ================================================================
+   CONFIGURATION
+   Replace YOUR_PROJECT_ID with your actual Supabase project ID.
+   The Edge Function must be deployed at: functions/v1/fetch-news
+   Expected response shape:
+   {
+     articles: {
+       agri:  [ { title, description, urlToImage, url, publishedAt, source:{name} }, … ],
+       biz:   […],
+       pol:   […],
+       gen:   […],
+       mandi: […]
+     }
+   }
+   ================================================================ */
+const BACKEND_URL = 'https://lkdajfsqpljdtsgapzeb.supabase.co/functions/v1/fetch-news';
 
-/* ---------------------------------------------------------------
-   NewsAPI endpoints — one URL per category.
-   top-headlines supports: country, category, q, pageSize
-   Free plan: 100 req/day · country=in · pageSize up to 100
---------------------------------------------------------------- */
-const NEWS_ENDPOINTS = {
-  agri: key => `https://newsapi.org/v2/top-headlines?country=in&q=agriculture+farmer+crop+MSP&pageSize=20&apiKey=${key}`,
-  biz:  key => `https://newsapi.org/v2/top-headlines?country=in&category=business&pageSize=20&apiKey=${key}`,
-  pol:  key => `https://newsapi.org/v2/top-headlines?country=in&q=politics+government+parliament+BJP+Modi&pageSize=20&apiKey=${key}`,
-  gen:  key => `https://newsapi.org/v2/top-headlines?country=in&pageSize=30&apiKey=${key}`,
-  mandi:key => `https://newsapi.org/v2/top-headlines?country=in&q=mandi+commodity+price+wheat+onion+gold&pageSize=15&apiKey=${key}`,
-};
-
-/* Static mandi price data (indicative) */
+/* ── Static mandi price data (indicative) ─────────────────── */
 const MANDI_DATA = [
   {e:'🌾',n:'Wheat',    p:'2250–2400',u:'₹/qtl',c:'+1.2%',up:1},
   {e:'🍚',n:'Rice',     p:'3200–3500',u:'₹/qtl',c:'+0.8%',up:1},
@@ -421,24 +410,204 @@ const MANDI_DATA = [
   {e:'🟡',n:'Mustard',  p:'5200–5600',u:'₹/qtl',c:'-0.4%',up:0},
 ];
 
-/* Importance keyword classifiers */
-const HKW=['crisis','flood','drought','record','ban','strike','collapse','emergency','attack','death','explosion','historic','election','budget','scam','war','arrest','verdict'];
-const MKW=['launch','policy','scheme','rise','fall','growth','report','minister','government','price','market','rbi','award','deal','merger'];
+/* ── Importance classifiers ───────────────────────────────── */
+const HKW = ['crisis','flood','drought','record','ban','strike','collapse','emergency',
+             'attack','death','explosion','historic','election','budget','scam','war','arrest','verdict'];
+const MKW = ['launch','policy','scheme','rise','fall','growth','report','minister',
+             'government','price','market','rbi','award','deal','merger'];
 
-/* Weather codes */
-const WI={0:'☀️',1:'🌤️',2:'⛅',3:'☁️',45:'🌫️',51:'🌦️',61:'🌧️',63:'🌧️',80:'🌦️',95:'⛈️'};
-const WD={0:'Clear sky',1:'Mainly clear',2:'Partly cloudy',3:'Overcast',45:'Foggy',51:'Drizzle',61:'Light rain',63:'Moderate rain',80:'Showers',95:'Thunderstorm'};
+/* ── Weather code maps ────────────────────────────────────── */
+const WI = {0:'☀️',1:'🌤️',2:'⛅',3:'☁️',45:'🌫️',51:'🌦️',61:'🌧️',63:'🌧️',80:'🌦️',95:'⛈️'};
+const WD = {0:'Clear sky',1:'Mainly clear',2:'Partly cloudy',3:'Overcast',45:'Foggy',
+            51:'Drizzle',61:'Light rain',63:'Moderate rain',80:'Showers',95:'Thunderstorm'};
 
-/* App state */
-let appData = { agri:[], biz:[], pol:[], gen:[], mandi:[] };
-let bookmarks = JSON.parse(localStorage.getItem('idb_bm') || '[]');
-let activeTab = 'overview', loaded = false, isDark = true;
-let arTimer = null, arNext = 0, searchQuery = '';
-let cardStore = {}, cardCount = 0;
-let topOnly = false;
-let AR = 120000;
+/* ── App state ────────────────────────────────────────────── */
+let appData    = { agri:[], biz:[], pol:[], gen:[], mandi:[] };
+let bookmarks  = JSON.parse(localStorage.getItem('idb_bm') || '[]');
+let activeTab  = 'overview';
+let loaded     = false;
+let isDark     = true;
+let arTimer    = null;
+let arNext     = 0;
+let searchQuery = '';
+let cardStore  = {};
+let cardCount  = 0;
+let topOnly    = false;
+let AR         = 120000; // 2 minutes default
 
-/* ── Utility helpers ─────────────────────────────────────── */
+/* ================================================================
+   CORE: fetchNews()
+   Single async function. Calls the Supabase Edge Function,
+   receives { articles: { agri, biz, pol, gen, mandi } },
+   maps each array to internal format, then renders everything.
+   ================================================================ */
+async function fetchNews() {
+  const btn = document.getElementById('rbtn');
+  btn.disabled = true;
+  btn.textContent = '⏳';
+  hideError();
+
+  /* Show loading screen on first load */
+  if (!loaded) {
+    document.getElementById('welcome').style.display = 'none';
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('show'));
+    document.getElementById('loading').style.display = 'flex';
+  }
+
+  /* Mark all loading steps active */
+  ['agri','biz','pol','gen','wx'].forEach(id => setStep(id, 'active'));
+
+  const t0 = Date.now();
+  let raw;
+
+  try {
+    /* ── Single fetch to backend — no API key in the request ── */
+    const res = await fetch(BACKEND_URL, {
+      method:  'GET',
+      headers: { 'Content-Type': 'application/json' },
+      cache:   'no-store',
+    });
+
+    if (!res.ok) {
+      /* Surface HTTP-level errors (4xx / 5xx from the Edge Function) */
+      let errBody = '';
+      try { errBody = await res.text(); } catch { /* ignore */ }
+      throw new Error(`HTTP ${res.status}${errBody ? ': ' + errBody.slice(0, 120) : ''}`);
+    }
+
+    raw = await res.json();
+  } catch (err) {
+    /* Network failure or non-2xx response */
+    const msg = err.message || 'Network error — could not reach backend.';
+    console.error('[fetchNews]', msg);
+    showError('Backend Error', msg +
+      '\n\nMake sure your Supabase Edge Function is deployed and BACKEND_URL is correct.');
+    ['agri','biz','pol','gen'].forEach(id => setStep(id, 'fail'));
+    finishLoad(btn, 0, false);
+    return;
+  }
+
+  /* ── Parse response ──────────────────────────────────────── */
+  const incoming = raw.articles || {};
+
+  /* Map one NewsAPI-compatible article to internal format */
+  function mapArticle(a) {
+    return {
+      headline:   trunc(a.title || '', 120),
+      summary:    trunc(a.description || a.content || 'Tap Read to view the full story.', 220),
+      source:     (a.source && a.source.name) ? a.source.name
+                  : (a.url ? safeHost(a.url) : 'News'),
+      link:       a.url        || '#',
+      pubDate:    a.publishedAt || '',
+      image:      a.urlToImage  || '',
+      importance: getImp((a.title || '') + ' ' + (a.description || '')),
+    };
+  }
+
+  /* Build, sort newest-first, deduplicate, limit for each category */
+  function processCategory(arr, limit) {
+    if (!Array.isArray(arr) || arr.length === 0) return [];
+    const mapped = arr.filter(a => a.title && a.title !== '[Removed]' && a.url).map(mapArticle);
+    mapped.sort((a, b) => {
+      const da = a.pubDate ? new Date(a.pubDate) : new Date(0);
+      const db = b.pubDate ? new Date(b.pubDate) : new Date(0);
+      return db - da;
+    });
+    return dedup(mapped).slice(0, limit || 15);
+  }
+
+  appData.agri  = processCategory(incoming.agri,  15);
+  appData.biz   = processCategory(incoming.biz,   15);
+  appData.pol   = processCategory(incoming.pol,   15);
+  appData.gen   = processCategory(incoming.gen,   20);
+  appData.mandi = processCategory(incoming.mandi, 12);
+
+  const elapsed = ((Date.now() - t0) / 1000).toFixed(1) + 's';
+
+  /* Update loading step indicators */
+  setStep('agri', appData.agri.length  ? 'done' : 'fail', elapsed);
+  setStep('biz',  appData.biz.length   ? 'done' : 'fail', elapsed);
+  setStep('pol',  appData.pol.length   ? 'done' : 'fail', elapsed);
+  setStep('gen',  appData.gen.length   ? 'done' : 'fail', elapsed);
+
+  /* Ticker — first 4 biz headlines */
+  if (appData.biz.length > 0) {
+    renderTicker(appData.biz.slice(0, 4).map((it, i) => ({
+      n:   ['📈','💰','📊','🏦'][i],
+      v:   trunc(it.headline, 45),
+      c:   '',
+      cls: 'neu',
+    })));
+  }
+
+  /* Total for status bar */
+  const total = appData.agri.length + appData.biz.length + appData.pol.length + appData.gen.length;
+
+  if (total === 0) {
+    showError(
+      'No articles returned',
+      'The backend responded successfully but returned no articles. ' +
+      'Check that your Edge Function is querying the correct NewsAPI categories and that your NewsAPI key is valid on the server.'
+    );
+  }
+
+  /* Render all grids */
+  renderAll();
+
+  /* Persist to local cache */
+  if (total > 0) {
+    localStorage.setItem('idb_last',  new Date().toISOString());
+    localStorage.setItem('idb_cache', JSON.stringify(appData));
+  }
+
+  /* Weather runs independently */
+  fetchWeather();
+
+  finishLoad(btn, total, true);
+}
+
+/* ── finishLoad — shared teardown after fetchNews ─────────── */
+function finishLoad(btn, total, success) {
+  /* Hide loading, show overview on first load */
+  if (!loaded) {
+    document.getElementById('loading').style.display = 'none';
+    loaded = true;
+    document.querySelectorAll('.tab').forEach(t =>
+      t.classList.toggle('active', t.dataset.tab === 'overview'));
+    document.getElementById('panel-overview').classList.add('show');
+    activeTab = 'overview';
+  }
+
+  const now = new Date().toLocaleTimeString('en-IN', { hour:'2-digit', minute:'2-digit' });
+  const luEl = document.getElementById('last-updated');
+  if (luEl) { luEl.textContent = '🕐 ' + now; luEl.style.display = 'inline-flex'; }
+
+  document.getElementById('stxt').innerHTML = total > 0
+    ? `<b>${total} stories</b> loaded &nbsp;·&nbsp; <span style="color:var(--teal)">Via Supabase Edge Function</span> &nbsp;·&nbsp; <span style="color:var(--text3);font-size:10px;">Latest first · Duplicates removed</span>`
+    : `<span style="color:var(--red)">⚠️ No stories loaded — check backend logs.</span>`;
+  document.getElementById('utxt').textContent = total > 0 ? '🕐 Updated ' + now : '';
+
+  if (success && total > 0) startAR();
+
+  btn.disabled = false;
+  btn.innerHTML = '⚡ Refresh';
+}
+
+/* ── renderAll — draws every grid ─────────────────────────── */
+function renderAll() {
+  renderOverview();
+  renderGrid('grid-agri',  appData.agri,  'c-agri',  'b-agri');
+  renderGrid('grid-biz',   appData.biz,   'c-biz',   'b-biz');
+  renderGrid('grid-pol',   appData.pol,   'c-pol',   'b-pol');
+  renderGrid('grid-gen',   appData.gen,   'c-gen',   'b-gen');
+  renderGrid('grid-mandi', appData.mandi, 'c-mandi', null);
+  renderMandi();
+  updSaved();
+}
+
+/* ================================================================
+   UTILITY HELPERS
+   ================================================================ */
 function getImp(text) {
   const s = (text || '').toLowerCase();
   if (HKW.some(k => s.includes(k))) return 'H';
@@ -447,6 +616,7 @@ function getImp(text) {
 }
 function impLabel(c) { return { H:'High', M:'Medium', L:'Low' }[c] || ''; }
 function trunc(s, n) { return s && s.length > n ? s.slice(0, n) + '…' : (s || ''); }
+function safeHost(u) { try { return new URL(u).hostname.replace('www.',''); } catch { return 'News'; } }
 function ago(ds) {
   try {
     const m = (Date.now() - new Date(ds)) / 60000;
@@ -467,8 +637,7 @@ function similarity(a, b) {
 function dedup(arr) {
   const kept = [];
   arr.forEach(x => {
-    const isDup = kept.some(k => similarity(k.headline, x.headline) > 0.55);
-    if (!isDup) kept.push(x);
+    if (!kept.some(k => similarity(k.headline, x.headline) > 0.55)) kept.push(x);
   });
   return kept;
 }
@@ -480,39 +649,26 @@ function toast(msg, dur = 2400) {
 }
 function hl(text, q) {
   if (!q) return text;
-  return text.replace(new RegExp(`(${q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')})`, 'gi'),
-    '<mark style="background:rgba(246,166,33,.2);color:var(--amber);border-radius:2px;padding:0 2px;">$1</mark>');
-}
-
-/* ── API Key management ───────────────────────────────────── */
-function saveApiKey() {
-  const key = document.getElementById('apiKeyInput').value.trim();
-  if (!key) { toast('⚠️ Please enter a valid API key'); return; }
-  NEWSAPI_KEY = key;
-  localStorage.setItem('idb_apikey', key);
-  document.getElementById('apiBanner').style.display = 'none';
-  fetchAll(false);
-}
-function startWithKey() {
-  if (!NEWSAPI_KEY) {
-    document.getElementById('apiBanner').style.display = 'block';
-    document.getElementById('apiBanner').scrollIntoView({ behavior: 'smooth' });
-    return;
-  }
-  fetchAll(false);
+  return text.replace(
+    new RegExp(`(${q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')})`, 'gi'),
+    '<mark style="background:rgba(246,166,33,.2);color:var(--amber);border-radius:2px;padding:0 2px;">$1</mark>'
+  );
 }
 function showError(title, msg) {
-  const card = document.getElementById('errCard');
   document.getElementById('errTitle').textContent = title;
   document.getElementById('errMsg').textContent   = msg;
-  card.style.display = 'block';
+  document.getElementById('errCard').style.display = 'block';
 }
-function hideError() {
-  document.getElementById('errCard').style.display = 'none';
+function hideError() { document.getElementById('errCard').style.display = 'none'; }
+function isNew(pubDate) {
+  if (!pubDate) return false;
+  return (Date.now() - new Date(pubDate)) < 2 * 60 * 60 * 1000;
 }
 
-/* ── Bookmarks ────────────────────────────────────────────── */
-function isBm(link)   { return bookmarks.some(b => b.link === link); }
+/* ================================================================
+   BOOKMARKS
+   ================================================================ */
+function isBm(link) { return bookmarks.some(b => b.link === link); }
 function toggleBm(item) {
   if (isBm(item.link)) {
     bookmarks = bookmarks.filter(b => b.link !== item.link);
@@ -536,35 +692,33 @@ function updSaved() {
   if (cs) cs.textContent = n + ' saved';
 }
 
-/* ── WhatsApp share ───────────────────────────────────────── */
+/* ── WhatsApp share ─────────────────────────────────────────*/
 function wa(headline, link) {
   window.open('https://wa.me/?text=' + encodeURIComponent(`📰 *${headline}*\n\n${link}\n\n_via India Daily Briefing_`), '_blank');
 }
 
-/* ── Card renderer ────────────────────────────────────────── */
-function isNew(pubDate) {
-  if (!pubDate) return false;
-  return (Date.now() - new Date(pubDate)) < 2 * 60 * 60 * 1000;
-}
-
+/* ================================================================
+   CARD RENDERER
+   ================================================================ */
 function card(item, delay, catLabel, q) {
-  const imp  = item.importance || 'L';
-  const bm   = isBm(item.link);
-  const id   = 'c' + (cardCount++);
+  const imp = item.importance || 'L';
+  const bm  = isBm(item.link);
+  const id  = 'c' + (cardCount++);
   cardStore[id] = item;
 
   const h2 = q ? hl(item.headline, q) : item.headline;
   const sm = q ? hl(item.summary,  q) : item.summary;
-  const newBadge = isNew(item.pubDate) ? '<span class="new-badge">🟢 NEW</span>' : '';
+  const newBadge  = isNew(item.pubDate) ? '<span class="new-badge">🟢 NEW</span>' : '';
   const clickable = item.link && item.link !== '#';
 
-  /* Image or placeholder */
-  let imgHtml = '';
-  if (item.image) {
-    imgHtml = `<img class="nc-img" src="${item.image}" alt="" loading="lazy"
-      onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-      <div class="nc-img-placeholder" style="display:none">${catLabel ? catLabel.split(' ')[0] : '📰'}</div>`;
-  }
+  /* Article image with graceful fallback */
+  const imgHtml = item.image
+    ? `<img class="nc-img" src="${item.image}" alt="" loading="lazy"
+         onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+       <div class="nc-img-placeholder" style="display:none">${catLabel ? catLabel.split(' ')[0] : '📰'}</div>`
+    : '';
+
+  const safeH = item.headline.replace(/'/g,"\\'").replace(/"/g,'&quot;');
 
   return `<div class="nc${clickable ? ' clickable' : ''}" style="animation-delay:${delay}s"
     ${clickable ? `onclick="if(!event.target.closest('button,a'))window.open('${item.link}','_blank')"` : ''}>
@@ -587,7 +741,7 @@ function card(item, delay, catLabel, q) {
           <div class="nct">${item.pubDate ? ago(item.pubDate) : ''}</div>
         </div>
         <div class="ncbtns">
-          <button class="wabtn" onclick="event.stopPropagation();wa('${item.headline.replace(/'/g,"\\'").replace(/"/g,'&quot;')}','${item.link}')" title="Share on WhatsApp">📲</button>
+          <button class="wabtn" onclick="event.stopPropagation();wa('${safeH}','${item.link}')" title="Share on WhatsApp">📲</button>
           ${clickable ? `<a href="${item.link}" target="_blank" rel="noopener" class="rbtn" onclick="event.stopPropagation()">Read →</a>` : ''}
         </div>
       </div>
@@ -595,75 +749,9 @@ function card(item, delay, catLabel, q) {
   </div>`;
 }
 
-/* ── NewsAPI fetch ────────────────────────────────────────── */
-/**
- * parseNewsAPI — converts a NewsAPI JSON response into our internal
- * article format { headline, summary, source, link, pubDate, image, importance }
- */
-function parseNewsAPI(json) {
-  if (!json || json.status !== 'ok') {
-    const code = json?.code || '';
-    const msg  = json?.message || 'Unknown error from NewsAPI';
-    throw new Error(`${code}: ${msg}`);
-  }
-  return (json.articles || [])
-    .filter(a => a.title && a.title !== '[Removed]' && a.url)
-    .map(a => ({
-      headline:   trunc(a.title || '', 120),
-      summary:    trunc(a.description || a.content || 'Tap Read to view the full story.', 220),
-      source:     a.source?.name || new URL(a.url).hostname.replace('www.',''),
-      link:       a.url,
-      pubDate:    a.publishedAt || '',
-      image:      a.urlToImage  || '',
-      importance: getImp((a.title || '') + ' ' + (a.description || '')),
-    }));
-}
-
-/**
- * fetchCategory — fetches one category from NewsAPI with full error handling.
- * Returns { items, ms, error }
- */
-async function fetchCategory(key) {
-  const t0 = Date.now();
-  const url = NEWS_ENDPOINTS[key](NEWSAPI_KEY);
-
-  let json;
-  try {
-    const res = await fetch(url, { cache: 'no-store' });
-    json = await res.json();
-
-    // NewsAPI returns HTTP 200 even for errors, so check the body too
-    if (!res.ok || json.status !== 'ok') {
-      const code = json?.code || res.status;
-      const msg  = json?.message || `HTTP ${res.status}`;
-      throw new Error(`${code}: ${msg}`);
-    }
-  } catch (err) {
-    // Network failure or JSON parse error
-    const errMsg = err.message || 'Network error';
-    console.error(`[fetchCategory:${key}]`, errMsg);
-    return { items: [], ms: ((Date.now() - t0) / 1000).toFixed(1) + 's', error: errMsg };
-  }
-
-  try {
-    const rawItems = parseNewsAPI(json);
-
-    // Sort newest first
-    rawItems.sort((a, b) => {
-      const da = a.pubDate ? new Date(a.pubDate) : new Date(0);
-      const db = b.pubDate ? new Date(b.pubDate) : new Date(0);
-      return db - da;
-    });
-
-    // Deduplicate and limit
-    const items = dedup(rawItems).slice(0, 15);
-    return { items, ms: ((Date.now() - t0) / 1000).toFixed(1) + 's', error: null };
-  } catch (err) {
-    return { items: [], ms: ((Date.now() - t0) / 1000).toFixed(1) + 's', error: err.message };
-  }
-}
-
-/* ── Grid renderer ────────────────────────────────────────── */
+/* ================================================================
+   GRID RENDERER
+   ================================================================ */
 function renderGrid(gid, items, cid, bid, q) {
   cardStore = {}; cardCount = 0;
   const el = document.getElementById(gid);
@@ -672,11 +760,14 @@ function renderGrid(gid, items, cid, bid, q) {
   el.innerHTML = view.length
     ? view.map((it, i) => card(it, i * 0.045, null, q)).join('')
     : '<div class="empty"><div class="ei">📭</div><p>No stories found.</p></div>';
-  if (cid) document.getElementById(cid).textContent = topOnly ? `Top 5 of ${items.length}` : items.length + ' stories';
+  if (cid) document.getElementById(cid).textContent =
+    topOnly ? `Top 5 of ${items.length}` : items.length + ' stories';
   if (bid) document.getElementById(bid).textContent = topOnly ? '5' : items.length;
 }
 
-/* ── Overview ────────────────────────────────────────────── */
+/* ================================================================
+   OVERVIEW PANEL
+   ================================================================ */
 function renderOverview() {
   const cats = [
     { key:'agri', cls:'agri', icon:'🌾', lbl:'Agriculture', tab:'agri' },
@@ -684,6 +775,8 @@ function renderOverview() {
     { key:'pol',  cls:'pol',  icon:'🏛️', lbl:'Politics',    tab:'pol'  },
     { key:'gen',  cls:'gen',  icon:'🌐', lbl:'General',     tab:'gen'  },
   ];
+
+  /* Category summary cards */
   document.getElementById('ovgrid').innerHTML = cats.map(c => {
     const a = appData[c.key] || [];
     return `<div class="ovc ${c.cls}" onclick="goTab('${c.tab}')">
@@ -693,6 +786,7 @@ function renderOverview() {
     </div>`;
   }).join('');
 
+  /* Top Stories grid — 2 highest-importance items per category */
   const ord = { H:0, M:1, L:2 };
   const top = [];
   cats.forEach(c => {
@@ -704,17 +798,21 @@ function renderOverview() {
 
   const topView = topOnly ? top.slice(0, 5) : top;
   cardStore = {}; cardCount = 0;
+
   document.getElementById('topgrid').innerHTML = topView.length
     ? topView.map((it, i) => {
-        const imp = it.importance || 'L';
-        const bm  = isBm(it.link);
-        const id  = 'c' + (cardCount++);
+        const imp    = it.importance || 'L';
+        const bm     = isBm(it.link);
+        const id     = 'c' + (cardCount++);
+        const safeH  = it.headline.replace(/'/g,"\\'").replace(/"/g,'&quot;');
         cardStore[id] = it;
         return `<div class="nc clickable" style="animation-delay:${i * 0.045}s"
           onclick="if(!event.target.closest('button,a'))window.open('${it.link}','_blank')">
-          ${it.image ? `<img class="nc-img" src="${it.image}" alt="" loading="lazy"
-            onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-            <div class="nc-img-placeholder" style="display:none">📰</div>` : ''}
+          ${it.image
+            ? `<img class="nc-img" src="${it.image}" alt="" loading="lazy"
+                onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+               <div class="nc-img-placeholder" style="display:none">📰</div>`
+            : ''}
           <div class="nc-body">
             <div class="nctop2">
               <div class="nccat">${it._cat}</div>
@@ -728,10 +826,15 @@ function renderOverview() {
             <div class="nchead"><h4>${it.headline}</h4><span class="imp ${imp}">${impLabel(imp)}</span></div>
             <div class="ncsum">${it.summary}</div>
             <div class="ncft">
-              <div class="ncmeta"><div class="ncsrc">${it.source}</div><div class="nct">${it.pubDate ? ago(it.pubDate) : ''}</div></div>
+              <div class="ncmeta">
+                <div class="ncsrc">${it.source}</div>
+                <div class="nct">${it.pubDate ? ago(it.pubDate) : ''}</div>
+              </div>
               <div class="ncbtns">
-                <button class="wabtn" onclick="event.stopPropagation();wa('${it.headline.replace(/'/g,"\\'").replace(/"/g,'&quot;')}','${it.link}')">📲</button>
-                ${it.link && it.link !== '#' ? `<a href="${it.link}" target="_blank" rel="noopener" class="rbtn" onclick="event.stopPropagation()">Read →</a>` : ''}
+                <button class="wabtn" onclick="event.stopPropagation();wa('${safeH}','${it.link}')">📲</button>
+                ${it.link && it.link !== '#'
+                  ? `<a href="${it.link}" target="_blank" rel="noopener" class="rbtn" onclick="event.stopPropagation()">Read →</a>`
+                  : ''}
               </div>
             </div>
           </div>
@@ -740,23 +843,20 @@ function renderOverview() {
     : '<div class="empty"><div class="ei">📰</div><p>Loading…</p></div>';
 }
 
-/* ── Top Stories toggle ───────────────────────────────────── */
+/* ── Top-stories filter toggle ───────────────────────────── */
 function toggleTop() {
   topOnly = !topOnly;
   const btn = document.getElementById('topbtn');
   if (btn) {
-    btn.textContent    = topOnly ? '🔄 Show All' : '🔥 Top Stories';
+    btn.textContent      = topOnly ? '🔄 Show All' : '🔥 Top Stories';
     btn.style.background = topOnly ? 'rgba(246,166,33,.25)' : 'var(--amber-d)';
   }
-  renderOverview();
-  renderGrid('grid-agri',  appData.agri,  'c-agri',  'b-agri');
-  renderGrid('grid-biz',   appData.biz,   'c-biz',   'b-biz');
-  renderGrid('grid-pol',   appData.pol,   'c-pol',   'b-pol');
-  renderGrid('grid-gen',   appData.gen,   'c-gen',   'b-gen');
-  renderGrid('grid-mandi', appData.mandi, 'c-mandi', null);
+  renderAll();
 }
 
-/* ── Search ───────────────────────────────────────────────── */
+/* ================================================================
+   SEARCH
+   ================================================================ */
 function onSearch(val) {
   searchQuery = val.trim().toLowerCase();
   document.getElementById('sclr').style.display = val ? 'block' : 'none';
@@ -769,16 +869,16 @@ function onSearch(val) {
   const all = [...appData.agri, ...appData.biz, ...appData.pol, ...appData.gen, ...appData.mandi];
   const res = all.filter(it =>
     it.headline.toLowerCase().includes(searchQuery) ||
-    it.summary.toLowerCase().includes(searchQuery) ||
+    it.summary.toLowerCase().includes(searchQuery)  ||
     (it.source || '').toLowerCase().includes(searchQuery)
   );
   cardStore = {}; cardCount = 0;
   document.getElementById('grid-sr').innerHTML = res.length
     ? res.map((it, i) => card(it, i * 0.04, null, searchQuery)).join('')
     : `<div class="empty"><div class="ei">🔍</div><p>No results for "<b>${val}</b>"</p></div>`;
-  document.getElementById('c-sr').textContent   = res.length + ' found';
-  document.getElementById('b-sr').textContent   = res.length;
-  document.getElementById('srline').innerHTML   = `Showing <b>${res.length}</b> results for "<b>${val}</b>"`;
+  document.getElementById('c-sr').textContent  = res.length + ' found';
+  document.getElementById('b-sr').textContent  = res.length;
+  document.getElementById('srline').innerHTML  = `Showing <b>${res.length}</b> results for "<b>${val}</b>"`;
   document.getElementById('srtab').style.display = 'flex';
   goTab('sr');
 }
@@ -789,30 +889,31 @@ function clearSearch() {
   if (activeTab === 'sr') goTab('overview');
 }
 
-/* ── Saved ────────────────────────────────────────────────── */
+/* ── Saved tab ─────────────────────────────────────────────*/
 function renderSaved() {
   cardStore = {}; cardCount = 0;
-  const el = document.getElementById('grid-saved');
-  el.innerHTML = bookmarks.length
+  document.getElementById('grid-saved').innerHTML = bookmarks.length
     ? bookmarks.map((it, i) => card(it, i * 0.04)).join('')
     : '<div class="empty"><div class="ei">🔖</div><p>No saved articles yet.<br>Tap 🏷️ on any story to save it.</p></div>';
   updSaved();
 }
 
-/* ── Mandi prices ─────────────────────────────────────────── */
+/* ── Mandi static prices ──────────────────────────────────*/
 function renderMandi() {
   document.getElementById('mgrid').innerHTML = MANDI_DATA.map(m =>
     `<div class="mc">
-      <div class="mcrop">${m.e}</div>
-      <div class="mname">${m.n}</div>
-      <div class="mprice">${m.p}</div>
-      <div class="munit">${m.u}</div>
-      <div class="mchg ${m.up ? 'up' : 'dn'}">${m.c}</div>
-    </div>`
+       <div class="mcrop">${m.e}</div>
+       <div class="mname">${m.n}</div>
+       <div class="mprice">${m.p}</div>
+       <div class="munit">${m.u}</div>
+       <div class="mchg ${m.up ? 'up' : 'dn'}">${m.c}</div>
+     </div>`
   ).join('');
 }
 
-/* ── Weather ──────────────────────────────────────────────── */
+/* ================================================================
+   WEATHER  (open-meteo, no key required)
+   ================================================================ */
 async function fetchWeather() {
   setStep('wx', 'active');
   try {
@@ -822,19 +923,19 @@ async function fetchWeather() {
         await new Promise((res, rej) =>
           navigator.geolocation.getCurrentPosition(
             p => { lat = p.coords.latitude; lon = p.coords.longitude; city = 'Your Location'; res(); },
-            rej,
-            { timeout: 4000 }
+            rej, { timeout: 4000 }
           )
         );
       }
-    } catch { /* use Mumbai default */ }
+    } catch { /* fall back to Mumbai */ }
 
     const r = await fetch(
-      `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,weathercode,windspeed_10m&timezone=Asia%2FKolkata`,
+      `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}` +
+      `&current=temperature_2m,relative_humidity_2m,weathercode,windspeed_10m&timezone=Asia%2FKolkata`,
       { cache: 'no-store' }
     );
     const d = await r.json();
-    const c = d.current;
+    const c   = d.current;
     const ico  = WI[c.weathercode] || '🌤️';
     const desc = WD[c.weathercode] || '';
     document.getElementById('wxwrap').innerHTML = `
@@ -860,28 +961,31 @@ async function fetchWeather() {
   }
 }
 
-/* ── Ticker ───────────────────────────────────────────────── */
+/* ── Ticker ──────────────────────────────────────────────── */
 function renderTicker(items) {
   document.getElementById('tscroll').innerHTML = items.map(m =>
-    `<div class="titem"><span class="tn">${m.n}</span><span class="tv ${m.cls}">${m.v}</span>${m.c ? `<span class="tc ${m.cls}">${m.c}</span>` : ''}</div>`
+    `<div class="titem">
+       <span class="tn">${m.n}</span>
+       <span class="tv ${m.cls}">${m.v}</span>
+       ${m.c ? `<span class="tc ${m.cls}">${m.c}</span>` : ''}
+     </div>`
   ).join('');
 }
 renderTicker([
-  {n:'Sensex',v:'—',c:'',cls:'neu'},
-  {n:'Nifty',v:'—',c:'',cls:'neu'},
-  {n:'Gold',v:'—',c:'',cls:'neu'},
-  {n:'USD/INR',v:'—',c:'',cls:'neu'},
+  {n:'Sensex',v:'—',c:'',cls:'neu'},{n:'Nifty',v:'—',c:'',cls:'neu'},
+  {n:'Gold',v:'—',c:'',cls:'neu'}, {n:'USD/INR',v:'—',c:'',cls:'neu'},
 ]);
 
-/* ── Loading step UI ──────────────────────────────────────── */
+/* ── Loading step UI ────────────────────────────────────── */
 function setStep(id, state, t) {
   const el = document.getElementById('ls-' + id);
   if (!el) return;
   el.className = 'lstep ' + state;
-  if (t) document.getElementById('lt-' + id).textContent = t;
+  const tEl = document.getElementById('lt-' + id);
+  if (t && tEl) tEl.textContent = t;
 }
 
-/* ── Tab navigation ───────────────────────────────────────── */
+/* ── Tab navigation ─────────────────────────────────────── */
 function goTab(tab) {
   activeTab = tab;
   document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
@@ -892,155 +996,54 @@ function goTab(tab) {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-/* ── Auto-refresh ─────────────────────────────────────────── */
+/* ================================================================
+   AUTO-REFRESH
+   ================================================================ */
 function startAR() {
   if (arTimer) clearInterval(arTimer);
   arNext = Date.now() + AR;
-  const pill = document.getElementById('arpill');
-  pill.style.display = 'flex';
+  document.getElementById('arpill').style.display = 'flex';
   const tick = () => {
     const rem = Math.max(0, arNext - Date.now());
     const h = ~~(rem / 3600000);
     const m = ~~((rem % 3600000) / 60000);
     const s = ~~((rem % 60000) / 1000);
     document.getElementById('arcd').textContent = h > 0 ? `${h}h ${m}m` : `${m}m ${s}s`;
-    if (rem <= 0) { fetchAll(true); arNext = Date.now() + AR; }
+    if (rem <= 0) { fetchNews(); arNext = Date.now() + AR; }
   };
   tick();
   arTimer = setInterval(tick, 1000);
 }
 
+/* Refresh on tab-focus if stale */
 document.addEventListener('visibilitychange', () => {
   if (!document.hidden && loaded) {
     const last = localStorage.getItem('idb_last');
-    if (last && (Date.now() - new Date(last)) > AR) fetchAll(true);
+    if (last && (Date.now() - new Date(last)) > AR) fetchNews();
   }
 });
 
-/* ── Theme toggle ─────────────────────────────────────────── */
+/* ── Theme toggle ───────────────────────────────────────── */
 function toggleTheme() {
   isDark = !isDark;
   document.getElementById('thbtn').textContent = isDark ? '☀️' : '🌙';
   const v = isDark
-    ? { bg:'#0B0F1A',bg2:'#111827',card:'#15202E',card2:'#1E2D40',card3:'#243347',bdr:'#1E2D40',bdr2:'#263548',text:'#F1F5F9',text2:'#94A3B8',text3:'#4B6080',text4:'#2E4260' }
-    : { bg:'#F8F9FA',bg2:'#FFFFFF',card:'#FFFFFF',card2:'#F1F5F9',card3:'#E2E8F0',bdr:'#E2E8F0',bdr2:'#CBD5E1',text:'#0F172A',text2:'#475569',text3:'#94A3B8',text4:'#CBD5E1' };
-  const names = ['--bg','--bg2','--card','--card2','--card3','--border','--border2','--text','--text2','--text3','--text4'];
-  const vals  = Object.values(v);
-  names.forEach((n, i) => document.documentElement.style.setProperty(n, vals[i]));
+    ? {bg:'#0B0F1A',bg2:'#111827',card:'#15202E',card2:'#1E2D40',card3:'#243347',
+       bdr:'#1E2D40',bdr2:'#263548',text:'#F1F5F9',text2:'#94A3B8',text3:'#4B6080',text4:'#2E4260'}
+    : {bg:'#F8F9FA',bg2:'#FFFFFF',card:'#FFFFFF',card2:'#F1F5F9',card3:'#E2E8F0',
+       bdr:'#E2E8F0',bdr2:'#CBD5E1',text:'#0F172A',text2:'#475569',text3:'#94A3B8',text4:'#CBD5E1'};
+  ['--bg','--bg2','--card','--card2','--card3','--border','--border2','--text','--text2','--text3','--text4']
+    .forEach((n, i) => document.documentElement.style.setProperty(n, Object.values(v)[i]));
 }
 
-/* ── Main fetch — all parallel ────────────────────────────── */
-async function fetchAll(silent) {
-  if (!NEWSAPI_KEY) {
-    document.getElementById('apiBanner').style.display = 'block';
-    return;
-  }
-  hideError();
-  const btn = document.getElementById('rbtn');
-  btn.disabled = true; btn.textContent = '⏳';
-
-  if (!silent) {
-    document.getElementById('welcome').style.display = 'none';
-    document.querySelectorAll('.panel').forEach(p => p.classList.remove('show'));
-    document.getElementById('loading').style.display = 'flex';
-  }
-
-  ['agri','biz','pol','gen'].forEach(id => setStep(id, 'active'));
-  setStep('wx', 'active');
-
-  /* Fetch all categories in parallel */
-  const [a, b, p, g, m] = await Promise.all([
-    fetchCategory('agri'),
-    fetchCategory('biz'),
-    fetchCategory('pol'),
-    fetchCategory('gen'),
-    fetchCategory('mandi'),
-  ]);
-
-  appData.agri  = a.items; setStep('agri',  a.items.length ? 'done' : 'fail', a.ms);
-  appData.biz   = b.items; setStep('biz',   b.items.length ? 'done' : 'fail', b.ms);
-  appData.pol   = p.items; setStep('pol',   p.items.length ? 'done' : 'fail', p.ms);
-  appData.gen   = g.items; setStep('gen',   g.items.length ? 'done' : 'fail', g.ms);
-  appData.mandi = m.items;
-
-  /* Collect errors */
-  const errors = [a,b,p,g,m].filter(r => r.error).map(r => r.error);
-  if (errors.length > 0 && appData.agri.length + appData.biz.length + appData.pol.length + appData.gen.length === 0) {
-    const firstErr = errors[0];
-    if (firstErr.includes('apiKeyInvalid') || firstErr.includes('401')) {
-      showError('Invalid API Key', 'Your NewsAPI key is invalid or expired. Please check newsapi.org and update your key.');
-      NEWSAPI_KEY = '';
-      localStorage.removeItem('idb_apikey');
-      document.getElementById('apiBanner').style.display = 'block';
-    } else if (firstErr.includes('corsNotAllowed') || firstErr.includes('403')) {
-      showError('CORS / Plan Restriction',
-        'NewsAPI free tier only allows requests from localhost. To use on a public domain, upgrade to a paid plan or proxy requests through your own backend server.');
-    } else {
-      showError('Could not fetch news', firstErr);
-    }
-  }
-
-  fetchWeather();
-
-  /* Update ticker with biz headlines */
-  if (appData.biz.length > 0) {
-    renderTicker(appData.biz.slice(0, 4).map((it, i) => ({
-      n: ['📈','💰','📊','🏦'][i],
-      v: trunc(it.headline, 45),
-      c: '',
-      cls: 'neu',
-    })));
-  }
-
-  if (!silent) {
-    document.getElementById('loading').style.display = 'none';
-    loaded = true;
-    document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === 'overview'));
-    document.getElementById('panel-overview').classList.add('show');
-    activeTab = 'overview';
-  }
-
-  const total = appData.agri.length + appData.biz.length + appData.pol.length + appData.gen.length;
-  renderOverview();
-  renderGrid('grid-agri',  appData.agri,  'c-agri',  'b-agri');
-  renderGrid('grid-biz',   appData.biz,   'c-biz',   'b-biz');
-  renderGrid('grid-pol',   appData.pol,   'c-pol',   'b-pol');
-  renderGrid('grid-gen',   appData.gen,   'c-gen',   'b-gen');
-  renderGrid('grid-mandi', appData.mandi, 'c-mandi', null);
-  renderMandi();
-  updSaved();
-
-  const now2 = new Date().toLocaleTimeString('en-IN', { hour:'2-digit', minute:'2-digit' });
-  const luEl = document.getElementById('last-updated');
-  if (luEl) { luEl.textContent = '🕐 ' + now2; luEl.style.display = 'inline-flex'; }
-
-  document.getElementById('stxt').innerHTML = total > 0
-    ? `<b>${total} stories</b> loaded &nbsp;·&nbsp; <span style="color:var(--teal)">Powered by NewsAPI</span> &nbsp;·&nbsp; <span style="color:var(--text3);font-size:10px;">Latest first · Duplicates removed</span>`
-    : `<span style="color:var(--red)">⚠️ No stories loaded — check your API key or plan limits.</span>`;
-  document.getElementById('utxt').textContent = total > 0 ? '🕐 Updated ' + now2 : '';
-
-  if (total > 0) {
-    localStorage.setItem('idb_last', new Date().toISOString());
-    localStorage.setItem('idb_cache', JSON.stringify(appData));
-    if (silent) toast('🔄 News refreshed!');
-    startAR();
-  }
-  btn.disabled = false;
-  btn.innerHTML = '⚡ Refresh';
-}
-
-/* ── Init — instant cache load ────────────────────────────── */
+/* ================================================================
+   INIT — restore from local cache, then kick off fetch
+   ================================================================ */
 (function init() {
   document.getElementById('date-el').textContent = new Date().toLocaleDateString('en-IN',
     { weekday:'short', day:'numeric', month:'short', year:'numeric' });
   updSaved();
   renderMandi();
-
-  /* Pre-fill API key input if saved */
-  if (NEWSAPI_KEY) {
-    const inp = document.getElementById('apiKeyInput');
-    if (inp) inp.value = NEWSAPI_KEY;
-  }
 
   const cache = localStorage.getItem('idb_cache');
   const last  = localStorage.getItem('idb_last');
@@ -1050,38 +1053,42 @@ async function fetchAll(silent) {
       appData = JSON.parse(cache);
       loaded  = true;
       document.getElementById('welcome').style.display = 'none';
-      renderOverview();
-      renderGrid('grid-agri',  appData.agri,  'c-agri',  'b-agri');
-      renderGrid('grid-biz',   appData.biz,   'c-biz',   'b-biz');
-      renderGrid('grid-pol',   appData.pol,   'c-pol',   'b-pol');
-      renderGrid('grid-gen',   appData.gen,   'c-gen',   'b-gen');
-      renderGrid('grid-mandi', appData.mandi, 'c-mandi', null);
-      updSaved();
+      renderAll();
       document.getElementById('panel-overview').classList.add('show');
-      document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === 'overview'));
+      document.querySelectorAll('.tab').forEach(t =>
+        t.classList.toggle('active', t.dataset.tab === 'overview'));
       activeTab = 'overview';
+
       const t = new Date(last).toLocaleTimeString('en-IN', { hour:'2-digit', minute:'2-digit' });
       const luEl = document.getElementById('last-updated');
       if (luEl) { luEl.textContent = '🕐 ' + t; luEl.style.display = 'inline-flex'; }
+
       const total = appData.agri.length + appData.biz.length + appData.pol.length + appData.gen.length;
       document.getElementById('stxt').innerHTML = `<b>${total} stories</b> (cached)`;
       document.getElementById('utxt').textContent = 'Last fetch: ' + t;
-      /* Refresh in background if cache is over 1 hour old */
-      if ((Date.now() - new Date(last)) / 3600000 > 1) setTimeout(() => fetchAll(true), 1200);
-      else startAR();
+
+      /* Background refresh if cache > 1 hour old */
+      if ((Date.now() - new Date(last)) / 3600000 > 1) {
+        setTimeout(() => fetchNews(), 1200);
+      } else {
+        startAR();
+      }
+
       fetchWeather();
-      if (appData.biz.length) renderTicker(appData.biz.slice(0, 4).map((it, i) => ({
-        n: ['📈','💰','📊','🏦'][i], v: trunc(it.headline, 45), c: '', cls: 'neu',
-      })));
+      if (appData.biz.length) {
+        renderTicker(appData.biz.slice(0, 4).map((it, i) => ({
+          n: ['📈','💰','📊','🏦'][i], v: trunc(it.headline, 45), c: '', cls: 'neu',
+        })));
+      }
     } catch {
-      setTimeout(() => fetchAll(false), 300);
+      /* Corrupt cache — fresh fetch */
+      localStorage.removeItem('idb_cache');
+      localStorage.removeItem('idb_last');
+      setTimeout(() => fetchNews(), 300);
     }
-  } else if (NEWSAPI_KEY) {
-    /* Key saved, no cache — fetch immediately */
-    setTimeout(() => fetchAll(false), 300);
   } else {
-    /* No key, no cache — show welcome with API banner */
-    document.getElementById('apiBanner').style.display = 'block';
+    /* No cache — fetch immediately */
+    setTimeout(() => fetchNews(), 300);
   }
 })();
 </script>
