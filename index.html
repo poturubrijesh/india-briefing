@@ -91,7 +91,6 @@ header{background:linear-gradient(180deg,rgba(11,15,26,.98),rgba(17,24,39,.96));
 .sbtn{background:linear-gradient(135deg,var(--amber),var(--amber2));color:#0B0F1A;border:none;padding:13px 36px;border-radius:10px;font-size:15px;font-weight:800;cursor:pointer;font-family:var(--ff);box-shadow:0 0 24px rgba(246,166,33,.3);transition:all .2s;}
 .sbtn:hover{transform:translateY(-2px);box-shadow:0 0 32px rgba(246,166,33,.45);}
 .ntip{margin-top:16px;font-size:11.5px;color:var(--text3);line-height:1.7;}
-.ntip a{color:var(--blue);font-weight:600;text-decoration:none;}
 
 /* LOADING */
 #loading{display:none;flex-direction:column;align-items:center;justify-content:center;min-height:55vh;gap:18px;}
@@ -211,8 +210,8 @@ header{background:linear-gradient(180deg,rgba(11,15,26,.98),rgba(17,24,39,.96));
 /* ERROR CARD */
 .err-card{background:var(--red-d);border:1px solid rgba(239,68,68,.25);border-radius:12px;padding:18px 20px;margin-bottom:16px;display:none;}
 .err-card h4{font-size:13px;font-weight:700;color:#F87171;margin-bottom:5px;}
-.err-card p{font-size:12px;color:var(--text2);line-height:1.6;}
-.err-card code{font-size:11px;background:rgba(0,0,0,.3);padding:2px 6px;border-radius:4px;color:#F87171;}
+.err-card p{font-size:12px;color:var(--text2);line-height:1.6;white-space:pre-wrap;}
+.err-card .err-detail{font-size:11px;margin-top:8px;padding:8px 10px;background:rgba(0,0,0,.25);border-radius:6px;color:#F87171;font-family:monospace;word-break:break-all;}
 
 /* TOAST */
 #toast{position:fixed;bottom:22px;right:22px;z-index:999;background:var(--card2);border:1px solid var(--border2);color:var(--text);font-size:13px;font-weight:500;padding:10px 16px;border-radius:9px;box-shadow:0 8px 32px rgba(0,0,0,.5);transform:translateY(70px);opacity:0;transition:all .3s cubic-bezier(.34,1.56,.64,1);pointer-events:none;max-width:260px;}
@@ -279,6 +278,7 @@ header{background:linear-gradient(180deg,rgba(11,15,26,.98),rgba(17,24,39,.96));
  <div class="err-card" id="errCard">
   <h4>⚠️ <span id="errTitle">Could not load news</span></h4>
   <p id="errMsg">–</p>
+  <div class="err-detail" id="errDetail" style="display:none"></div>
  </div>
 
  <!-- WELCOME -->
@@ -294,7 +294,7 @@ header{background:linear-gradient(180deg,rgba(11,15,26,.98),rgba(17,24,39,.96));
    <div class="wp mandi">🛒 Mandi Prices</div>
   </div>
   <button class="sbtn" onclick="fetchNews()">⚡ Get Today's Briefing</button>
-  <p class="ntip">Powered by a secure backend · No API keys in your browser</p>
+  <p class="ntip">Powered by Supabase Edge Function · No API keys in your browser</p>
  </div>
 
  <!-- LOADING -->
@@ -302,7 +302,7 @@ header{background:linear-gradient(180deg,rgba(11,15,26,.98),rgba(17,24,39,.96));
   <div class="spin"></div>
   <div class="lcard">
    <div class="lhd">Fetching today's news</div>
-   <div class="lsub">Contacting backend · Fetching all categories…</div>
+   <div class="lsub" id="lsub">Connecting to backend…</div>
    <div>
     <div class="lstep" id="ls-agri"><div class="ldot"></div><span class="ltxt">🌾 Agriculture — crops, mandi, MSP</span><span class="ltime" id="lt-agri"></span></div>
     <div class="lstep" id="ls-biz"> <div class="ldot"></div><span class="ltxt">📈 Business — markets, RBI, economy</span><span class="ltime" id="lt-biz"></span></div>
@@ -378,21 +378,24 @@ header{background:linear-gradient(180deg,rgba(11,15,26,.98),rgba(17,24,39,.96));
 
 <script>
 /* ================================================================
-   CONFIGURATION
-   Replace YOUR_PROJECT_ID with your actual Supabase project ID.
-   The Edge Function must be deployed at: functions/v1/fetch-news
-   Expected response shape:
+   BACKEND — single source of truth.
+   All news flows through this Supabase Edge Function.
+   No direct NewsAPI calls. No RSS feeds. No CORS proxies.
+   Expected JSON response shape from backend:
    {
      articles: {
        agri:  [ { title, description, urlToImage, url, publishedAt, source:{name} }, … ],
-       biz:   […],
-       pol:   […],
-       gen:   […],
-       mandi: […]
+       biz:   [ … ],
+       pol:   [ … ],
+       gen:   [ … ],
+       mandi: [ … ]
      }
    }
    ================================================================ */
 const BACKEND_URL = 'https://lkdajfsqpljdtsgapzeb.supabase.co/functions/v1/smooth-responder';
+
+/* ── Fetch guard — prevents overlapping fetches ──────────── */
+let isFetching = false;
 
 /* ── Static mandi price data (indicative) ─────────────────── */
 const MANDI_DATA = [
@@ -410,104 +413,151 @@ const MANDI_DATA = [
   {e:'🟡',n:'Mustard',  p:'5200–5600',u:'₹/qtl',c:'-0.4%',up:0},
 ];
 
-/* ── Importance classifiers ───────────────────────────────── */
+/* ── Importance keyword classifiers ───────────────────────── */
 const HKW = ['crisis','flood','drought','record','ban','strike','collapse','emergency',
              'attack','death','explosion','historic','election','budget','scam','war','arrest','verdict'];
 const MKW = ['launch','policy','scheme','rise','fall','growth','report','minister',
              'government','price','market','rbi','award','deal','merger'];
 
-/* ── Weather code maps ────────────────────────────────────── */
+/* ── Weather code maps (open-meteo, no API key needed) ─────── */
 const WI = {0:'☀️',1:'🌤️',2:'⛅',3:'☁️',45:'🌫️',51:'🌦️',61:'🌧️',63:'🌧️',80:'🌦️',95:'⛈️'};
 const WD = {0:'Clear sky',1:'Mainly clear',2:'Partly cloudy',3:'Overcast',45:'Foggy',
             51:'Drizzle',61:'Light rain',63:'Moderate rain',80:'Showers',95:'Thunderstorm'};
 
 /* ── App state ────────────────────────────────────────────── */
-let appData    = { agri:[], biz:[], pol:[], gen:[], mandi:[] };
-let bookmarks  = JSON.parse(localStorage.getItem('idb_bm') || '[]');
-let activeTab  = 'overview';
-let loaded     = false;
-let isDark     = true;
-let arTimer    = null;
-let arNext     = 0;
+let appData     = { agri:[], biz:[], pol:[], gen:[], mandi:[] };
+let bookmarks   = JSON.parse(localStorage.getItem('idb_bm') || '[]');
+let activeTab   = 'overview';
+let loaded      = false;
+let isDark      = true;
+let arTimer     = null;
+let arNext      = 0;
 let searchQuery = '';
-let cardStore  = {};
-let cardCount  = 0;
-let topOnly    = false;
-let AR         = 120000; // 2 minutes default
+let cardStore   = {};
+let cardCount   = 0;
+let topOnly     = false;
+let AR          = 120000; // 2-minute default
 
 /* ================================================================
    CORE: fetchNews()
-   Single async function. Calls the Supabase Edge Function,
-   receives { articles: { agri, biz, pol, gen, mandi } },
-   maps each array to internal format, then renders everything.
+   ─ Only ONE network call to BACKEND_URL.
+   ─ No direct NewsAPI / RSS / allorigins calls anywhere.
+   ─ Parses { articles: { agri, biz, pol, gen, mandi } }
+   ─ Falls back gracefully on any error.
    ================================================================ */
 async function fetchNews() {
+  if (isFetching) return; // prevent double-fetch
+  isFetching = true;
+
   const btn = document.getElementById('rbtn');
-  btn.disabled = true;
-  btn.textContent = '⏳';
+  btn.disabled  = true;
+  btn.innerHTML = '⏳ Loading…';
   hideError();
 
-  /* Show loading screen on first load */
+  /* Show loading UI on first load */
   if (!loaded) {
     document.getElementById('welcome').style.display = 'none';
     document.querySelectorAll('.panel').forEach(p => p.classList.remove('show'));
     document.getElementById('loading').style.display = 'flex';
+    document.getElementById('lsub').textContent = 'Connecting to Supabase backend…';
   }
 
-  /* Mark all loading steps active */
+  /* Animate all steps to "active" */
   ['agri','biz','pol','gen','wx'].forEach(id => setStep(id, 'active'));
 
   const t0 = Date.now();
-  let raw;
+  let raw   = null;
 
+  /* ── Step 1: HTTP fetch ───────────────────────────────── */
   try {
-    /* ── Single fetch to backend — no API key in the request ── */
+    const controller = new AbortController();
+    const timeout    = setTimeout(() => controller.abort(), 20000); // 20s timeout
+
     const res = await fetch(BACKEND_URL, {
       method:  'GET',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
       cache:   'no-store',
+      signal:  controller.signal,
     });
+    clearTimeout(timeout);
 
+    /* ── Step 2: Check HTTP status ──────────────────────── */
     if (!res.ok) {
-      /* Surface HTTP-level errors (4xx / 5xx from the Edge Function) */
-      let errBody = '';
-      try { errBody = await res.text(); } catch { /* ignore */ }
-      throw new Error(`HTTP ${res.status}${errBody ? ': ' + errBody.slice(0, 120) : ''}`);
+      let body = '';
+      try { body = await res.text(); } catch { /* ignore */ }
+      throw new Error(
+        `Backend returned HTTP ${res.status} ${res.statusText}.` +
+        (body ? `\n\nResponse: ${body.slice(0, 300)}` : '')
+      );
     }
 
-    raw = await res.json();
+    /* ── Step 3: Parse JSON ─────────────────────────────── */
+    try {
+      raw = await res.json();
+    } catch (jsonErr) {
+      throw new Error(`Backend returned invalid JSON: ${jsonErr.message}`);
+    }
+
   } catch (err) {
-    /* Network failure or non-2xx response */
-    const msg = err.message || 'Network error — could not reach backend.';
-    console.error('[fetchNews]', msg);
-    showError('Backend Error', msg +
-      '\n\nMake sure your Supabase Edge Function is deployed and BACKEND_URL is correct.');
+    const isTimeout = err.name === 'AbortError';
+    const msg = isTimeout
+      ? 'Request timed out after 20 seconds. The backend may be cold-starting — try again.'
+      : (err.message || 'Network error — could not reach the backend.');
+
+    console.error('[fetchNews] Fetch failed:', msg);
+    showError(
+      isTimeout ? 'Request Timeout' : 'Backend Fetch Error',
+      msg,
+      'Check: Supabase Edge Function is deployed · Function is set to public (no JWT required for GET) · BACKEND_URL is correct'
+    );
     ['agri','biz','pol','gen'].forEach(id => setStep(id, 'fail'));
     finishLoad(btn, 0, false);
+    isFetching = false;
     return;
   }
 
-  /* ── Parse response ──────────────────────────────────────── */
-  const incoming = raw.articles || {};
+  /* ── Step 4: Validate response shape ────────────────────
+     Support two possible shapes:
+       A) { articles: { agri, biz, pol, gen, mandi } }  ← preferred
+       B) { agri, biz, pol, gen, mandi }                ← flat fallback
+     ──────────────────────────────────────────────────── */
+  let incoming = {};
+  if (raw && raw.articles && typeof raw.articles === 'object') {
+    incoming = raw.articles;                 // shape A
+  } else if (raw && (raw.agri || raw.biz || raw.pol || raw.gen)) {
+    incoming = raw;                          // shape B (flat)
+  } else {
+    console.warn('[fetchNews] Unexpected response shape:', raw);
+    showError(
+      'Unexpected Response',
+      'Backend responded successfully, but the data shape was not recognised.\n' +
+      'Expected: { articles: { agri, biz, pol, gen, mandi } }',
+      JSON.stringify(raw, null, 2).slice(0, 400)
+    );
+    finishLoad(btn, 0, false);
+    isFetching = false;
+    return;
+  }
 
-  /* Map one NewsAPI-compatible article to internal format */
+  /* ── Step 5: Map and process each category ───────────── */
   function mapArticle(a) {
     return {
-      headline:   trunc(a.title || '', 120),
+      headline:   trunc(a.title       || 'Untitled', 120),
       summary:    trunc(a.description || a.content || 'Tap Read to view the full story.', 220),
       source:     (a.source && a.source.name) ? a.source.name
                   : (a.url ? safeHost(a.url) : 'News'),
-      link:       a.url        || '#',
-      pubDate:    a.publishedAt || '',
-      image:      a.urlToImage  || '',
+      link:       a.url         || '#',
+      pubDate:    a.publishedAt  || '',
+      image:      a.urlToImage   || '',
       importance: getImp((a.title || '') + ' ' + (a.description || '')),
     };
   }
 
-  /* Build, sort newest-first, deduplicate, limit for each category */
   function processCategory(arr, limit) {
     if (!Array.isArray(arr) || arr.length === 0) return [];
-    const mapped = arr.filter(a => a.title && a.title !== '[Removed]' && a.url).map(mapArticle);
+    const mapped = arr
+      .filter(a => a && a.title && a.title !== '[Removed]' && a.url)
+      .map(mapArticle);
     mapped.sort((a, b) => {
       const da = a.pubDate ? new Date(a.pubDate) : new Date(0);
       const db = b.pubDate ? new Date(b.pubDate) : new Date(0);
@@ -524,13 +574,25 @@ async function fetchNews() {
 
   const elapsed = ((Date.now() - t0) / 1000).toFixed(1) + 's';
 
-  /* Update loading step indicators */
+  /* Update step indicators */
   setStep('agri', appData.agri.length  ? 'done' : 'fail', elapsed);
   setStep('biz',  appData.biz.length   ? 'done' : 'fail', elapsed);
   setStep('pol',  appData.pol.length   ? 'done' : 'fail', elapsed);
   setStep('gen',  appData.gen.length   ? 'done' : 'fail', elapsed);
 
-  /* Ticker — first 4 biz headlines */
+  const total = appData.agri.length + appData.biz.length + appData.pol.length + appData.gen.length;
+
+  /* Warn if zero articles despite valid response */
+  if (total === 0) {
+    showError(
+      'No Articles Returned',
+      'Backend responded with HTTP 200 and valid JSON, but all category arrays are empty.\n\n' +
+      'Check: NewsAPI key is valid on the server · Edge Function is querying the correct categories · API quota not exceeded',
+      ''
+    );
+  }
+
+  /* ── Ticker: top 4 business headlines ───────────────── */
   if (appData.biz.length > 0) {
     renderTicker(appData.biz.slice(0, 4).map((it, i) => ({
       n:   ['📈','💰','📊','🏦'][i],
@@ -540,35 +602,29 @@ async function fetchNews() {
     })));
   }
 
-  /* Total for status bar */
-  const total = appData.agri.length + appData.biz.length + appData.pol.length + appData.gen.length;
-
-  if (total === 0) {
-    showError(
-      'No articles returned',
-      'The backend responded successfully but returned no articles. ' +
-      'Check that your Edge Function is querying the correct NewsAPI categories and that your NewsAPI key is valid on the server.'
-    );
-  }
-
-  /* Render all grids */
+  /* ── Render all grids ────────────────────────────────── */
   renderAll();
 
-  /* Persist to local cache */
+  /* ── Persist to local cache ──────────────────────────── */
   if (total > 0) {
-    localStorage.setItem('idb_last',  new Date().toISOString());
-    localStorage.setItem('idb_cache', JSON.stringify(appData));
+    try {
+      localStorage.setItem('idb_last',  new Date().toISOString());
+      localStorage.setItem('idb_cache', JSON.stringify(appData));
+    } catch (e) {
+      console.warn('[fetchNews] Could not write to localStorage:', e.message);
+    }
   }
 
-  /* Weather runs independently */
+  /* ── Weather runs independently, no await ────────────── */
   fetchWeather();
 
   finishLoad(btn, total, true);
+  isFetching = false;
 }
 
-/* ── finishLoad — shared teardown after fetchNews ─────────── */
+/* ── finishLoad — shared teardown ────────────────────────── */
 function finishLoad(btn, total, success) {
-  /* Hide loading, show overview on first load */
+  /* Reveal overview on first load */
   if (!loaded) {
     document.getElementById('loading').style.display = 'none';
     loaded = true;
@@ -578,22 +634,22 @@ function finishLoad(btn, total, success) {
     activeTab = 'overview';
   }
 
-  const now = new Date().toLocaleTimeString('en-IN', { hour:'2-digit', minute:'2-digit' });
+  const now  = new Date().toLocaleTimeString('en-IN', { hour:'2-digit', minute:'2-digit' });
   const luEl = document.getElementById('last-updated');
   if (luEl) { luEl.textContent = '🕐 ' + now; luEl.style.display = 'inline-flex'; }
 
   document.getElementById('stxt').innerHTML = total > 0
-    ? `<b>${total} stories</b> loaded &nbsp;·&nbsp; <span style="color:var(--teal)">Via Supabase Edge Function</span> &nbsp;·&nbsp; <span style="color:var(--text3);font-size:10px;">Latest first · Duplicates removed</span>`
-    : `<span style="color:var(--red)">⚠️ No stories loaded — check backend logs.</span>`;
+    ? `<b>${total} stories</b> loaded &nbsp;·&nbsp; <span style="color:var(--teal)">Supabase Edge Function</span> &nbsp;·&nbsp; <span style="color:var(--text3);font-size:10px;">Latest first · Duplicates removed</span>`
+    : `<span style="color:var(--red)">⚠️ No stories — check backend / NewsAPI key.</span>`;
   document.getElementById('utxt').textContent = total > 0 ? '🕐 Updated ' + now : '';
 
   if (success && total > 0) startAR();
 
-  btn.disabled = false;
+  btn.disabled  = false;
   btn.innerHTML = '⚡ Refresh';
 }
 
-/* ── renderAll — draws every grid ─────────────────────────── */
+/* ── renderAll — redraws every grid ──────────────────────── */
 function renderAll() {
   renderOverview();
   renderGrid('grid-agri',  appData.agri,  'c-agri',  'b-agri');
@@ -654,9 +710,12 @@ function hl(text, q) {
     '<mark style="background:rgba(246,166,33,.2);color:var(--amber);border-radius:2px;padding:0 2px;">$1</mark>'
   );
 }
-function showError(title, msg) {
+function showError(title, msg, detail) {
   document.getElementById('errTitle').textContent = title;
   document.getElementById('errMsg').textContent   = msg;
+  const det = document.getElementById('errDetail');
+  if (detail) { det.textContent = detail; det.style.display = 'block'; }
+  else        { det.style.display = 'none'; }
   document.getElementById('errCard').style.display = 'block';
 }
 function hideError() { document.getElementById('errCard').style.display = 'none'; }
@@ -677,7 +736,7 @@ function toggleBm(item) {
     bookmarks.unshift({ ...item, savedAt: Date.now() });
     toast('🔖 Saved!');
   }
-  localStorage.setItem('idb_bm', JSON.stringify(bookmarks));
+  try { localStorage.setItem('idb_bm', JSON.stringify(bookmarks)); } catch { /* quota */ }
   updSaved();
   if (activeTab === 'saved') renderSaved();
   document.querySelectorAll(`[data-bl="${item.link}"]`).forEach(b => {
@@ -701,24 +760,21 @@ function wa(headline, link) {
    CARD RENDERER
    ================================================================ */
 function card(item, delay, catLabel, q) {
-  const imp = item.importance || 'L';
-  const bm  = isBm(item.link);
-  const id  = 'c' + (cardCount++);
-  cardStore[id] = item;
-
-  const h2 = q ? hl(item.headline, q) : item.headline;
-  const sm = q ? hl(item.summary,  q) : item.summary;
+  const imp       = item.importance || 'L';
+  const bm        = isBm(item.link);
+  const id        = 'c' + (cardCount++);
+  cardStore[id]   = item;
+  const h2        = q ? hl(item.headline, q) : item.headline;
+  const sm        = q ? hl(item.summary,  q) : item.summary;
   const newBadge  = isNew(item.pubDate) ? '<span class="new-badge">🟢 NEW</span>' : '';
   const clickable = item.link && item.link !== '#';
+  const safeH     = item.headline.replace(/'/g,"\\'").replace(/"/g,'&quot;');
 
-  /* Article image with graceful fallback */
   const imgHtml = item.image
     ? `<img class="nc-img" src="${item.image}" alt="" loading="lazy"
          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
        <div class="nc-img-placeholder" style="display:none">${catLabel ? catLabel.split(' ')[0] : '📰'}</div>`
     : '';
-
-  const safeH = item.headline.replace(/'/g,"\\'").replace(/"/g,'&quot;');
 
   return `<div class="nc${clickable ? ' clickable' : ''}" style="animation-delay:${delay}s"
     ${clickable ? `onclick="if(!event.target.closest('button,a'))window.open('${item.link}','_blank')"` : ''}>
@@ -759,10 +815,15 @@ function renderGrid(gid, items, cid, bid, q) {
   const view = topOnly ? items.slice(0, 5) : items;
   el.innerHTML = view.length
     ? view.map((it, i) => card(it, i * 0.045, null, q)).join('')
-    : '<div class="empty"><div class="ei">📭</div><p>No stories found.</p></div>';
-  if (cid) document.getElementById(cid).textContent =
-    topOnly ? `Top 5 of ${items.length}` : items.length + ' stories';
-  if (bid) document.getElementById(bid).textContent = topOnly ? '5' : items.length;
+    : '<div class="empty"><div class="ei">📭</div><p>No stories found in this category.</p></div>';
+  if (cid) {
+    const el2 = document.getElementById(cid);
+    if (el2) el2.textContent = topOnly ? `Top 5 of ${items.length}` : items.length + ' stories';
+  }
+  if (bid) {
+    const el3 = document.getElementById(bid);
+    if (el3) el3.textContent = topOnly ? '5' : items.length;
+  }
 }
 
 /* ================================================================
@@ -781,12 +842,12 @@ function renderOverview() {
     const a = appData[c.key] || [];
     return `<div class="ovc ${c.cls}" onclick="goTab('${c.tab}')">
       <div class="ovh"><div class="ovico ${c.cls}">${c.icon}</div><h3>${c.lbl}</h3></div>
-      <div class="ovhl">${a[0] ? a[0].headline : 'No stories'}</div>
+      <div class="ovhl">${a[0] ? a[0].headline : 'No stories yet.'}</div>
       <div class="ovft"><span class="ovcnt">${a.length} stories</span><span style="font-size:11px;color:var(--text4)">→</span></div>
     </div>`;
   }).join('');
 
-  /* Top Stories grid — 2 highest-importance items per category */
+  /* Top Stories — 2 highest-importance items per category */
   const ord = { H:0, M:1, L:2 };
   const top = [];
   cats.forEach(c => {
@@ -801,10 +862,10 @@ function renderOverview() {
 
   document.getElementById('topgrid').innerHTML = topView.length
     ? topView.map((it, i) => {
-        const imp    = it.importance || 'L';
-        const bm     = isBm(it.link);
-        const id     = 'c' + (cardCount++);
-        const safeH  = it.headline.replace(/'/g,"\\'").replace(/"/g,'&quot;');
+        const imp   = it.importance || 'L';
+        const bm    = isBm(it.link);
+        const id    = 'c' + (cardCount++);
+        const safeH = it.headline.replace(/'/g,"\\'").replace(/"/g,'&quot;');
         cardStore[id] = it;
         return `<div class="nc clickable" style="animation-delay:${i * 0.045}s"
           onclick="if(!event.target.closest('button,a'))window.open('${it.link}','_blank')">
@@ -840,10 +901,10 @@ function renderOverview() {
           </div>
         </div>`;
       }).join('')
-    : '<div class="empty"><div class="ei">📰</div><p>Loading…</p></div>';
+    : '<div class="empty"><div class="ei">📰</div><p>Loading stories…</p></div>';
 }
 
-/* ── Top-stories filter toggle ───────────────────────────── */
+/* ── Top-stories toggle ──────────────────────────────────── */
 function toggleTop() {
   topOnly = !topOnly;
   const btn = document.getElementById('topbtn');
@@ -912,7 +973,7 @@ function renderMandi() {
 }
 
 /* ================================================================
-   WEATHER  (open-meteo, no key required)
+   WEATHER  (open-meteo — no API key required)
    ================================================================ */
 async function fetchWeather() {
   setStep('wx', 'active');
@@ -934,10 +995,11 @@ async function fetchWeather() {
       `&current=temperature_2m,relative_humidity_2m,weathercode,windspeed_10m&timezone=Asia%2FKolkata`,
       { cache: 'no-store' }
     );
-    const d = await r.json();
+    if (!r.ok) throw new Error('Weather API error');
+    const d   = await r.json();
     const c   = d.current;
     const ico  = WI[c.weathercode] || '🌤️';
-    const desc = WD[c.weathercode] || '';
+    const desc = WD[c.weathercode] || 'Current conditions';
     document.getElementById('wxwrap').innerHTML = `
       <div class="wcard">
         <div class="wtop">
@@ -971,6 +1033,7 @@ function renderTicker(items) {
      </div>`
   ).join('');
 }
+/* Init ticker placeholder */
 renderTicker([
   {n:'Sensex',v:'—',c:'',cls:'neu'},{n:'Nifty',v:'—',c:'',cls:'neu'},
   {n:'Gold',v:'—',c:'',cls:'neu'}, {n:'USD/INR',v:'—',c:'',cls:'neu'},
@@ -1005,19 +1068,20 @@ function startAR() {
   document.getElementById('arpill').style.display = 'flex';
   const tick = () => {
     const rem = Math.max(0, arNext - Date.now());
-    const h = ~~(rem / 3600000);
-    const m = ~~((rem % 3600000) / 60000);
-    const s = ~~((rem % 60000) / 1000);
-    document.getElementById('arcd').textContent = h > 0 ? `${h}h ${m}m` : `${m}m ${s}s`;
+    const h   = ~~(rem / 3600000);
+    const m   = ~~((rem % 3600000) / 60000);
+    const s   = ~~((rem % 60000) / 1000);
+    document.getElementById('arcd').textContent =
+      h > 0 ? `${h}h ${m}m` : `${m}m ${s}s`;
     if (rem <= 0) { fetchNews(); arNext = Date.now() + AR; }
   };
   tick();
   arTimer = setInterval(tick, 1000);
 }
 
-/* Refresh on tab-focus if stale */
+/* Refresh on tab-focus if cache is stale */
 document.addEventListener('visibilitychange', () => {
-  if (!document.hidden && loaded) {
+  if (!document.hidden && loaded && !isFetching) {
     const last = localStorage.getItem('idb_last');
     if (last && (Date.now() - new Date(last)) > AR) fetchNews();
   }
@@ -1037,7 +1101,7 @@ function toggleTheme() {
 }
 
 /* ================================================================
-   INIT — restore from local cache, then kick off fetch
+   INIT — restore from cache, then fetch fresh data
    ================================================================ */
 (function init() {
   document.getElementById('date-el').textContent = new Date().toLocaleDateString('en-IN',
@@ -1059,7 +1123,7 @@ function toggleTheme() {
         t.classList.toggle('active', t.dataset.tab === 'overview'));
       activeTab = 'overview';
 
-      const t = new Date(last).toLocaleTimeString('en-IN', { hour:'2-digit', minute:'2-digit' });
+      const t    = new Date(last).toLocaleTimeString('en-IN', { hour:'2-digit', minute:'2-digit' });
       const luEl = document.getElementById('last-updated');
       if (luEl) { luEl.textContent = '🕐 ' + t; luEl.style.display = 'inline-flex'; }
 
@@ -1067,21 +1131,24 @@ function toggleTheme() {
       document.getElementById('stxt').innerHTML = `<b>${total} stories</b> (cached)`;
       document.getElementById('utxt').textContent = 'Last fetch: ' + t;
 
-      /* Background refresh if cache > 1 hour old */
-      if ((Date.now() - new Date(last)) / 3600000 > 1) {
-        setTimeout(() => fetchNews(), 1200);
-      } else {
-        startAR();
-      }
-
       fetchWeather();
+
       if (appData.biz.length) {
         renderTicker(appData.biz.slice(0, 4).map((it, i) => ({
           n: ['📈','💰','📊','🏦'][i], v: trunc(it.headline, 45), c: '', cls: 'neu',
         })));
       }
-    } catch {
-      /* Corrupt cache — fresh fetch */
+
+      /* Background-refresh if cache is older than 1 hour */
+      const ageHours = (Date.now() - new Date(last)) / 3600000;
+      if (ageHours > 1) {
+        setTimeout(() => fetchNews(), 1200);
+      } else {
+        startAR();
+      }
+    } catch (e) {
+      /* Corrupt cache — clear and start fresh */
+      console.warn('[init] Corrupt cache, clearing:', e.message);
       localStorage.removeItem('idb_cache');
       localStorage.removeItem('idb_last');
       setTimeout(() => fetchNews(), 300);
