@@ -1,51 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- ═══════════════════════════════════════════════════
-     SEO — Feature 2
-     ═══════════════════════════════════════════════════ -->
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>India Daily Briefing — Agriculture News, Mandi Price & Farmer Updates</title>
-<meta name="description" content="Latest agriculture news India, today's mandi prices, MSP updates, farmer news, business and politics. India's free all-in-one daily news briefing — live, updated every day.">
-<meta name="keywords" content="agriculture news india, mandi price today, farmer updates, MSP news, india business news, kisan samachar, india politics news, commodity prices india">
-<meta name="author" content="India Daily Briefing">
-<meta name="robots" content="index,follow">
-<link rel="canonical" href="https://indiadailybriefing.in/">
-<!-- Open Graph -->
-<meta property="og:type"        content="website">
-<meta property="og:url"         content="https://indiadailybriefing.in/">
-<meta property="og:title"       content="India Daily Briefing — Agriculture, Mandi Price & Farmer Updates">
-<meta property="og:description" content="Agriculture news India, today's mandi prices, MSP updates and top India stories — all in one place, updated live.">
-<meta property="og:image"       content="https://flagcdn.com/w320/in.png">
-<meta property="og:locale"      content="en_IN">
-<!-- Twitter Card -->
-<meta name="twitter:card"        content="summary_large_image">
-<meta name="twitter:title"       content="India Daily Briefing — Agriculture & Mandi News">
-<meta name="twitter:description" content="Agriculture news, mandi prices, farmer updates and top India stories. Free, live, updated daily.">
-<meta name="twitter:image"       content="https://flagcdn.com/w320/in.png">
-<!-- PWA -->
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#0B0F1A">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="India Briefing">
-
+<title>India Daily Briefing</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
-<!-- ═══════════════════════════════════════════
-     STRUCTURED DATA (SEO — Feature 2)
-     ═══════════════════════════════════════════ -->
-<script type="application/ld+json">
-{
-  "@context":"https://schema.org",
-  "@type":"NewsMediaOrganization",
-  "name":"India Daily Briefing",
-  "url":"https://indiadailybriefing.in/",
-  "description":"Latest agriculture news India, mandi prices, farmer updates, business and politics.",
-  "areaServed":"IN",
-  "knowsAbout":["Agriculture","Mandi Prices","MSP","Farmer News","Indian Economy","Indian Politics"]
-}
-</script>
-
 <style>
 :root{
   --bg:#0B0F1A;--bg2:#111827;--card:#15202E;--card2:#1E2D40;--card3:#243347;
@@ -65,7 +26,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--ff);min-height:100
 ::-webkit-scrollbar-track{background:var(--bg2);}
 ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:4px;}
 
-/* ── HEADER ─────────────────────────────────────────── */
+/* HEADER */
 header{background:linear-gradient(180deg,rgba(11,15,26,.98),rgba(17,24,39,.96));border-bottom:1px solid var(--border);padding:10px 20px;position:sticky;top:0;z-index:300;backdrop-filter:blur(14px);}
 .hdr{max-width:1280px;margin:0 auto;display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
 .logo{display:flex;align-items:center;gap:9px;flex-shrink:0;}
@@ -89,7 +50,7 @@ header{background:linear-gradient(180deg,rgba(11,15,26,.98),rgba(17,24,39,.96));
 #rbtn:disabled{opacity:.5;cursor:not-allowed;}
 .ar-pill{font-size:10px;background:var(--green-d);color:var(--green);border:1px solid rgba(16,185,129,.25);padding:3px 8px;border-radius:20px;font-weight:600;white-space:nowrap;display:none;align-items:center;gap:3px;}
 
-/* ── TICKER ─────────────────────────────────────────── */
+/* TICKER */
 .ticker{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 20px;height:32px;display:flex;align-items:center;gap:10px;overflow:hidden;}
 .tlbl{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--amber);flex-shrink:0;}
 .tscroll{display:flex;overflow-x:auto;scrollbar-width:none;flex:1;gap:0;}
@@ -101,21 +62,20 @@ header{background:linear-gradient(180deg,rgba(11,15,26,.98),rgba(17,24,39,.96));
 .tc{font-size:10px;font-weight:600;}
 .up{color:var(--green);}.dn{color:var(--red);}.neu{color:var(--text2);}
 
-/* ── TABS ───────────────────────────────────────────── */
+/* TABS */
 .tabs{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 20px;overflow-x:auto;scrollbar-width:none;}
 .tabs::-webkit-scrollbar{display:none;}
 .tabs-in{max-width:1280px;margin:0 auto;display:flex;}
 .tab{padding:12px 15px;font-size:12.5px;font-weight:600;color:var(--text3);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:all .2s;display:flex;align-items:center;gap:5px;}
 .tab:hover{color:var(--text);}
 .tab.active{color:var(--amber);border-bottom-color:var(--amber);}
-.tab.hidden-tab{display:none;}
 .cnt{background:var(--card3);color:var(--text3);font-size:9px;font-weight:700;padding:2px 6px;border-radius:20px;transition:all .2s;}
 .tab.active .cnt{background:var(--amber-d);color:var(--amber);}
 
-/* ── MAIN ───────────────────────────────────────────── */
+/* MAIN */
 .main{max-width:1280px;margin:0 auto;padding:20px;}
 
-/* ── WELCOME ────────────────────────────────────────── */
+/* WELCOME */
 #welcome{text-align:center;padding:52px 20px 36px;}
 .wflag{font-size:60px;margin-bottom:14px;display:block;animation:float 3s ease-in-out infinite;}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
@@ -132,7 +92,7 @@ header{background:linear-gradient(180deg,rgba(11,15,26,.98),rgba(17,24,39,.96));
 .sbtn:hover{transform:translateY(-2px);box-shadow:0 0 32px rgba(246,166,33,.45);}
 .ntip{margin-top:16px;font-size:11.5px;color:var(--text3);line-height:1.7;}
 
-/* ── LOADING ────────────────────────────────────────── */
+/* LOADING */
 #loading{display:none;flex-direction:column;align-items:center;justify-content:center;min-height:55vh;gap:18px;}
 .spin{width:42px;height:42px;border:3px solid var(--border2);border-top-color:var(--amber);border-radius:50%;animation:spin .75s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg)}}
@@ -147,19 +107,19 @@ header{background:linear-gradient(180deg,rgba(11,15,26,.98),rgba(17,24,39,.96));
 .lstep.done{color:var(--green);}.lstep.done .ldot{background:var(--green);}
 .lstep.fail{color:var(--red);}.lstep.fail .ldot{background:var(--red);}
 
-/* ── PANELS ─────────────────────────────────────────── */
+/* PANELS */
 .panel{display:none;}
 .panel.show{display:block;animation:fup .3s ease;}
 @keyframes fup{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}
 
-/* ── STATUS BAR ──────────────────────────────────────── */
+/* STATUS BAR */
 .sbar{background:var(--card);border:1px solid var(--border2);border-radius:9px;padding:9px 14px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:11.5px;color:var(--text3);margin-bottom:16px;}
 .sbar b{color:var(--green);}
 
-/* ── TOP ROW ──────────────────────────────────────────── */
+/* TOP ROW */
 .toprow{display:grid;grid-template-columns:1fr 270px;gap:14px;margin-bottom:18px;}
 
-/* ── WEATHER ────────────────────────────────────────── */
+/* WEATHER */
 .wcard{background:linear-gradient(135deg,#0F2027,#203A43,#2C5364);border:1px solid rgba(6,182,212,.2);border-radius:14px;padding:18px;display:flex;flex-direction:column;justify-content:space-between;min-height:128px;position:relative;overflow:hidden;}
 .wcard::before{content:'';position:absolute;top:-20px;right:-20px;width:110px;height:110px;background:radial-gradient(circle,rgba(6,182,212,.15),transparent 70%);pointer-events:none;}
 .wtop{display:flex;justify-content:space-between;align-items:flex-start;}
@@ -171,7 +131,7 @@ header{background:linear-gradient(180deg,rgba(11,15,26,.98),rgba(17,24,39,.96));
 .wstat{font-size:10.5px;color:rgba(255,255,255,.5);}
 .wstat b{color:white;}
 
-/* ── OVERVIEW GRID ──────────────────────────────────── */
+/* OVERVIEW GRID */
 .ovgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:11px;margin-bottom:18px;}
 .ovc{background:var(--card);border:1px solid var(--border2);border-radius:13px;padding:15px;cursor:pointer;transition:all .22s;position:relative;overflow:hidden;}
 .ovc::after{content:'';position:absolute;top:0;left:0;right:0;height:2.5px;}
@@ -192,16 +152,16 @@ header{background:linear-gradient(180deg,rgba(11,15,26,.98),rgba(17,24,39,.96));
 .ovft{display:flex;justify-content:space-between;align-items:center;}
 .ovcnt{font-size:10px;color:var(--text3);font-weight:600;}
 
-/* ── SECTION HEADER ─────────────────────────────────── */
+/* SECTION HEADER */
 .shdr{display:flex;align-items:center;gap:8px;margin-bottom:13px;padding-bottom:10px;border-bottom:1px solid var(--border);}
 .sdot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
 .shdr h2{font-size:14.5px;font-weight:700;}
 .scnt{background:var(--card3);border:1px solid var(--border2);color:var(--text3);font-size:9.5px;font-weight:700;padding:2px 8px;border-radius:20px;margin-left:auto;}
 
-/* ── NEWS GRID ──────────────────────────────────────── */
+/* NEWS GRID */
 .ngrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(305px,1fr));gap:11px;}
 
-/* ── NEWS CARD ──────────────────────────────────────── */
+/* NEWS CARD */
 .nc{background:var(--card);border:1px solid var(--border2);border-radius:13px;overflow:hidden;transition:all .22s;animation:cin .35s ease both;display:flex;flex-direction:column;}
 .nc:hover{border-color:rgba(246,166,33,.2);box-shadow:0 6px 28px rgba(0,0,0,.3);transform:translateY(-2px);}
 .nc.clickable{cursor:pointer;}
@@ -216,29 +176,23 @@ header{background:linear-gradient(180deg,rgba(11,15,26,.98),rgba(17,24,39,.96));
 .nab{background:none;border:none;cursor:pointer;color:var(--text3);font-size:13px;padding:2px 4px;border-radius:4px;transition:all .15s;line-height:1;}
 .nab:hover{color:var(--amber);background:var(--amber-d);}
 .nab.bm{color:var(--amber);}
-/* Audio button — Feature 4 */
-.nab.spk{color:var(--text3);}
-.nab.spk.speaking{color:var(--teal);background:rgba(6,182,212,.1);animation:pulse .8s ease-in-out infinite alternate;}
-@keyframes pulse{from{opacity:.7}to{opacity:1}}
 .nchead{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:9px;}
 .nchead h4{font-size:13px;font-weight:600;line-height:1.45;flex:1;color:var(--text);}
 .imp{flex-shrink:0;font-size:8.5px;font-weight:700;text-transform:uppercase;padding:3px 6px;border-radius:4px;}
 .imp.H{background:var(--red-d);color:#F87171;border:1px solid rgba(239,68,68,.2);}
 .imp.M{background:var(--amber-d);color:var(--amber);border:1px solid rgba(246,166,33,.2);}
 .imp.L{background:rgba(75,96,128,.1);color:var(--text3);border:1px solid var(--border);}
-/* AI Summary label — Feature 1 */
-.ai-sum-lbl{font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--teal);margin-bottom:3px;display:flex;align-items:center;gap:3px;}
 .ncsum{font-size:12px;color:var(--text2);line-height:1.65;margin-bottom:11px;flex:1;}
 .ncft{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:auto;}
 .ncmeta .ncsrc{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--text3);}
 .ncmeta .nct{font-size:10px;color:var(--text4);margin-top:2px;}
 .ncbtns{display:flex;gap:5px;flex-shrink:0;}
-.rbtn{font-size:11px;color:var(--text);text-decoration:none;font-weight:700;padding:5px 10px;background:var(--card3);border:1px solid var(--border2);border-radius:6px;transition:all .15px;white-space:nowrap;}
+.rbtn{font-size:11px;color:var(--text);text-decoration:none;font-weight:700;padding:5px 10px;background:var(--card3);border:1px solid var(--border2);border-radius:6px;transition:all .15s;white-space:nowrap;}
 .rbtn:hover{background:var(--amber-d);border-color:rgba(246,166,33,.3);color:var(--amber);}
 .wabtn{font-size:12px;padding:5px 8px;background:rgba(37,211,102,.1);border:1px solid rgba(37,211,102,.2);border-radius:6px;text-decoration:none;transition:all .15s;cursor:pointer;}
 .wabtn:hover{background:rgba(37,211,102,.22);}
 
-/* ── MANDI ──────────────────────────────────────────── */
+/* MANDI */
 .mgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:9px;margin-bottom:20px;}
 .mc{background:var(--card);border:1px solid var(--border2);border-radius:11px;padding:14px;text-align:center;transition:all .2s;}
 .mc:hover{border-color:rgba(249,115,22,.3);transform:translateY(-2px);}
@@ -248,63 +202,21 @@ header{background:linear-gradient(180deg,rgba(11,15,26,.98),rgba(17,24,39,.96));
 .munit{font-size:9px;color:var(--text4);}
 .mchg{font-size:10.5px;font-weight:700;margin-top:4px;}
 
-/* ── EMPTY ──────────────────────────────────────────── */
+/* EMPTY */
 .empty{text-align:center;padding:50px 20px;color:var(--text3);}
 .empty .ei{font-size:44px;margin-bottom:12px;opacity:.5;}
 .empty p{font-size:13px;line-height:1.7;}
 
-/* ── ERROR CARD ─────────────────────────────────────── */
+/* ERROR CARD */
 .err-card{background:var(--red-d);border:1px solid rgba(239,68,68,.25);border-radius:12px;padding:18px 20px;margin-bottom:16px;display:none;}
 .err-card h4{font-size:13px;font-weight:700;color:#F87171;margin-bottom:5px;}
 .err-card p{font-size:12px;color:var(--text2);line-height:1.6;white-space:pre-wrap;}
 .err-card .err-detail{font-size:11px;margin-top:8px;padding:8px 10px;background:rgba(0,0,0,.25);border-radius:6px;color:#F87171;font-family:monospace;word-break:break-all;}
 
-/* ══════════════════════════════════════════════════════
-   AD SLOTS — Feature 6 (Monetization placeholders)
-   ══════════════════════════════════════════════════════ */
-.ad-slot{background:var(--card2);border:1px dashed var(--border2);border-radius:10px;padding:0;min-height:72px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:5px;color:var(--text4);overflow:hidden;position:relative;}
-.ad-slot-banner{margin-bottom:14px;width:100%;}
-.ad-slot-banner .ad-inner{display:flex;align-items:center;justify-content:space-between;padding:12px 18px;gap:16px;flex-wrap:wrap;}
-.ad-slot .ad-lbl{font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--text4);position:absolute;top:6px;right:10px;}
-.ad-slot .ad-copy{font-size:12px;color:var(--text3);font-weight:600;text-align:center;}
-.ad-slot .ad-sub{font-size:10px;color:var(--text4);text-align:center;}
-.ad-grid-wrap{grid-column:1/-1;} /* stretches ad across full grid width */
-.ad-card{background:linear-gradient(135deg,var(--card2),var(--card3));border:1px dashed var(--border2);border-radius:13px;padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;min-height:110px;}
-.ad-card .ad-lbl{font-size:8.5px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--text4);}
-.ad-card .ad-copy{font-size:13px;color:var(--text3);font-weight:600;text-align:center;}
-.ad-card .ad-cta{font-size:11px;background:var(--amber-d);color:var(--amber);border:1px solid rgba(246,166,33,.3);padding:5px 14px;border-radius:20px;font-weight:700;cursor:pointer;font-family:var(--ff);}
-
-/* ══════════════════════════════════════════════════════
-   PERSONALIZATION — Feature 5
-   ══════════════════════════════════════════════════════ */
-.pref-overlay{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:500;display:none;align-items:flex-end;justify-content:center;backdrop-filter:blur(4px);}
-.pref-overlay.open{display:flex;}
-.pref-sheet{background:var(--bg2);border:1px solid var(--border2);border-radius:20px 20px 0 0;padding:24px 22px 30px;width:100%;max-width:520px;animation:slideUp .3s cubic-bezier(.34,1.1,.64,1);}
-@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
-.pref-drag{width:36px;height:4px;background:var(--border2);border-radius:2px;margin:0 auto 18px;}
-.pref-title{font-family:var(--ffd);font-size:19px;margin-bottom:3px;}
-.pref-sub{font-size:12px;color:var(--text3);margin-bottom:18px;line-height:1.6;}
-.pref-list{display:flex;flex-direction:column;gap:9px;margin-bottom:22px;}
-.pref-row{display:flex;align-items:center;justify-content:space-between;background:var(--card);border:1px solid var(--border2);border-radius:11px;padding:13px 16px;transition:border-color .2s;}
-.pref-row:has(.ptoggle.on){border-color:rgba(16,185,129,.25);}
-.pref-lbl{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:600;}
-.pref-ico{font-size:18px;line-height:1;}
-.pref-desc{font-size:11px;color:var(--text3);font-weight:400;margin-top:1px;}
-.ptoggle{width:42px;height:24px;background:var(--border2);border-radius:12px;cursor:pointer;position:relative;transition:background .25s;flex-shrink:0;border:none;outline:none;}
-.ptoggle.on{background:var(--green);}
-.ptoggle::after{content:'';position:absolute;top:4px;left:4px;width:16px;height:16px;background:white;border-radius:50%;transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,.3);}
-.ptoggle.on::after{left:22px;}
-.pref-actions{display:flex;gap:10px;}
-.pref-save{flex:1;background:var(--amber);color:#0B0F1A;border:none;padding:13px;border-radius:11px;font-size:14px;font-weight:800;cursor:pointer;font-family:var(--ff);transition:background .15s;}
-.pref-save:hover{background:var(--amber2);}
-.pref-cancel{background:var(--card2);color:var(--text2);border:1px solid var(--border2);padding:13px 20px;border-radius:11px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--ff);}
-.pref-cancel:hover{border-color:var(--text3);}
-
-/* ── TOAST ──────────────────────────────────────────── */
+/* TOAST */
 #toast{position:fixed;bottom:22px;right:22px;z-index:999;background:var(--card2);border:1px solid var(--border2);color:var(--text);font-size:13px;font-weight:500;padding:10px 16px;border-radius:9px;box-shadow:0 8px 32px rgba(0,0,0,.5);transform:translateY(70px);opacity:0;transition:all .3s cubic-bezier(.34,1.56,.64,1);pointer-events:none;max-width:260px;}
 #toast.show{transform:translateY(0);opacity:1;}
 
-/* ── RESPONSIVE ─────────────────────────────────────── */
 @media(max-width:900px){.toprow{grid-template-columns:1fr;}.ovgrid{grid-template-columns:repeat(2,1fr);}}
 @media(max-width:768px){.hdr{height:auto;flex-wrap:wrap;}.srch{order:3;max-width:100%;flex:0 0 100%;}.main{padding:14px;}.ngrid{grid-template-columns:1fr;}#date-el{display:none;}}
 @media(max-width:480px){.ovgrid{grid-template-columns:1fr 1fr;}.mgrid{grid-template-columns:repeat(3,1fr);}}
@@ -312,9 +224,6 @@ header{background:linear-gradient(180deg,rgba(11,15,26,.98),rgba(17,24,39,.96));
 </head>
 <body>
 
-<!-- ════════════════════════════════════════════
-     HEADER
-     ════════════════════════════════════════════ -->
 <header>
  <div class="hdr">
   <div class="logo">
@@ -338,7 +247,6 @@ header{background:linear-gradient(180deg,rgba(11,15,26,.98),rgba(17,24,39,.96));
      <option value="3600000">1h</option>
     </select>
    </div>
-   <button class="ibtn" onclick="openPrefs()" title="Personalise" aria-label="Personalise feed">⚙️</button>
    <button class="ibtn" onclick="goTab('saved')" title="Saved">🔖 <span class="bl" id="svhdr">0</span></button>
    <button class="ibtn" id="thbtn" onclick="toggleTheme()">☀️</button>
    <button id="rbtn" class="ibtn" onclick="fetchNews()">⚡ Refresh</button>
@@ -351,50 +259,31 @@ header{background:linear-gradient(180deg,rgba(11,15,26,.98),rgba(17,24,39,.96));
  <div class="tscroll" id="tscroll"><div class="titem"><span class="tn">Loading…</span></div></div>
 </div>
 
-<!-- ════════════════════════════════════════════
-     TABS — Feature 3 (category navigation)
-     ════════════════════════════════════════════ -->
-<nav class="tabs" role="navigation" aria-label="News categories">
+<div class="tabs">
  <div class="tabs-in">
   <div class="tab active" data-tab="overview" onclick="goTab('overview')">🏠 Overview</div>
-  <div class="tab" data-tab="agri"   id="tab-agri"  onclick="goTab('agri')">🌾 Agriculture <span class="cnt" id="b-agri">0</span></div>
-  <div class="tab" data-tab="biz"    id="tab-biz"   onclick="goTab('biz')">📈 Business <span class="cnt" id="b-biz">0</span></div>
-  <div class="tab" data-tab="pol"    id="tab-pol"   onclick="goTab('pol')">🏛️ Politics <span class="cnt" id="b-pol">0</span></div>
-  <div class="tab" data-tab="gen"    id="tab-gen"   onclick="goTab('gen')">🌐 General <span class="cnt" id="b-gen">0</span></div>
-  <div class="tab" data-tab="mandi"  id="tab-mandi" onclick="goTab('mandi')">🛒 Mandi</div>
-  <div class="tab" data-tab="saved"  onclick="goTab('saved')">🔖 Saved <span class="cnt" id="b-saved">0</span></div>
+  <div class="tab" data-tab="agri"  onclick="goTab('agri')">🌾 Agriculture <span class="cnt" id="b-agri">0</span></div>
+  <div class="tab" data-tab="biz"   onclick="goTab('biz')">📈 Business <span class="cnt" id="b-biz">0</span></div>
+  <div class="tab" data-tab="pol"   onclick="goTab('pol')">🏛️ Politics <span class="cnt" id="b-pol">0</span></div>
+  <div class="tab" data-tab="gen"   onclick="goTab('gen')">🌐 General <span class="cnt" id="b-gen">0</span></div>
+  <div class="tab" data-tab="mandi" onclick="goTab('mandi')">🛒 Mandi</div>
+  <div class="tab" data-tab="saved" onclick="goTab('saved')">🔖 Saved <span class="cnt" id="b-saved">0</span></div>
   <div class="tab" id="srtab" data-tab="sr" style="display:none" onclick="goTab('sr')">🔍 Results <span class="cnt" id="b-sr">0</span></div>
- </div>
-</nav>
-
-<!-- ════════════════════════════════════════════
-     TOP AD BANNER — Feature 6
-     ════════════════════════════════════════════ -->
-<div style="max-width:1280px;margin:12px auto 0;padding:0 20px;">
- <div class="ad-slot ad-slot-banner" id="ad-top">
-  <span class="ad-lbl">Advertisement</span>
-  <div class="ad-inner">
-   <div>
-    <div class="ad-copy">Your ad here — Reach 50,000+ daily farmers &amp; agri-professionals</div>
-    <div class="ad-sub">Contact us to advertise on India Daily Briefing</div>
-   </div>
-   <button class="ad-cta" onclick="toast('📧 Contact: ads@indiadailybriefing.in')">Advertise →</button>
-  </div>
  </div>
 </div>
 
-<main class="main" role="main">
+<div class="main">
 
  <!-- ERROR CARD -->
- <div class="err-card" id="errCard" role="alert">
+ <div class="err-card" id="errCard">
   <h4>⚠️ <span id="errTitle">Could not load news</span></h4>
   <p id="errMsg">–</p>
   <div class="err-detail" id="errDetail" style="display:none"></div>
  </div>
 
  <!-- WELCOME -->
- <section id="welcome" aria-label="Welcome">
-  <span class="wflag" role="img" aria-label="Indian flag">🇮🇳</span>
+ <div id="welcome">
+  <span class="wflag">🇮🇳</span>
   <h2>India Daily Briefing</h2>
   <p>Agriculture · Business · Politics · General · Mandi Prices · Weather — all in one place, updated live every day.</p>
   <div class="wpills">
@@ -406,14 +295,14 @@ header{background:linear-gradient(180deg,rgba(11,15,26,.98),rgba(17,24,39,.96));
   </div>
   <button class="sbtn" onclick="fetchNews()">⚡ Get Today's Briefing</button>
   <p class="ntip">Powered by Supabase Edge Function · No API keys in your browser</p>
- </section>
+ </div>
 
  <!-- LOADING -->
- <div id="loading" aria-live="polite" aria-label="Loading news">
+ <div id="loading">
   <div class="spin"></div>
   <div class="lcard">
    <div class="lhd">Fetching today's news</div>
-   <div class="lsub" id="lsub">Connecting to Supabase backend…</div>
+   <div class="lsub" id="lsub">Connecting to backend…</div>
    <div>
     <div class="lstep" id="ls-agri"><div class="ldot"></div><span class="ltxt">🌾 Agriculture — crops, mandi, MSP</span><span class="ltime" id="lt-agri"></span></div>
     <div class="lstep" id="ls-biz"> <div class="ldot"></div><span class="ltxt">📈 Business — markets, RBI, economy</span><span class="ltime" id="lt-biz"></span></div>
@@ -424,8 +313,8 @@ header{background:linear-gradient(180deg,rgba(11,15,26,.98),rgba(17,24,39,.96));
   </div>
  </div>
 
- <!-- OVERVIEW — Feature 3 -->
- <article id="panel-overview" class="panel" aria-label="Overview">
+ <!-- OVERVIEW -->
+ <div id="panel-overview" class="panel">
   <div class="sbar"><span id="stxt">–</span><span id="utxt" style="font-size:11px;color:var(--text3);">–</span></div>
   <div class="toprow">
    <div><div class="ovgrid" id="ovgrid"></div></div>
@@ -437,137 +326,78 @@ header{background:linear-gradient(180deg,rgba(11,15,26,.98),rgba(17,24,39,.96));
    <button id="topbtn" onclick="toggleTop()" style="margin-left:auto;flex-shrink:0;background:var(--amber-d);border:1px solid rgba(246,166,33,.3);color:var(--amber);font-size:11px;font-weight:700;padding:5px 12px;border-radius:20px;cursor:pointer;font-family:var(--ff);transition:all .2s;">🔥 Top Stories</button>
   </div>
   <div class="ngrid" id="topgrid"></div>
- </article>
+ </div>
 
- <!-- AGRICULTURE — Feature 3 -->
- <article id="panel-agri" class="panel" aria-label="Agriculture news">
-  <div class="shdr">
-   <div class="sdot" style="background:var(--green)"></div>
-   <h2>🌾 Agriculture & Agri Business</h2>
-   <span class="scnt" id="c-agri">0</span>
-   <span class="scnt" style="background:var(--green-d);color:var(--green);border-color:rgba(16,185,129,.2);">🕐 Latest First</span>
-  </div>
+ <!-- AGRI -->
+ <div id="panel-agri" class="panel">
+  <div class="shdr"><div class="sdot" style="background:var(--green)"></div><h2>🌾 Agriculture & Agri Business</h2><span class="scnt" id="c-agri">0</span><span class="scnt" style="background:var(--green-d);color:var(--green);border-color:rgba(16,185,129,.2);">🕐 Latest First</span></div>
   <div class="ngrid" id="grid-agri"></div>
- </article>
+ </div>
 
- <!-- BUSINESS — Feature 3 -->
- <article id="panel-biz" class="panel" aria-label="Business news">
-  <div class="shdr">
-   <div class="sdot" style="background:var(--blue)"></div>
-   <h2>📈 Business & Markets</h2>
-   <span class="scnt" id="c-biz">0</span>
-   <span class="scnt" style="background:var(--blue-d);color:var(--blue);border-color:rgba(59,130,246,.2);">🕐 Latest First</span>
-  </div>
+ <!-- BIZ -->
+ <div id="panel-biz" class="panel">
+  <div class="shdr"><div class="sdot" style="background:var(--blue)"></div><h2>📈 Business & Markets</h2><span class="scnt" id="c-biz">0</span><span class="scnt" style="background:var(--blue-d);color:var(--blue);border-color:rgba(59,130,246,.2);">🕐 Latest First</span></div>
   <div class="ngrid" id="grid-biz"></div>
- </article>
+ </div>
 
- <!-- POLITICS — Feature 3 -->
- <article id="panel-pol" class="panel" aria-label="Politics news">
-  <div class="shdr">
-   <div class="sdot" style="background:var(--red)"></div>
-   <h2>🏛️ Politics & Government</h2>
-   <span class="scnt" id="c-pol">0</span>
-   <span class="scnt" style="background:var(--red-d);color:var(--red);border-color:rgba(239,68,68,.2);">🕐 Latest First</span>
-  </div>
+ <!-- POL -->
+ <div id="panel-pol" class="panel">
+  <div class="shdr"><div class="sdot" style="background:var(--red)"></div><h2>🏛️ Politics & Government</h2><span class="scnt" id="c-pol">0</span><span class="scnt" style="background:var(--red-d);color:var(--red);border-color:rgba(239,68,68,.2);">🕐 Latest First</span></div>
   <div class="ngrid" id="grid-pol"></div>
- </article>
+ </div>
 
- <!-- GENERAL — Feature 3 -->
- <article id="panel-gen" class="panel" aria-label="General news">
-  <div class="shdr">
-   <div class="sdot" style="background:var(--purple)"></div>
-   <h2>🌐 General News</h2>
-   <span class="scnt" id="c-gen">0</span>
-   <span class="scnt" style="background:var(--purple-d);color:var(--purple);border-color:rgba(139,92,246,.2);">🕐 Latest First</span>
-  </div>
+ <!-- GEN -->
+ <div id="panel-gen" class="panel">
+  <div class="shdr"><div class="sdot" style="background:var(--purple)"></div><h2>🌐 General News</h2><span class="scnt" id="c-gen">0</span><span class="scnt" style="background:var(--purple-d);color:var(--purple);border-color:rgba(139,92,246,.2);">🕐 Latest First</span></div>
   <div class="ngrid" id="grid-gen"></div>
- </article>
+ </div>
 
- <!-- MANDI — Feature 3 -->
- <article id="panel-mandi" class="panel" aria-label="Mandi prices">
-  <div class="shdr">
-   <div class="sdot" style="background:var(--orange)"></div>
-   <h2>🛒 Mandi &amp; Commodity Prices</h2>
-   <span class="scnt">Indicative · ₹/Quintal</span>
-  </div>
+ <!-- MANDI -->
+ <div id="panel-mandi" class="panel">
+  <div class="shdr"><div class="sdot" style="background:var(--orange)"></div><h2>🛒 Mandi & Commodity Prices</h2><span class="scnt">Indicative · ₹/Quintal</span></div>
   <div class="mgrid" id="mgrid"></div>
-  <div class="shdr" style="margin-top:18px;">
-   <div class="sdot" style="background:var(--orange)"></div>
-   <h2>📰 Commodity News</h2>
-   <span class="scnt" id="c-mandi">0</span>
-  </div>
+  <div class="shdr" style="margin-top:18px;"><div class="sdot" style="background:var(--orange)"></div><h2>📰 Commodity News</h2><span class="scnt" id="c-mandi">0</span></div>
   <div class="ngrid" id="grid-mandi"></div>
- </article>
+ </div>
 
  <!-- SAVED -->
- <article id="panel-saved" class="panel" aria-label="Saved articles">
+ <div id="panel-saved" class="panel">
   <div class="shdr"><div class="sdot" style="background:var(--amber)"></div><h2>🔖 Saved Articles</h2><span class="scnt" id="c-saved">0</span></div>
   <div class="ngrid" id="grid-saved"></div>
- </article>
+ </div>
 
  <!-- SEARCH RESULTS -->
- <article id="panel-sr" class="panel" aria-label="Search results">
+ <div id="panel-sr" class="panel">
   <div class="shdr"><div class="sdot" style="background:var(--teal)"></div><h2>🔍 Search Results</h2><span class="scnt" id="c-sr">0</span></div>
   <div id="srline" style="font-size:13px;color:var(--text2);margin-bottom:14px;"></div>
   <div class="ngrid" id="grid-sr"></div>
- </article>
-
-</main>
-
-<!-- ════════════════════════════════════════════
-     PERSONALIZATION MODAL — Feature 5
-     ════════════════════════════════════════════ -->
-<div class="pref-overlay" id="prefOverlay" onclick="if(event.target===this)closePrefs()" role="dialog" aria-modal="true" aria-label="Personalise feed">
- <div class="pref-sheet">
-  <div class="pref-drag"></div>
-  <div class="pref-title">⚙️ Personalise Your Feed</div>
-  <div class="pref-sub">Choose which categories to show. Your preferences are saved on this device.</div>
-  <div class="pref-list">
-   <div class="pref-row">
-    <div class="pref-lbl"><span class="pref-ico">🌾</span><div><div>Agriculture</div><div class="pref-desc">Crops, MSP, kisan updates, mandi</div></div></div>
-    <button class="ptoggle on" id="pt-agri" onclick="togglePref('agri',this)" aria-label="Toggle Agriculture"></button>
-   </div>
-   <div class="pref-row">
-    <div class="pref-lbl"><span class="pref-ico">📈</span><div><div>Business & Markets</div><div class="pref-desc">Sensex, RBI, economy, companies</div></div></div>
-    <button class="ptoggle on" id="pt-biz" onclick="togglePref('biz',this)" aria-label="Toggle Business"></button>
-   </div>
-   <div class="pref-row">
-    <div class="pref-lbl"><span class="pref-ico">🏛️</span><div><div>Politics</div><div class="pref-desc">Parliament, government, policy</div></div></div>
-    <button class="ptoggle on" id="pt-pol" onclick="togglePref('pol',this)" aria-label="Toggle Politics"></button>
-   </div>
-   <div class="pref-row">
-    <div class="pref-lbl"><span class="pref-ico">🌐</span><div><div>General News</div><div class="pref-desc">Top India stories, science, sports</div></div></div>
-    <button class="ptoggle on" id="pt-gen" onclick="togglePref('gen',this)" aria-label="Toggle General"></button>
-   </div>
-   <div class="pref-row">
-    <div class="pref-lbl"><span class="pref-ico">🛒</span><div><div>Mandi Prices</div><div class="pref-desc">Commodity prices, wholesale market</div></div></div>
-    <button class="ptoggle on" id="pt-mandi" onclick="togglePref('mandi',this)" aria-label="Toggle Mandi"></button>
-   </div>
-  </div>
-  <div class="pref-actions">
-   <button class="pref-cancel" onclick="closePrefs()">Cancel</button>
-   <button class="pref-save" onclick="savePrefs()">✓ Save Preferences</button>
-  </div>
  </div>
-</div>
 
-<div id="toast" role="status" aria-live="polite"></div>
+</div><!-- /.main -->
+<div id="toast"></div>
 
-<!-- ════════════════════════════════════════════════════════════════
-     JAVASCRIPT
-     ════════════════════════════════════════════════════════════════ -->
 <script>
-/* ── BACKEND ──────────────────────────────────────────────────
-   Single source of truth. All news via Supabase Edge Function.
-   ──────────────────────────────────────────────────────────── */
+/* ================================================================
+   BACKEND — single source of truth.
+   All news flows through this Supabase Edge Function.
+   No direct NewsAPI calls. No RSS feeds. No CORS proxies.
+   Expected JSON response shape from backend:
+   {
+     articles: {
+       agri:  [ { title, description, urlToImage, url, publishedAt, source:{name} }, … ],
+       biz:   [ … ],
+       pol:   [ … ],
+       gen:   [ … ],
+       mandi: [ … ]
+     }
+   }
+   ================================================================ */
 const BACKEND_URL = 'https://lkdajfsqpljdtsgapzeb.supabase.co/functions/v1/smooth-responder';
 
+/* ── Fetch guard — prevents overlapping fetches ──────────── */
 let isFetching = false;
 
-/* ── currentArticles — flat store of raw incoming articles ── */
-let currentArticles = [];
-
-/* ── Static mandi prices (indicative) ───────────────────────── */
+/* ── Static mandi price data (indicative) ─────────────────── */
 const MANDI_DATA = [
   {e:'🌾',n:'Wheat',    p:'2250–2400',u:'₹/qtl',c:'+1.2%',up:1},
   {e:'🍚',n:'Rice',     p:'3200–3500',u:'₹/qtl',c:'+0.8%',up:1},
@@ -583,18 +413,18 @@ const MANDI_DATA = [
   {e:'🟡',n:'Mustard',  p:'5200–5600',u:'₹/qtl',c:'-0.4%',up:0},
 ];
 
-/* ── Importance classifiers ──────────────────────────────────── */
+/* ── Importance keyword classifiers ───────────────────────── */
 const HKW = ['crisis','flood','drought','record','ban','strike','collapse','emergency',
              'attack','death','explosion','historic','election','budget','scam','war','arrest','verdict'];
 const MKW = ['launch','policy','scheme','rise','fall','growth','report','minister',
              'government','price','market','rbi','award','deal','merger'];
 
-/* ── Weather maps ────────────────────────────────────────────── */
+/* ── Weather code maps (open-meteo, no API key needed) ─────── */
 const WI = {0:'☀️',1:'🌤️',2:'⛅',3:'☁️',45:'🌫️',51:'🌦️',61:'🌧️',63:'🌧️',80:'🌦️',95:'⛈️'};
 const WD = {0:'Clear sky',1:'Mainly clear',2:'Partly cloudy',3:'Overcast',45:'Foggy',
             51:'Drizzle',61:'Light rain',63:'Moderate rain',80:'Showers',95:'Thunderstorm'};
 
-/* ── App state ───────────────────────────────────────────────── */
+/* ── App state ────────────────────────────────────────────── */
 let appData     = { agri:[], biz:[], pol:[], gen:[], mandi:[] };
 let bookmarks   = JSON.parse(localStorage.getItem('idb_bm') || '[]');
 let activeTab   = 'overview';
@@ -606,237 +436,17 @@ let searchQuery = '';
 let cardStore   = {};
 let cardCount   = 0;
 let topOnly     = false;
-let AR          = 120000;
+let AR          = 120000; // 2-minute default
 
-/* ════════════════════════════════════════════════════════════
-   FEATURE 5 — PERSONALIZATION
-   userPrefs: which categories are enabled.
-   Loaded from localStorage, applied on render.
-   ════════════════════════════════════════════════════════════ */
-const DEFAULT_PREFS = { agri:true, biz:true, pol:true, gen:true, mandi:true };
-let userPrefs = { ...DEFAULT_PREFS };
-let tempPrefs = { ...DEFAULT_PREFS }; // working copy inside modal
-
-function loadPrefs() {
-  try {
-    const stored = localStorage.getItem('idb_prefs');
-    if (stored) userPrefs = { ...DEFAULT_PREFS, ...JSON.parse(stored) };
-  } catch { userPrefs = { ...DEFAULT_PREFS }; }
-}
-function openPrefs() {
-  tempPrefs = { ...userPrefs };
-  ['agri','biz','pol','gen','mandi'].forEach(k => {
-    const btn = document.getElementById('pt-' + k);
-    if (btn) btn.className = 'ptoggle' + (tempPrefs[k] ? ' on' : '');
-  });
-  document.getElementById('prefOverlay').classList.add('open');
-}
-function closePrefs() {
-  document.getElementById('prefOverlay').classList.remove('open');
-}
-function togglePref(key, btn) {
-  tempPrefs[key] = !tempPrefs[key];
-  btn.className = 'ptoggle' + (tempPrefs[key] ? ' on' : '');
-}
-function savePrefs() {
-  userPrefs = { ...tempPrefs };
-  try { localStorage.setItem('idb_prefs', JSON.stringify(userPrefs)); } catch { /* quota */ }
-  applyPrefs();
-  closePrefs();
-  toast('✅ Preferences saved!');
-}
-function applyPrefs() {
-  const catMap = { agri:'tab-agri', biz:'tab-biz', pol:'tab-pol', gen:'tab-gen', mandi:'tab-mandi' };
-  Object.entries(catMap).forEach(([key, tabId]) => {
-    const tab = document.getElementById(tabId);
-    if (tab) tab.classList.toggle('hidden-tab', !userPrefs[key]);
-  });
-  /* If currently on a disabled tab, go to overview */
-  if (activeTab !== 'overview' && activeTab !== 'saved' && activeTab !== 'sr' && !userPrefs[activeTab]) {
-    goTab('overview');
-  }
-  if (loaded) renderAll();
-}
-
-/* ════════════════════════════════════════════════════════════
-   FEATURE 1 — AI SUMMARY (client-side extractive, no API key)
-   Extracts 2 most relevant sentences from article description
-   using keyword overlap scoring with the headline.
-   Falls back gracefully if description is absent or short.
-   ════════════════════════════════════════════════════════════ */
-function aiSummarize(title, desc) {
-  const clean = (desc || '').replace(/<[^>]+>/g,'').replace(/\s+/g,' ').trim();
-
-  /* If description is usable as-is and short, return it */
-  if (clean.length >= 40 && clean.length <= 180) return clean;
-
-  /* Split into sentences */
-  const raw = clean.match(/[^.!?]+[.!?]+/g) || [];
-  const sents = raw.map(s => s.trim()).filter(s => s.length > 20);
-
-  if (sents.length === 0) {
-    /* No usable sentences — synthesize from title */
-    return synthesizeFromTitle(title);
-  }
-  if (sents.length <= 2) {
-    return trunc(sents.join(' '), 220);
-  }
-
-  /* Score each sentence by keyword overlap with headline */
-  const titleWords = new Set(
-    title.toLowerCase()
-      .replace(/[^a-z0-9\s]/g,'')
-      .split(/\s+/)
-      .filter(w => w.length > 3)
-  );
-  const scored = sents.map((s, i) => {
-    const words = s.toLowerCase().replace(/[^a-z0-9\s]/g,'').split(/\s+/);
-    const overlap = words.filter(w => titleWords.has(w)).length;
-    return { s, score: overlap + (i === 0 ? 0.5 : 0) }; // first sentence gets small boost
-  });
-
-  /* Pick top 2, then restore original order */
-  const top2 = scored
-    .map((x, i) => ({ ...x, i }))
-    .sort((a, b) => b.score - a.score)
-    .slice(0, 2)
-    .sort((a, b) => a.i - b.i)
-    .map(x => x.s);
-
-  return trunc(top2.join(' '), 220);
-}
-
-function synthesizeFromTitle(title) {
-  /* Build a readable 2-line summary from the headline using keyword extraction */
-  const words    = title.replace(/[^a-zA-Z0-9\s]/g,'').split(/\s+/).filter(w => w.length > 3);
-  const keywords = words.slice(0, 4).join(', ');
-  const base     = trunc(title, 90);
-  if (!keywords) return base + ' — tap Read for full story.';
-  return `${base}. Key focus: ${keywords}. Tap Read to view the complete coverage and background.`;
-}
-
-/* ════════════════════════════════════════════════════════════
-   REQUIRED — generateSummary & speakNews
-   Simple utility functions as specified in requirements.
-   generateSummary: extracts first 2 sentences from raw article
-   object (description → content → fallback).
-   speakNews: lightweight TTS wrapper for title + summary text.
-   Both coexist with the richer aiSummarize / speakArticle
-   implementations used by the card renderer.
-   ════════════════════════════════════════════════════════════ */
-
-/**
- * generateSummary(article)
- * Accepts a raw NewsAPI-style article object.
- * Returns a plain-text summary string (first 2 sentences).
- */
-function generateSummary(article) {
-  if (article.description) {
-    return article.description.split('. ').slice(0, 2).join('. ') + '.';
-  }
-  if (article.content) {
-    return article.content.split('. ').slice(0, 2).join('. ') + '.';
-  }
-  return 'No summary available.';
-}
-
-/**
- * speakNews(title, summary)
- * Reads title and summary aloud using the Web Speech API.
- * Uses en-IN locale to match Indian English pronunciation.
- */
-function speakNews(title, summary) {
-  if (!window.speechSynthesis) return;
-  const speech = new SpeechSynthesisUtterance(title + '. ' + summary);
-  speech.lang = 'en-IN';
-  window.speechSynthesis.speak(speech);
-}
-
-/**
- * speakByIndex(index)
- * Reads a raw article from currentArticles by its flat index.
- * Generates a plain-text summary via generateSummary() and speaks
- * the title + summary using the Web Speech API (en-IN locale).
- */
-function speakByIndex(index) {
-  if (!window.speechSynthesis) return;
-  const article = currentArticles[index];
-  if (!article) return;
-  const summary = generateSummary(article);
-  const speech  = new SpeechSynthesisUtterance(article.title + '. ' + summary);
-  speech.lang   = 'en-IN';
-  window.speechSynthesis.speak(speech);
-}
-
-/* ════════════════════════════════════════════════════════════
-   FEATURE 4 — AUDIO NEWS (SpeechSynthesis API)
-   Reads headline + summary aloud. Toggle to stop.
-   ════════════════════════════════════════════════════════════ */
-let currentSpeakBtn = null;
-
-function speakArticle(id, btn) {
-  if (!window.speechSynthesis) {
-    toast('🔇 Audio not supported in this browser');
-    return;
-  }
-  /* If already speaking this item — stop */
-  if (btn === currentSpeakBtn && window.speechSynthesis.speaking) {
-    window.speechSynthesis.cancel();
-    resetSpeakBtn(btn);
-    currentSpeakBtn = null;
-    return;
-  }
-  /* Stop any previous utterance */
-  if (window.speechSynthesis.speaking) {
-    window.speechSynthesis.cancel();
-    if (currentSpeakBtn) resetSpeakBtn(currentSpeakBtn);
-  }
-
-  const item = cardStore[id];
-  if (!item) return;
-
-  const text = `${item.headline}. ${item.summary}`;
-  const utt  = new SpeechSynthesisUtterance(text);
-  utt.lang  = 'en-IN';
-  utt.rate  = 0.93;
-  utt.pitch = 1.05;
-
-  /* Try to pick an Indian English voice if available */
-  const voices   = window.speechSynthesis.getVoices();
-  const indVoice = voices.find(v => /en.IN|Rishi|Veena/i.test(v.lang + v.name));
-  if (indVoice) utt.voice = indVoice;
-
-  btn.textContent = '⏹';
-  btn.classList.add('speaking');
-  btn.title = 'Stop reading';
-  currentSpeakBtn = btn;
-
-  utt.onend = utt.onerror = () => {
-    resetSpeakBtn(btn);
-    currentSpeakBtn = null;
-  };
-  window.speechSynthesis.speak(utt);
-}
-
-function resetSpeakBtn(btn) {
-  if (!btn) return;
-  btn.textContent = '🔊';
-  btn.classList.remove('speaking');
-  btn.title = 'Listen to this article';
-}
-
-/* Pre-load voices (Chrome needs a trigger) */
-if (window.speechSynthesis) {
-  window.speechSynthesis.getVoices();
-  window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
-}
-
-/* ════════════════════════════════════════════════════════════
-   CORE: fetchNews() — Feature 7 (Performance: single call,
-   AbortController timeout, dedup, cache)
-   ════════════════════════════════════════════════════════════ */
+/* ================================================================
+   CORE: fetchNews()
+   ─ Only ONE network call to BACKEND_URL.
+   ─ No direct NewsAPI / RSS / allorigins calls anywhere.
+   ─ Parses { articles: { agri, biz, pol, gen, mandi } }
+   ─ Falls back gracefully on any error.
+   ================================================================ */
 async function fetchNews() {
-  if (isFetching) return;
+  if (isFetching) return; // prevent double-fetch
   isFetching = true;
 
   const btn = document.getElementById('rbtn');
@@ -844,6 +454,7 @@ async function fetchNews() {
   btn.innerHTML = '⏳ Loading…';
   hideError();
 
+  /* Show loading UI on first load */
   if (!loaded) {
     document.getElementById('welcome').style.display = 'none';
     document.querySelectorAll('.panel').forEach(p => p.classList.remove('show'));
@@ -851,69 +462,94 @@ async function fetchNews() {
     document.getElementById('lsub').textContent = 'Connecting to Supabase backend…';
   }
 
+  /* Animate all steps to "active" */
   ['agri','biz','pol','gen','wx'].forEach(id => setStep(id, 'active'));
 
   const t0 = Date.now();
   let raw   = null;
 
+  /* ── Step 1: HTTP fetch ───────────────────────────────── */
   try {
     const controller = new AbortController();
-    const timeout    = setTimeout(() => controller.abort(), 20000);
+    const timeout    = setTimeout(() => controller.abort(), 20000); // 20s timeout
 
     const res = await fetch(BACKEND_URL, {
       method:  'GET',
-      headers: { 'Content-Type':'application/json', 'Accept':'application/json' },
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
       cache:   'no-store',
       signal:  controller.signal,
     });
     clearTimeout(timeout);
 
+    /* ── Step 2: Check HTTP status ──────────────────────── */
     if (!res.ok) {
       let body = '';
       try { body = await res.text(); } catch { /* ignore */ }
-      throw new Error(`Backend HTTP ${res.status}${body ? ': ' + body.slice(0,200) : ''}`);
+      throw new Error(
+        `Backend returned HTTP ${res.status} ${res.statusText}.` +
+        (body ? `\n\nResponse: ${body.slice(0, 300)}` : '')
+      );
     }
-    try { raw = await res.json(); }
-    catch (e) { throw new Error('Invalid JSON from backend: ' + e.message); }
+
+    /* ── Step 3: Parse JSON ─────────────────────────────── */
+    try {
+      raw = await res.json();
+    } catch (jsonErr) {
+      throw new Error(`Backend returned invalid JSON: ${jsonErr.message}`);
+    }
 
   } catch (err) {
-    const isTO = err.name === 'AbortError';
-    const msg  = isTO ? 'Request timed out (20s). Try again.' : (err.message || 'Network error');
-    showError(isTO ? 'Request Timeout' : 'Backend Error', msg,
-      'Check: Supabase Edge Function deployed · Public GET · BACKEND_URL correct');
-    ['agri','biz','pol','gen'].forEach(id => setStep(id,'fail'));
+    const isTimeout = err.name === 'AbortError';
+    const msg = isTimeout
+      ? 'Request timed out after 20 seconds. The backend may be cold-starting — try again.'
+      : (err.message || 'Network error — could not reach the backend.');
+
+    console.error('[fetchNews] Fetch failed:', msg);
+    showError(
+      isTimeout ? 'Request Timeout' : 'Backend Fetch Error',
+      msg,
+      'Check: Supabase Edge Function is deployed · Function is set to public (no JWT required for GET) · BACKEND_URL is correct'
+    );
+    ['agri','biz','pol','gen'].forEach(id => setStep(id, 'fail'));
     finishLoad(btn, 0, false);
     isFetching = false;
     return;
   }
 
-  /* ── Validate response shape (A or B) ─────────────────── */
+  /* ── Step 4: Validate response shape ────────────────────
+     Support two possible shapes:
+       A) { articles: { agri, biz, pol, gen, mandi } }  ← preferred
+       B) { agri, biz, pol, gen, mandi }                ← flat fallback
+     ──────────────────────────────────────────────────── */
   let incoming = {};
   if (raw && raw.articles && typeof raw.articles === 'object') {
-    incoming = raw.articles;
+    incoming = raw.articles;                 // shape A
   } else if (raw && (raw.agri || raw.biz || raw.pol || raw.gen)) {
-    incoming = raw;
+    incoming = raw;                          // shape B (flat)
   } else {
-    showError('Unexpected Response',
-      'Backend returned valid JSON but shape unrecognised.\nExpected: { articles:{agri,biz,pol,gen,mandi} }',
-      JSON.stringify(raw,null,2).slice(0,300));
+    console.warn('[fetchNews] Unexpected response shape:', raw);
+    showError(
+      'Unexpected Response',
+      'Backend responded successfully, but the data shape was not recognised.\n' +
+      'Expected: { articles: { agri, biz, pol, gen, mandi } }',
+      JSON.stringify(raw, null, 2).slice(0, 400)
+    );
     finishLoad(btn, 0, false);
     isFetching = false;
     return;
   }
 
-  /* ── Map article → internal format, with AI summary ─────── */
+  /* ── Step 5: Map and process each category ───────────── */
   function mapArticle(a) {
-    const headline = trunc(a.title || 'Untitled', 120);
-    const rawDesc  = a.description || a.content || '';
     return {
-      headline,
-      summary:    aiSummarize(headline, rawDesc),   // ← Feature 1: AI summary
-      source:     (a.source && a.source.name) ? a.source.name : safeHost(a.url || ''),
+      headline:   trunc(a.title       || 'Untitled', 120),
+      summary:    trunc(a.description || a.content || 'Tap Read to view the full story.', 220),
+      source:     (a.source && a.source.name) ? a.source.name
+                  : (a.url ? safeHost(a.url) : 'News'),
       link:       a.url         || '#',
       pubDate:    a.publishedAt  || '',
       image:      a.urlToImage   || '',
-      importance: getImp(headline + ' ' + rawDesc),
+      importance: getImp((a.title || '') + ' ' + (a.description || '')),
     };
   }
 
@@ -936,50 +572,59 @@ async function fetchNews() {
   appData.gen   = processCategory(incoming.gen,   20);
   appData.mandi = processCategory(incoming.mandi, 12);
 
-  /* ── Populate currentArticles with all raw incoming articles ── */
-  currentArticles = [
-    ...(incoming.agri  || []),
-    ...(incoming.biz   || []),
-    ...(incoming.pol   || []),
-    ...(incoming.gen   || []),
-    ...(incoming.mandi || []),
-  ];
-
   const elapsed = ((Date.now() - t0) / 1000).toFixed(1) + 's';
+
+  /* Update step indicators */
   setStep('agri', appData.agri.length  ? 'done' : 'fail', elapsed);
   setStep('biz',  appData.biz.length   ? 'done' : 'fail', elapsed);
   setStep('pol',  appData.pol.length   ? 'done' : 'fail', elapsed);
   setStep('gen',  appData.gen.length   ? 'done' : 'fail', elapsed);
 
   const total = appData.agri.length + appData.biz.length + appData.pol.length + appData.gen.length;
+
+  /* Warn if zero articles despite valid response */
   if (total === 0) {
-    showError('No Articles Returned',
-      'Backend 200 OK but all arrays empty.\nCheck NewsAPI key · category queries · quota.',
-      '');
+    showError(
+      'No Articles Returned',
+      'Backend responded with HTTP 200 and valid JSON, but all category arrays are empty.\n\n' +
+      'Check: NewsAPI key is valid on the server · Edge Function is querying the correct categories · API quota not exceeded',
+      ''
+    );
   }
 
+  /* ── Ticker: top 4 business headlines ───────────────── */
   if (appData.biz.length > 0) {
-    renderTicker(appData.biz.slice(0,4).map((it,i) => ({
-      n: ['📈','💰','📊','🏦'][i], v: trunc(it.headline,45), c:'', cls:'neu',
+    renderTicker(appData.biz.slice(0, 4).map((it, i) => ({
+      n:   ['📈','💰','📊','🏦'][i],
+      v:   trunc(it.headline, 45),
+      c:   '',
+      cls: 'neu',
     })));
   }
 
+  /* ── Render all grids ────────────────────────────────── */
   renderAll();
 
+  /* ── Persist to local cache ──────────────────────────── */
   if (total > 0) {
     try {
       localStorage.setItem('idb_last',  new Date().toISOString());
       localStorage.setItem('idb_cache', JSON.stringify(appData));
-    } catch (e) { console.warn('localStorage write failed:', e.message); }
+    } catch (e) {
+      console.warn('[fetchNews] Could not write to localStorage:', e.message);
+    }
   }
 
+  /* ── Weather runs independently, no await ────────────── */
   fetchWeather();
+
   finishLoad(btn, total, true);
   isFetching = false;
 }
 
-/* ── finishLoad ──────────────────────────────────────────────── */
+/* ── finishLoad — shared teardown ────────────────────────── */
 function finishLoad(btn, total, success) {
+  /* Reveal overview on first load */
   if (!loaded) {
     document.getElementById('loading').style.display = 'none';
     loaded = true;
@@ -988,300 +633,275 @@ function finishLoad(btn, total, success) {
     document.getElementById('panel-overview').classList.add('show');
     activeTab = 'overview';
   }
-  const now  = new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});
+
+  const now  = new Date().toLocaleTimeString('en-IN', { hour:'2-digit', minute:'2-digit' });
   const luEl = document.getElementById('last-updated');
   if (luEl) { luEl.textContent = '🕐 ' + now; luEl.style.display = 'inline-flex'; }
 
   document.getElementById('stxt').innerHTML = total > 0
-    ? `<b>${total} stories</b> loaded &nbsp;·&nbsp; <span style="color:var(--teal)">Supabase Edge Function</span> &nbsp;·&nbsp; <span style="font-size:10px;color:var(--text3)">✨ AI summaries · Latest first</span>`
-    : `<span style="color:var(--red)">⚠️ No stories — check backend.</span>`;
-  document.getElementById('utxt').textContent = total > 0 ? '🕐 ' + now : '';
+    ? `<b>${total} stories</b> loaded &nbsp;·&nbsp; <span style="color:var(--teal)">Supabase Edge Function</span> &nbsp;·&nbsp; <span style="color:var(--text3);font-size:10px;">Latest first · Duplicates removed</span>`
+    : `<span style="color:var(--red)">⚠️ No stories — check backend / NewsAPI key.</span>`;
+  document.getElementById('utxt').textContent = total > 0 ? '🕐 Updated ' + now : '';
 
   if (success && total > 0) startAR();
+
   btn.disabled  = false;
   btn.innerHTML = '⚡ Refresh';
 }
 
-/* ── renderAll ───────────────────────────────────────────────── */
+/* ── renderAll — redraws every grid ──────────────────────── */
 function renderAll() {
   renderOverview();
-  /* Only render categories that are enabled in prefs */
-  if (userPrefs.agri)  renderGrid('grid-agri',  appData.agri,  'c-agri',  'b-agri');
-  else                 clearGrid('grid-agri',  'c-agri', 'b-agri');
-  if (userPrefs.biz)   renderGrid('grid-biz',   appData.biz,   'c-biz',   'b-biz');
-  else                 clearGrid('grid-biz',   'c-biz',  'b-biz');
-  if (userPrefs.pol)   renderGrid('grid-pol',   appData.pol,   'c-pol',   'b-pol');
-  else                 clearGrid('grid-pol',   'c-pol',  'b-pol');
-  if (userPrefs.gen)   renderGrid('grid-gen',   appData.gen,   'c-gen',   'b-gen');
-  else                 clearGrid('grid-gen',   'c-gen',  'b-gen');
-  if (userPrefs.mandi) renderGrid('grid-mandi', appData.mandi, 'c-mandi', null);
-  else                 clearGrid('grid-mandi', 'c-mandi', null);
+  renderGrid('grid-agri',  appData.agri,  'c-agri',  'b-agri');
+  renderGrid('grid-biz',   appData.biz,   'c-biz',   'b-biz');
+  renderGrid('grid-pol',   appData.pol,   'c-pol',   'b-pol');
+  renderGrid('grid-gen',   appData.gen,   'c-gen',   'b-gen');
+  renderGrid('grid-mandi', appData.mandi, 'c-mandi', null);
   renderMandi();
   updSaved();
-  applyPrefs(); // sync tab visibility
-}
-function clearGrid(gid, cid, bid) {
-  const el = document.getElementById(gid);
-  if (el) el.innerHTML = '<div class="empty"><div class="ei">🙈</div><p>This category is hidden.<br>Enable it in ⚙️ Preferences.</p></div>';
-  if (cid) { const e = document.getElementById(cid); if (e) e.textContent = 'hidden'; }
-  if (bid) { const e = document.getElementById(bid);  if (e) e.textContent = '–'; }
 }
 
-/* ════════════════════════════════════════════════════════════
+/* ================================================================
    UTILITY HELPERS
-   ════════════════════════════════════════════════════════════ */
+   ================================================================ */
 function getImp(text) {
-  const s = (text||'').toLowerCase();
+  const s = (text || '').toLowerCase();
   if (HKW.some(k => s.includes(k))) return 'H';
   if (MKW.some(k => s.includes(k))) return 'M';
   return 'L';
 }
-function impLabel(c) { return {H:'High',M:'Medium',L:'Low'}[c]||''; }
-function trunc(s,n) { return s && s.length>n ? s.slice(0,n)+'…' : (s||''); }
+function impLabel(c) { return { H:'High', M:'Medium', L:'Low' }[c] || ''; }
+function trunc(s, n) { return s && s.length > n ? s.slice(0, n) + '…' : (s || ''); }
 function safeHost(u) { try { return new URL(u).hostname.replace('www.',''); } catch { return 'News'; } }
 function ago(ds) {
   try {
-    const m = (Date.now()-new Date(ds))/60000;
-    if (m<1)    return 'just now';
-    if (m<60)   return `${~~m}m ago`;
-    if (m<1440) return `${~~(m/60)}h ago`;
-    return `${~~(m/1440)}d ago`;
+    const m = (Date.now() - new Date(ds)) / 60000;
+    if (m < 1)    return 'just now';
+    if (m < 60)   return `${~~m}m ago`;
+    if (m < 1440) return `${~~(m / 60)}h ago`;
+    return `${~~(m / 1440)}d ago`;
   } catch { return ''; }
 }
-function similarity(a,b) {
-  const wa = new Set(a.toLowerCase().replace(/[^a-z0-9\s]/g,'').split(/\s+/).filter(w=>w.length>3));
-  const wb = new Set(b.toLowerCase().replace(/[^a-z0-9\s]/g,'').split(/\s+/).filter(w=>w.length>3));
-  let c=0; wa.forEach(w=>{if(wb.has(w))c++;}); const u=wa.size+wb.size-c;
-  return u===0?0:c/u;
+function similarity(a, b) {
+  const wa = new Set(a.toLowerCase().replace(/[^a-z0-9\s]/g,'').split(/\s+/).filter(w => w.length > 3));
+  const wb = new Set(b.toLowerCase().replace(/[^a-z0-9\s]/g,'').split(/\s+/).filter(w => w.length > 3));
+  let common = 0;
+  wa.forEach(w => { if (wb.has(w)) common++; });
+  const union = wa.size + wb.size - common;
+  return union === 0 ? 0 : common / union;
 }
 function dedup(arr) {
-  const kept=[];
-  arr.forEach(x=>{if(!kept.some(k=>similarity(k.headline,x.headline)>0.55))kept.push(x);});
+  const kept = [];
+  arr.forEach(x => {
+    if (!kept.some(k => similarity(k.headline, x.headline) > 0.55)) kept.push(x);
+  });
   return kept;
 }
-function toast(msg,dur=2400) {
-  const t=document.getElementById('toast');
-  t.textContent=msg; t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),dur);
+function toast(msg, dur = 2400) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), dur);
 }
-function hl(text,q) {
-  if(!q) return text;
-  return text.replace(new RegExp(`(${q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')})`, 'gi'),
-    '<mark style="background:rgba(246,166,33,.2);color:var(--amber);border-radius:2px;padding:0 2px;">$1</mark>');
+function hl(text, q) {
+  if (!q) return text;
+  return text.replace(
+    new RegExp(`(${q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')})`, 'gi'),
+    '<mark style="background:rgba(246,166,33,.2);color:var(--amber);border-radius:2px;padding:0 2px;">$1</mark>'
+  );
 }
-function showError(title,msg,detail) {
-  document.getElementById('errTitle').textContent=title;
-  document.getElementById('errMsg').textContent=msg;
-  const det=document.getElementById('errDetail');
-  if(detail){det.textContent=detail;det.style.display='block';}
-  else{det.style.display='none';}
-  document.getElementById('errCard').style.display='block';
+function showError(title, msg, detail) {
+  document.getElementById('errTitle').textContent = title;
+  document.getElementById('errMsg').textContent   = msg;
+  const det = document.getElementById('errDetail');
+  if (detail) { det.textContent = detail; det.style.display = 'block'; }
+  else        { det.style.display = 'none'; }
+  document.getElementById('errCard').style.display = 'block';
 }
-function hideError(){document.getElementById('errCard').style.display='none';}
-function isNew(pubDate) { return pubDate && (Date.now()-new Date(pubDate))<2*3600000; }
+function hideError() { document.getElementById('errCard').style.display = 'none'; }
+function isNew(pubDate) {
+  if (!pubDate) return false;
+  return (Date.now() - new Date(pubDate)) < 2 * 60 * 60 * 1000;
+}
 
-/* ════════════════════════════════════════════════════════════
+/* ================================================================
    BOOKMARKS
-   ════════════════════════════════════════════════════════════ */
-function isBm(link){return bookmarks.some(b=>b.link===link);}
+   ================================================================ */
+function isBm(link) { return bookmarks.some(b => b.link === link); }
 function toggleBm(item) {
-  if(isBm(item.link)){
-    bookmarks=bookmarks.filter(b=>b.link!==item.link);toast('🗑 Removed from saved');
+  if (isBm(item.link)) {
+    bookmarks = bookmarks.filter(b => b.link !== item.link);
+    toast('🗑 Removed from saved');
   } else {
-    bookmarks.unshift({...item,savedAt:Date.now()});toast('🔖 Saved!');
+    bookmarks.unshift({ ...item, savedAt: Date.now() });
+    toast('🔖 Saved!');
   }
-  try{localStorage.setItem('idb_bm',JSON.stringify(bookmarks));}catch{}
+  try { localStorage.setItem('idb_bm', JSON.stringify(bookmarks)); } catch { /* quota */ }
   updSaved();
-  if(activeTab==='saved') renderSaved();
-  document.querySelectorAll(`[data-bl="${item.link}"]`).forEach(b=>{
-    b.classList.toggle('bm',isBm(item.link));
-    b.textContent=isBm(item.link)?'🔖':'🏷️';
+  if (activeTab === 'saved') renderSaved();
+  document.querySelectorAll(`[data-bl="${item.link}"]`).forEach(b => {
+    b.classList.toggle('bm', isBm(item.link));
+    b.textContent = isBm(item.link) ? '🔖' : '🏷️';
   });
 }
 function updSaved() {
-  const n=bookmarks.length;
-  ['b-saved','svhdr'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=n;});
-  const cs=document.getElementById('c-saved');if(cs)cs.textContent=n+' saved';
-}
-function wa(headline,link) {
-  window.open('https://wa.me/?text='+encodeURIComponent(`📰 *${headline}*\n\n${link}\n\n_via India Daily Briefing_`),'_blank');
+  const n = bookmarks.length;
+  ['b-saved','svhdr'].forEach(id => { const el = document.getElementById(id); if (el) el.textContent = n; });
+  const cs = document.getElementById('c-saved');
+  if (cs) cs.textContent = n + ' saved';
 }
 
-/* ════════════════════════════════════════════════════════════
-   CARD RENDERER — includes AI summary label + Audio button
-   Features: 1 (AI summary), 4 (audio), 6 (ad injection handled in renderGrid)
-   ════════════════════════════════════════════════════════════ */
+/* ── WhatsApp share ─────────────────────────────────────────*/
+function wa(headline, link) {
+  window.open('https://wa.me/?text=' + encodeURIComponent(`📰 *${headline}*\n\n${link}\n\n_via India Daily Briefing_`), '_blank');
+}
+
+/* ================================================================
+   CARD RENDERER
+   ================================================================ */
 function card(item, delay, catLabel, q) {
   const imp       = item.importance || 'L';
   const bm        = isBm(item.link);
   const id        = 'c' + (cardCount++);
   cardStore[id]   = item;
-  const h2        = q ? hl(item.headline,q) : item.headline;
-  const sm        = q ? hl(item.summary,q)  : item.summary;
-  const newBadge  = isNew(item.pubDate)
-    ? '<span class="new-badge">🟢 NEW</span>' : '';
+  const h2        = q ? hl(item.headline, q) : item.headline;
+  const sm        = q ? hl(item.summary,  q) : item.summary;
+  const newBadge  = isNew(item.pubDate) ? '<span class="new-badge">🟢 NEW</span>' : '';
   const clickable = item.link && item.link !== '#';
-  /* Safely escape headline for use inside onclick attribute strings */
-  const safeH     = item.headline
-    .replace(/\\/g, '\\\\')
-    .replace(/'/g, "\\'")
-    .replace(/"/g, '&quot;');
+  const safeH     = item.headline.replace(/'/g,"\\'").replace(/"/g,'&quot;');
 
   const imgHtml = item.image
-    ? `<img class="nc-img" src="${item.image}" alt="${item.headline.replace(/"/g,'&quot;')}" loading="lazy"
+    ? `<img class="nc-img" src="${item.image}" alt="" loading="lazy"
          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-       <div class="nc-img-placeholder" style="display:none">${catLabel?catLabel.split(' ')[0]:'📰'}</div>`
+       <div class="nc-img-placeholder" style="display:none">${catLabel ? catLabel.split(' ')[0] : '📰'}</div>`
     : '';
 
-  return `<div class="nc${clickable?' clickable':''}" style="animation-delay:${delay}s"
-    ${clickable?`onclick="if(!event.target.closest('button,a'))window.open('${item.link}','_blank')"`:''}>
+  return `<div class="nc${clickable ? ' clickable' : ''}" style="animation-delay:${delay}s"
+    ${clickable ? `onclick="if(!event.target.closest('button,a'))window.open('${item.link}','_blank')"` : ''}>
     ${imgHtml}
     <div class="nc-body">
       <div class="nctop2">
-        <div class="nccat">${catLabel||item.source||''}</div>
+        <div class="nccat">${catLabel || item.source || ''}</div>
         <div class="ncacts">
-          <button class="nab spk" onclick='event.stopPropagation();speakArticle("${id}",this)' title="Listen to this article">🔊</button>
-          <button class="nab${bm?' bm':''}" data-bl="${item.link}"
-            onclick='event.stopPropagation();toggleBm(cardStore["${id}"])' title="${bm?'Remove':'Save'}">
-            ${bm?'🔖':'🏷️'}
+          <button class="nab ${bm ? 'bm' : ''}" data-bl="${item.link}"
+            onclick='event.stopPropagation();toggleBm(cardStore["${id}"])' title="${bm ? 'Remove' : 'Save'}">
+            ${bm ? '🔖' : '🏷️'}
           </button>
         </div>
       </div>
       <div class="nchead"><h4>${h2}${newBadge}</h4><span class="imp ${imp}">${impLabel(imp)}</span></div>
-      <div class="ai-sum-lbl">✨ AI Summary</div>
       <div class="ncsum">${sm}</div>
       <div class="ncft">
         <div class="ncmeta">
           <div class="ncsrc">${item.source}</div>
-          <div class="nct">${item.pubDate?ago(item.pubDate):''}</div>
+          <div class="nct">${item.pubDate ? ago(item.pubDate) : ''}</div>
         </div>
         <div class="ncbtns">
           <button class="wabtn" onclick="event.stopPropagation();wa('${safeH}','${item.link}')" title="Share on WhatsApp">📲</button>
-          ${clickable?`<a href="${item.link}" target="_blank" rel="noopener" class="rbtn" onclick="event.stopPropagation()">Read →</a>`:''}
+          ${clickable ? `<a href="${item.link}" target="_blank" rel="noopener" class="rbtn" onclick="event.stopPropagation()">Read →</a>` : ''}
         </div>
       </div>
     </div>
   </div>`;
 }
 
-/* ── Inline ad card for grid injection — Feature 6 ──────── */
-function adCardHTML() {
-  return `<div class="ad-card">
-    <div class="ad-lbl">Sponsored</div>
-    <div class="ad-copy">🌱 Grow your agri-business<br>Reach farmers across India</div>
-    <button class="ad-cta" onclick="toast('📧 Contact: ads@indiadailybriefing.in')">Advertise Here</button>
-  </div>`;
-}
-
-/* ════════════════════════════════════════════════════════════
-   GRID RENDERER — injects ad every 6 cards (Feature 6)
-   ════════════════════════════════════════════════════════════ */
+/* ================================================================
+   GRID RENDERER
+   ================================================================ */
 function renderGrid(gid, items, cid, bid, q) {
   cardStore = {}; cardCount = 0;
   const el = document.getElementById(gid);
   if (!el) return;
-  const view = topOnly ? items.slice(0,5) : items;
-
-  if (view.length === 0) {
-    el.innerHTML = '<div class="empty"><div class="ei">📭</div><p>No stories found in this category.</p></div>';
-  } else {
-    const cards = view.map((it,i) => card(it, i*0.045, null, q));
-    /* Inject ad card every 6 items */
-    const withAds = [];
-    cards.forEach((c,i) => {
-      withAds.push(c);
-      if ((i+1) % 6 === 0 && i !== cards.length-1) {
-        withAds.push(adCardHTML());
-      }
-    });
-    el.innerHTML = withAds.join('');
+  const view = topOnly ? items.slice(0, 5) : items;
+  el.innerHTML = view.length
+    ? view.map((it, i) => card(it, i * 0.045, null, q)).join('')
+    : '<div class="empty"><div class="ei">📭</div><p>No stories found in this category.</p></div>';
+  if (cid) {
+    const el2 = document.getElementById(cid);
+    if (el2) el2.textContent = topOnly ? `Top 5 of ${items.length}` : items.length + ' stories';
   }
-
-  if (cid) {const e=document.getElementById(cid);if(e)e.textContent=topOnly?`Top 5 of ${items.length}`:items.length+' stories';}
-  if (bid) {const e=document.getElementById(bid); if(e)e.textContent=topOnly?'5':items.length;}
+  if (bid) {
+    const el3 = document.getElementById(bid);
+    if (el3) el3.textContent = topOnly ? '5' : items.length;
+  }
 }
 
-/* ════════════════════════════════════════════════════════════
+/* ================================================================
    OVERVIEW PANEL
-   ════════════════════════════════════════════════════════════ */
+   ================================================================ */
 function renderOverview() {
-  const allCats = [
-    {key:'agri',cls:'agri',icon:'🌾',lbl:'Agriculture',tab:'agri'},
-    {key:'biz', cls:'biz', icon:'📈',lbl:'Business',   tab:'biz' },
-    {key:'pol', cls:'pol', icon:'🏛️',lbl:'Politics',   tab:'pol' },
-    {key:'gen', cls:'gen', icon:'🌐',lbl:'General',    tab:'gen' },
+  const cats = [
+    { key:'agri', cls:'agri', icon:'🌾', lbl:'Agriculture', tab:'agri' },
+    { key:'biz',  cls:'biz',  icon:'📈', lbl:'Business',    tab:'biz'  },
+    { key:'pol',  cls:'pol',  icon:'🏛️', lbl:'Politics',    tab:'pol'  },
+    { key:'gen',  cls:'gen',  icon:'🌐', lbl:'General',     tab:'gen'  },
   ];
-  /* Only show enabled cats */
-  const cats = allCats.filter(c => userPrefs[c.key] !== false);
 
+  /* Category summary cards */
   document.getElementById('ovgrid').innerHTML = cats.map(c => {
     const a = appData[c.key] || [];
     return `<div class="ovc ${c.cls}" onclick="goTab('${c.tab}')">
       <div class="ovh"><div class="ovico ${c.cls}">${c.icon}</div><h3>${c.lbl}</h3></div>
-      <div class="ovhl">${a[0]?a[0].headline:'No stories yet.'}</div>
+      <div class="ovhl">${a[0] ? a[0].headline : 'No stories yet.'}</div>
       <div class="ovft"><span class="ovcnt">${a.length} stories</span><span style="font-size:11px;color:var(--text4)">→</span></div>
     </div>`;
-  }).join('') || '<div class="empty"><div class="ei">⚙️</div><p>All categories hidden.<br>Open Preferences to enable categories.</p></div>';
+  }).join('');
 
-  /* Top stories — 2 high-importance items from each active category */
-  const ord = {H:0,M:1,L:2};
+  /* Top Stories — 2 highest-importance items per category */
+  const ord = { H:0, M:1, L:2 };
   const top = [];
   cats.forEach(c => {
-    [...(appData[c.key]||[])]
-      .sort((a,b)=>(ord[a.importance]||2)-(ord[b.importance]||2))
-      .slice(0,2)
-      .forEach(it => top.push({...it, _cat:c.icon+' '+c.lbl}));
+    [...(appData[c.key] || [])]
+      .sort((a, b) => (ord[a.importance] || 2) - (ord[b.importance] || 2))
+      .slice(0, 2)
+      .forEach(it => top.push({ ...it, _cat: c.icon + ' ' + c.lbl }));
   });
 
-  const topView = topOnly ? top.slice(0,5) : top;
+  const topView = topOnly ? top.slice(0, 5) : top;
   cardStore = {}; cardCount = 0;
 
   document.getElementById('topgrid').innerHTML = topView.length
-    ? topView.map((it,i) => {
-        const imp   = it.importance||'L';
+    ? topView.map((it, i) => {
+        const imp   = it.importance || 'L';
         const bm    = isBm(it.link);
-        const id    = 'c'+(cardCount++);
-        /* Safely escape headline for overview card onclick attributes */
-        const safeH = it.headline
-          .replace(/\\/g, '\\\\')
-          .replace(/'/g, "\\'")
-          .replace(/"/g, '&quot;');
+        const id    = 'c' + (cardCount++);
+        const safeH = it.headline.replace(/'/g,"\\'").replace(/"/g,'&quot;');
         cardStore[id] = it;
-        return `<div class="nc clickable" style="animation-delay:${i*0.045}s"
+        return `<div class="nc clickable" style="animation-delay:${i * 0.045}s"
           onclick="if(!event.target.closest('button,a'))window.open('${it.link}','_blank')">
           ${it.image
-            ?`<img class="nc-img" src="${it.image}" alt="" loading="lazy"
+            ? `<img class="nc-img" src="${it.image}" alt="" loading="lazy"
                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-               <div class="nc-img-placeholder" style="display:none">📰</div>`:''}
+               <div class="nc-img-placeholder" style="display:none">📰</div>`
+            : ''}
           <div class="nc-body">
             <div class="nctop2">
               <div class="nccat">${it._cat}</div>
               <div class="ncacts">
-                <button class="nab spk" onclick='event.stopPropagation();speakArticle("${id}",this)' title="Listen">🔊</button>
-                <button class="nab${bm?' bm':''}" data-bl="${it.link}"
+                <button class="nab ${bm ? 'bm' : ''}" data-bl="${it.link}"
                   onclick='event.stopPropagation();toggleBm(cardStore["${id}"])'>
-                  ${bm?'🔖':'🏷️'}
+                  ${bm ? '🔖' : '🏷️'}
                 </button>
               </div>
             </div>
             <div class="nchead"><h4>${it.headline}</h4><span class="imp ${imp}">${impLabel(imp)}</span></div>
-            <div class="ai-sum-lbl">✨ AI Summary</div>
             <div class="ncsum">${it.summary}</div>
             <div class="ncft">
               <div class="ncmeta">
                 <div class="ncsrc">${it.source}</div>
-                <div class="nct">${it.pubDate?ago(it.pubDate):''}</div>
+                <div class="nct">${it.pubDate ? ago(it.pubDate) : ''}</div>
               </div>
               <div class="ncbtns">
                 <button class="wabtn" onclick="event.stopPropagation();wa('${safeH}','${it.link}')">📲</button>
-                ${it.link&&it.link!=='#'
-                  ?`<a href="${it.link}" target="_blank" rel="noopener" class="rbtn" onclick="event.stopPropagation()">Read →</a>`:''}
+                ${it.link && it.link !== '#'
+                  ? `<a href="${it.link}" target="_blank" rel="noopener" class="rbtn" onclick="event.stopPropagation()">Read →</a>`
+                  : ''}
               </div>
             </div>
           </div>
         </div>`;
       }).join('')
-    : '<div class="empty"><div class="ei">📰</div><p>Enable categories in ⚙️ to see top stories.</p></div>';
+    : '<div class="empty"><div class="ei">📰</div><p>Loading stories…</p></div>';
 }
 
 /* ── Top-stories toggle ──────────────────────────────────── */
@@ -1295,51 +915,51 @@ function toggleTop() {
   renderAll();
 }
 
-/* ════════════════════════════════════════════════════════════
+/* ================================================================
    SEARCH
-   ════════════════════════════════════════════════════════════ */
+   ================================================================ */
 function onSearch(val) {
   searchQuery = val.trim().toLowerCase();
   document.getElementById('sclr').style.display = val ? 'block' : 'none';
   if (!loaded) return;
   if (!searchQuery) {
     document.getElementById('srtab').style.display = 'none';
-    if (activeTab==='sr') goTab('overview');
+    if (activeTab === 'sr') goTab('overview');
     return;
   }
-  const all = [...appData.agri,...appData.biz,...appData.pol,...appData.gen,...appData.mandi];
-  const res  = all.filter(it =>
+  const all = [...appData.agri, ...appData.biz, ...appData.pol, ...appData.gen, ...appData.mandi];
+  const res = all.filter(it =>
     it.headline.toLowerCase().includes(searchQuery) ||
     it.summary.toLowerCase().includes(searchQuery)  ||
-    (it.source||'').toLowerCase().includes(searchQuery)
+    (it.source || '').toLowerCase().includes(searchQuery)
   );
-  cardStore={}; cardCount=0;
+  cardStore = {}; cardCount = 0;
   document.getElementById('grid-sr').innerHTML = res.length
-    ? res.map((it,i)=>card(it,i*0.04,null,searchQuery)).join('')
+    ? res.map((it, i) => card(it, i * 0.04, null, searchQuery)).join('')
     : `<div class="empty"><div class="ei">🔍</div><p>No results for "<b>${val}</b>"</p></div>`;
-  document.getElementById('c-sr').textContent  = res.length+' found';
+  document.getElementById('c-sr').textContent  = res.length + ' found';
   document.getElementById('b-sr').textContent  = res.length;
   document.getElementById('srline').innerHTML  = `Showing <b>${res.length}</b> results for "<b>${val}</b>"`;
   document.getElementById('srtab').style.display = 'flex';
   goTab('sr');
 }
 function clearSearch() {
-  document.getElementById('sinput').value='';
+  document.getElementById('sinput').value = '';
   onSearch('');
-  document.getElementById('srtab').style.display='none';
-  if (activeTab==='sr') goTab('overview');
+  document.getElementById('srtab').style.display = 'none';
+  if (activeTab === 'sr') goTab('overview');
 }
 
-/* ── Saved ───────────────────────────────────────────────── */
+/* ── Saved tab ─────────────────────────────────────────────*/
 function renderSaved() {
-  cardStore={}; cardCount=0;
+  cardStore = {}; cardCount = 0;
   document.getElementById('grid-saved').innerHTML = bookmarks.length
-    ? bookmarks.map((it,i)=>card(it,i*0.04)).join('')
+    ? bookmarks.map((it, i) => card(it, i * 0.04)).join('')
     : '<div class="empty"><div class="ei">🔖</div><p>No saved articles yet.<br>Tap 🏷️ on any story to save it.</p></div>';
   updSaved();
 }
 
-/* ── Mandi ───────────────────────────────────────────────── */
+/* ── Mandi static prices ──────────────────────────────────*/
 function renderMandi() {
   document.getElementById('mgrid').innerHTML = MANDI_DATA.map(m =>
     `<div class="mc">
@@ -1347,36 +967,39 @@ function renderMandi() {
        <div class="mname">${m.n}</div>
        <div class="mprice">${m.p}</div>
        <div class="munit">${m.u}</div>
-       <div class="mchg ${m.up?'up':'dn'}">${m.c}</div>
+       <div class="mchg ${m.up ? 'up' : 'dn'}">${m.c}</div>
      </div>`
   ).join('');
 }
 
-/* ════════════════════════════════════════════════════════════
-   WEATHER  (open-meteo, no API key)
-   ════════════════════════════════════════════════════════════ */
+/* ================================================================
+   WEATHER  (open-meteo — no API key required)
+   ================================================================ */
 async function fetchWeather() {
-  setStep('wx','active');
+  setStep('wx', 'active');
   try {
-    let lat=19.076, lon=72.877, city='Mumbai';
+    let lat = 19.076, lon = 72.877, city = 'Mumbai';
     try {
       if (navigator.geolocation) {
-        await new Promise((res,rej)=>
+        await new Promise((res, rej) =>
           navigator.geolocation.getCurrentPosition(
-            p=>{lat=p.coords.latitude;lon=p.coords.longitude;city='Your Location';res();},
-            rej,{timeout:4000}));
+            p => { lat = p.coords.latitude; lon = p.coords.longitude; city = 'Your Location'; res(); },
+            rej, { timeout: 4000 }
+          )
+        );
       }
-    } catch { /* default Mumbai */ }
+    } catch { /* fall back to Mumbai */ }
 
     const r = await fetch(
       `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}` +
       `&current=temperature_2m,relative_humidity_2m,weathercode,windspeed_10m&timezone=Asia%2FKolkata`,
-      {cache:'no-store'});
-    if (!r.ok) throw new Error('weather api error');
+      { cache: 'no-store' }
+    );
+    if (!r.ok) throw new Error('Weather API error');
     const d   = await r.json();
     const c   = d.current;
-    const ico  = WI[c.weathercode]||'🌤️';
-    const desc = WD[c.weathercode]||'';
+    const ico  = WI[c.weathercode] || '🌤️';
+    const desc = WD[c.weathercode] || 'Current conditions';
     document.getElementById('wxwrap').innerHTML = `
       <div class="wcard">
         <div class="wtop">
@@ -1389,14 +1012,14 @@ async function fetchWeather() {
           <div class="wstat">💨 <b>${Math.round(c.windspeed_10m)} km/h</b></div>
         </div>
       </div>`;
-    setStep('wx','done');
+    setStep('wx', 'done');
   } catch {
-    setStep('wx','fail');
-    document.getElementById('wxwrap').innerHTML =
-      `<div class="wcard" style="align-items:center;justify-content:center;text-align:center;">
-         <div style="font-size:26px;margin-bottom:6px">🌤️</div>
-         <div style="font-size:11px;color:rgba(255,255,255,.4)">Weather unavailable</div>
-       </div>`;
+    setStep('wx', 'fail');
+    document.getElementById('wxwrap').innerHTML = `
+      <div class="wcard" style="align-items:center;justify-content:center;text-align:center;">
+        <div style="font-size:26px;margin-bottom:6px">🌤️</div>
+        <div style="font-size:11px;color:rgba(255,255,255,.4)">Weather unavailable</div>
+      </div>`;
   }
 }
 
@@ -1406,81 +1029,85 @@ function renderTicker(items) {
     `<div class="titem">
        <span class="tn">${m.n}</span>
        <span class="tv ${m.cls}">${m.v}</span>
-       ${m.c?`<span class="tc ${m.cls}">${m.c}`:''}
+       ${m.c ? `<span class="tc ${m.cls}">${m.c}</span>` : ''}
      </div>`
   ).join('');
 }
+/* Init ticker placeholder */
 renderTicker([
   {n:'Sensex',v:'—',c:'',cls:'neu'},{n:'Nifty',v:'—',c:'',cls:'neu'},
-  {n:'Gold',v:'—',c:'',cls:'neu'},{n:'USD/INR',v:'—',c:'',cls:'neu'},
+  {n:'Gold',v:'—',c:'',cls:'neu'}, {n:'USD/INR',v:'—',c:'',cls:'neu'},
 ]);
 
-/* ── Loading steps ───────────────────────────────────────── */
-function setStep(id,state,t) {
-  const el=document.getElementById('ls-'+id);
-  if(!el) return;
-  el.className='lstep '+state;
-  const tEl=document.getElementById('lt-'+id);
-  if(t&&tEl) tEl.textContent=t;
+/* ── Loading step UI ────────────────────────────────────── */
+function setStep(id, state, t) {
+  const el = document.getElementById('ls-' + id);
+  if (!el) return;
+  el.className = 'lstep ' + state;
+  const tEl = document.getElementById('lt-' + id);
+  if (t && tEl) tEl.textContent = t;
 }
 
-/* ── Tab navigation — Feature 3 ──────────────────────────── */
+/* ── Tab navigation ─────────────────────────────────────── */
 function goTab(tab) {
   activeTab = tab;
-  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.tab===tab));
-  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('show'));
-  const p=document.getElementById('panel-'+tab);
-  if(p) p.classList.add('show');
-  if(tab==='saved') renderSaved();
-  window.scrollTo({top:0,behavior:'smooth'});
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('show'));
+  const p = document.getElementById('panel-' + tab);
+  if (p) p.classList.add('show');
+  if (tab === 'saved') renderSaved();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-/* ════════════════════════════════════════════════════════════
-   AUTO-REFRESH — Feature 7 (Performance: no duplicate calls)
-   ════════════════════════════════════════════════════════════ */
+/* ================================================================
+   AUTO-REFRESH
+   ================================================================ */
 function startAR() {
   if (arTimer) clearInterval(arTimer);
   arNext = Date.now() + AR;
   document.getElementById('arpill').style.display = 'flex';
   const tick = () => {
-    const rem = Math.max(0, arNext-Date.now());
-    const h=~~(rem/3600000), m=~~((rem%3600000)/60000), s=~~((rem%60000)/1000);
-    document.getElementById('arcd').textContent = h>0?`${h}h ${m}m`:`${m}m ${s}s`;
-    if (rem<=0) { fetchNews(); arNext=Date.now()+AR; }
+    const rem = Math.max(0, arNext - Date.now());
+    const h   = ~~(rem / 3600000);
+    const m   = ~~((rem % 3600000) / 60000);
+    const s   = ~~((rem % 60000) / 1000);
+    document.getElementById('arcd').textContent =
+      h > 0 ? `${h}h ${m}m` : `${m}m ${s}s`;
+    if (rem <= 0) { fetchNews(); arNext = Date.now() + AR; }
   };
   tick();
   arTimer = setInterval(tick, 1000);
 }
 
+/* Refresh on tab-focus if cache is stale */
 document.addEventListener('visibilitychange', () => {
   if (!document.hidden && loaded && !isFetching) {
     const last = localStorage.getItem('idb_last');
-    if (last && (Date.now()-new Date(last))>AR) fetchNews();
+    if (last && (Date.now() - new Date(last)) > AR) fetchNews();
   }
 });
 
-/* ── Theme toggle ────────────────────────────────────────── */
+/* ── Theme toggle ───────────────────────────────────────── */
 function toggleTheme() {
   isDark = !isDark;
-  document.getElementById('thbtn').textContent = isDark?'☀️':'🌙';
+  document.getElementById('thbtn').textContent = isDark ? '☀️' : '🌙';
   const v = isDark
-    ?{bg:'#0B0F1A',bg2:'#111827',card:'#15202E',card2:'#1E2D40',card3:'#243347',bdr:'#1E2D40',bdr2:'#263548',text:'#F1F5F9',text2:'#94A3B8',text3:'#4B6080',text4:'#2E4260'}
-    :{bg:'#F8F9FA',bg2:'#FFFFFF',card:'#FFFFFF',card2:'#F1F5F9',card3:'#E2E8F0',bdr:'#E2E8F0',bdr2:'#CBD5E1',text:'#0F172A',text2:'#475569',text3:'#94A3B8',text4:'#CBD5E1'};
+    ? {bg:'#0B0F1A',bg2:'#111827',card:'#15202E',card2:'#1E2D40',card3:'#243347',
+       bdr:'#1E2D40',bdr2:'#263548',text:'#F1F5F9',text2:'#94A3B8',text3:'#4B6080',text4:'#2E4260'}
+    : {bg:'#F8F9FA',bg2:'#FFFFFF',card:'#FFFFFF',card2:'#F1F5F9',card3:'#E2E8F0',
+       bdr:'#E2E8F0',bdr2:'#CBD5E1',text:'#0F172A',text2:'#475569',text3:'#94A3B8',text4:'#CBD5E1'};
   ['--bg','--bg2','--card','--card2','--card3','--border','--border2','--text','--text2','--text3','--text4']
-    .forEach((n,i)=>document.documentElement.style.setProperty(n,Object.values(v)[i]));
+    .forEach((n, i) => document.documentElement.style.setProperty(n, Object.values(v)[i]));
 }
 
-/* ════════════════════════════════════════════════════════════
-   INIT
-   ════════════════════════════════════════════════════════════ */
+/* ================================================================
+   INIT — restore from cache, then fetch fresh data
+   ================================================================ */
 (function init() {
-  loadPrefs();  // Feature 5 — load saved prefs first
-
   document.getElementById('date-el').textContent = new Date().toLocaleDateString('en-IN',
-    {weekday:'short',day:'numeric',month:'short',year:'numeric'});
+    { weekday:'short', day:'numeric', month:'short', year:'numeric' });
   updSaved();
   renderMandi();
-  applyPrefs(); // apply tab visibility from prefs
 
   const cache = localStorage.getItem('idb_cache');
   const last  = localStorage.getItem('idb_last');
@@ -1489,40 +1116,46 @@ function toggleTheme() {
     try {
       appData = JSON.parse(cache);
       loaded  = true;
-      document.getElementById('welcome').style.display='none';
+      document.getElementById('welcome').style.display = 'none';
       renderAll();
       document.getElementById('panel-overview').classList.add('show');
-      document.querySelectorAll('.tab').forEach(t=>
-        t.classList.toggle('active',t.dataset.tab==='overview'));
+      document.querySelectorAll('.tab').forEach(t =>
+        t.classList.toggle('active', t.dataset.tab === 'overview'));
       activeTab = 'overview';
 
-      const t    = new Date(last).toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});
+      const t    = new Date(last).toLocaleTimeString('en-IN', { hour:'2-digit', minute:'2-digit' });
       const luEl = document.getElementById('last-updated');
-      if(luEl){luEl.textContent='🕐 '+t;luEl.style.display='inline-flex';}
+      if (luEl) { luEl.textContent = '🕐 ' + t; luEl.style.display = 'inline-flex'; }
 
-      const total = appData.agri.length+appData.biz.length+appData.pol.length+appData.gen.length;
-      document.getElementById('stxt').innerHTML=`<b>${total} stories</b> (cached) &nbsp;·&nbsp; <span style="font-size:10px;color:var(--text3)">✨ AI summaries</span>`;
-      document.getElementById('utxt').textContent='Last fetch: '+t;
+      const total = appData.agri.length + appData.biz.length + appData.pol.length + appData.gen.length;
+      document.getElementById('stxt').innerHTML = `<b>${total} stories</b> (cached)`;
+      document.getElementById('utxt').textContent = 'Last fetch: ' + t;
 
       fetchWeather();
+
       if (appData.biz.length) {
-        renderTicker(appData.biz.slice(0,4).map((it,i)=>({
-          n:['📈','💰','📊','🏦'][i],v:trunc(it.headline,45),c:'',cls:'neu',
+        renderTicker(appData.biz.slice(0, 4).map((it, i) => ({
+          n: ['📈','💰','📊','🏦'][i], v: trunc(it.headline, 45), c: '', cls: 'neu',
         })));
       }
 
-      const ageHours = (Date.now()-new Date(last))/3600000;
-      if (ageHours > 1) setTimeout(()=>fetchNews(), 1200);
-      else startAR();
-
-    } catch(e) {
-      console.warn('[init] Corrupt cache:', e.message);
+      /* Background-refresh if cache is older than 1 hour */
+      const ageHours = (Date.now() - new Date(last)) / 3600000;
+      if (ageHours > 1) {
+        setTimeout(() => fetchNews(), 1200);
+      } else {
+        startAR();
+      }
+    } catch (e) {
+      /* Corrupt cache — clear and start fresh */
+      console.warn('[init] Corrupt cache, clearing:', e.message);
       localStorage.removeItem('idb_cache');
       localStorage.removeItem('idb_last');
-      setTimeout(()=>fetchNews(), 300);
+      setTimeout(() => fetchNews(), 300);
     }
   } else {
-    setTimeout(()=>fetchNews(), 300);
+    /* No cache — fetch immediately */
+    setTimeout(() => fetchNews(), 300);
   }
 })();
 </script>
