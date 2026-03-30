@@ -564,6 +564,9 @@ const BACKEND_URL = 'https://lkdajfsqpljdtsgapzeb.supabase.co/functions/v1/smoot
 
 let isFetching = false;
 
+/* ── currentArticles — flat store of raw incoming articles ── */
+let currentArticles = [];
+
 /* ── Static mandi prices (indicative) ───────────────────────── */
 const MANDI_DATA = [
   {e:'🌾',n:'Wheat',    p:'2250–2400',u:'₹/qtl',c:'+1.2%',up:1},
@@ -749,6 +752,22 @@ function speakNews(title, summary) {
   window.speechSynthesis.speak(speech);
 }
 
+/**
+ * speakByIndex(index)
+ * Reads a raw article from currentArticles by its flat index.
+ * Generates a plain-text summary via generateSummary() and speaks
+ * the title + summary using the Web Speech API (en-IN locale).
+ */
+function speakByIndex(index) {
+  if (!window.speechSynthesis) return;
+  const article = currentArticles[index];
+  if (!article) return;
+  const summary = generateSummary(article);
+  const speech  = new SpeechSynthesisUtterance(article.title + '. ' + summary);
+  speech.lang   = 'en-IN';
+  window.speechSynthesis.speak(speech);
+}
+
 /* ════════════════════════════════════════════════════════════
    FEATURE 4 — AUDIO NEWS (SpeechSynthesis API)
    Reads headline + summary aloud. Toggle to stop.
@@ -916,6 +935,15 @@ async function fetchNews() {
   appData.pol   = processCategory(incoming.pol,   15);
   appData.gen   = processCategory(incoming.gen,   20);
   appData.mandi = processCategory(incoming.mandi, 12);
+
+  /* ── Populate currentArticles with all raw incoming articles ── */
+  currentArticles = [
+    ...(incoming.agri  || []),
+    ...(incoming.biz   || []),
+    ...(incoming.pol   || []),
+    ...(incoming.gen   || []),
+    ...(incoming.mandi || []),
+  ];
 
   const elapsed = ((Date.now() - t0) / 1000).toFixed(1) + 's';
   setStep('agri', appData.agri.length  ? 'done' : 'fail', elapsed);
